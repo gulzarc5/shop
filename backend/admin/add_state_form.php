@@ -75,7 +75,7 @@ include_once "databaseConnection/connection.php";
                         <strong class="card-title">State</strong>
                     </div>
                     <div class="card-body">
-                        <table id="region_table" class="table table-striped table-bordered">
+                        <table id="bootstrap-data-table-export" class="table table-striped table-bordered">
 	                        <thead>
 	                            <tr>
 	                                <th>Sl</th>
@@ -93,7 +93,7 @@ include_once "databaseConnection/connection.php";
                             				print	$count++;
                             				print	"</td>
                             					<td>$row[name]</td>
-			                                    <tr>";
+			                                    </tr>";
                             			}
                             		}
                             	?>
@@ -112,7 +112,6 @@ include_once "databaseConnection/connection.php";
 		</div>
     </div><!-- .animated -->
 </div><!-- .content -->
-
 
 
 <?php

@@ -69,8 +69,8 @@ include_once "databaseConnection/connection.php";
                     <div class="card-header">
                         <strong class="card-title">Region</strong>
                     </div>
-                    <div class="card-body">
-                        <table id="region_table" class="table table-striped table-bordered">
+                    <div class="card-body table-responsive">
+                        <table id="bootstrap-data-table-export" class="table table-striped table-bordered" style=" overflow: scroll;">
 	                        <thead>
 	                            <tr>
 	                                <th>Sl</th>
@@ -98,7 +98,7 @@ include_once "databaseConnection/connection.php";
                                             print "<td><button type='button' class='btn btn-secondary'>Not Approved</button></td>";
                                         }
 			                                print    "<td>$row[created_at]</td>
-			                                    <tr>";
+			                                    </tr>";
                             			}
                             		}
                             	?>
