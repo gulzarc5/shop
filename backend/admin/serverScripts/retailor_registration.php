@@ -60,7 +60,7 @@ if (!empty($_POST['add_retailor']) && $_POST['add_retailor'] == 'add_retailor') 
 		$sql_retailor_registration = "INSERT INTO `users`(`user_id`, `organization`, `first_name`, `middle_name`, `last_name`, `designation_id`, `address_id`, `business_code`, `mobile_no`, `email_id`, `trade_licence_number`, `trade_licence_using_authority`, `pan`, `GSTIN`, `GSTIN_category_id`, `membership_id`, `membership_number`, `membership_location`, `IEC_code`, `user_type_id`, `created_at`, `password`) VALUES (null,'$organization','$first_name','$middle_name','$last_name','$designation','$address_id','$businessCode','$mobile_number','$email','$trade_licence_number','$licence_issuing_authority','$pan','$gstin','$gstin_category','$membership','$membership_number','$membership_location','$iec','$user_type_id',null,'$password')";
 		if ($result_retailor_registration = $connection->query($sql_retailor_registration)) {
 
-			if (!empty() || !empty($_POST['branch_address']) || !empty($_POST['ifsc_code']) || !empty($_POST['micr_code'])) {
+			if (!empty($branch_address) || !empty($_POST['branch_address']) || !empty($_POST['ifsc_code']) || !empty($_POST['micr_code'])) {
 				$user_id = $connection->insert_id;
 				$sql_user_bank_details = "INSERT INTO `user_bank_details`(`user_bank_id`, `user_id`, `name_of_bank`, `branch_address`, `ifsc`, `micr`) VALUES (null,'$user_id','$bank_name','$branch_address','$ifsc','$micr')";
 				if ($result_user_bank_details = $connection->query($sql_user_bank_details)){
@@ -81,14 +81,9 @@ if (!empty($_POST['add_retailor']) && $_POST['add_retailor'] == 'add_retailor') 
 
 	
 
-	// if (password_verify($confirm_password,$password)) {
-	//     echo "<br>success";
-	// }
-	// else {
-	//     echo "<br>failed";
-	// }
+	
 
-	echo "<br>".$password;
+	// echo "<br>".$password;
 
 	// $sql = "";
 

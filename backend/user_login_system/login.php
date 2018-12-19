@@ -1,3 +1,7 @@
+<?php
+include_once "../admin/databaseConnection/connection.php";  
+?>
+
 <!doctype html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
@@ -49,10 +53,28 @@
                             // echo $val;
                             if ($val == 1) {
                                 print "<div class='alert alert-danger' role='alert'>Username or Password worng</div>";
-                            }                        
+                            } 
+                            if ($val == 2) {
+                                print "<div class='alert alert-danger' role='alert'>Password Not Matched</div>";
+                            }                       
                         }
                       ?>         
-                    <form action="serverScripts/login_check.php" method="post">
+                    <form action="user_login_check.php" method="post">
+                        <div class="form-group">
+                            <label for="user_type">Membership</label>
+                                <select name="membership" id="membership" class="form-control" required>
+                                    <option value="" selected>Select Membership...</option>
+                                        <?php
+                                            $sql ="SELECT * FROM `user_type` WHERE `user_type_id` != '1'";
+                                            if($result=$connection->query($sql)){
+                                                $count = 1;
+                                                while ($row=$result->fetch_assoc()) {
+                                                    print"<option value='$row[user_type_id]'>$row[name]</option>";
+                                                }
+                                            }
+                                        ?>                                
+                                </select>
+                        </div>
                         <div class="form-group">
                             <label>Email address</label>
                             <input type="email" name="email" class="form-control" placeholder="Email" required>
