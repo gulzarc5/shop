@@ -6,7 +6,7 @@ include_once "databaseConnection/connection.php";
     <div class="col-sm-4">
         <div class="page-header float-left">
             <div class="page-title">
-                <h1>Wholesallers Registration</h1>
+                <h1>Add New Product</h1>
             </div>
         </div>
     </div>
@@ -14,9 +14,8 @@ include_once "databaseConnection/connection.php";
         <div class="page-header float-right">
             <div class="page-title">
                 <ol class="breadcrumb text-right">
-                    <li class="active" id="check">Dashboard</li>
+                    <li class="active" id="check">Dashboard/Add New Product</li>
                 </ol>
-                <ol id="abxc">adashdfasjkfshfghfgjsdfhsdf</ol>
             </div>
         </div>
     </div>
@@ -32,7 +31,7 @@ include_once "databaseConnection/connection.php";
     <form action="serverScripts/add_city.php" method="post" class="form-horizontal">
         <div class="card">
             <div class="card-header">
-                <strong>Business </strong> Information
+                <strong>Product </strong> Information
             </div>
             <?php
                 if(!empty($_GET['msg'])){
@@ -51,9 +50,26 @@ include_once "databaseConnection/connection.php";
             ?>   
 	       <div class="card-body card-block">
                 <div class="row form-group">
-                   <div class="col col-md-3"><label for="organization" class=" form-control-label"> Organization Name</label></div>
+                   <div class="col col-md-3"><label for="organization" class=" form-control-label"> Product Title</label></div>
                    <div class="col-12 col-md-9"><input type="text" name="organization" placeholder="Enter City..." class="form-control"></div>
                </div>
+
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="hf-email" class=" form-control-label">Product Category</label></div>
+                    <div class="col-12 col-md-9">
+                        <select name="designation"  class="form-control" required>
+                            <option value="" selected>Select Product Category...</option>
+                                <?php
+                                    $category_sql ="SELECT * FROM `category` WHERE `status`='1'";
+                                    if($category_result=$connection->query($category_sql)){
+                                        while ($category_row=$category_result->fetch_assoc()) {
+                                            print"<option value='$category_row[category_id]'>$category_row[category_code] - $category_row[name]</option>";
+                                        }
+                                    }
+                                ?>                                
+                        </select>
+                    </div>
+                </div>
 
                <div class="row form-group">
                    <div class="col col-md-3"><label for="contact_person" class=" form-control-label"> Contact Person</label></div>

@@ -74,8 +74,8 @@ include_once "databaseConnection/connection.php";
                     <div class="card-header">
                         <strong class="card-title">Category</strong>
                     </div>
-                    <div class="card-body">
-                        <table id="region_table" class="table table-striped table-bordered">
+                    <div class="card-body table-responsive">
+                        <table id="bootstrap-data-table-export" class="table table-striped table-bordered">
 	                        <thead>
 	                            <tr>
 	                                <th>Sl</th>
@@ -104,7 +104,7 @@ include_once "databaseConnection/connection.php";
                                         }
                                                 
 			                                print    "<td>$row[created_at]</td>
-			                                    <tr>";
+			                                    </tr>";
                             			}
                             		}
                             	?>

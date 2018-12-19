@@ -74,7 +74,7 @@ include_once "databaseConnection/connection.php";
                     <div class="card-header">
                         <strong class="card-title">State</strong>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body table-responsive">
                         <table id="bootstrap-data-table-export" class="table table-striped table-bordered">
 	                        <thead>
 	                            <tr>
