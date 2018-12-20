@@ -28,7 +28,7 @@ require_once('partials/header.php');
         <div class="card-header">
             <strong>Add</strong> New Retailor
         </div> -->
-    <form action="serverScripts/add_city.php" method="post" class="form-horizontal">
+    <form action="serverScripts/add_product_retailer.php" method="post" class="form-horizontal" enctype="multipart/form-data">
         <div class="card">
             <div class="card-header">
                 <strong>Product </strong> Information
@@ -191,7 +191,7 @@ require_once('partials/header.php');
                    <div class="col-12 col-md-3"><input type="text" name="rate" placeholder="ex. 12" class="form-control" required></div>
                    <div class="col-12 col-md-6" >
 
-                     <select name="rate_weight_type"  class="form-control" required id="images_select_box">
+                     <select name="rate_currency"  class="form-control" required id="images_select_box">
                             <option value="" selected>Select Currency...</option>
                             <option value="1">INR</option>
                             <option value="2">USD</option>                                 
@@ -220,10 +220,13 @@ require_once('partials/header.php');
                    </div>
                </div>
 
+               <div id="image_more">
                 <div class="row form-group">
                    <div class="col col-md-3"><label for="product_image" class=" form-control-label"> Upload Image</label></div>
-                   <div class="col-12 col-md-9"><input type="file" name="product_image[]" placeholder="Enter Product Title..." class="form-control" multiple></div>
+                   <div class="col-12 col-md-7"><input type="file" name="product_image[]" placeholder="Enter Product Title..." class="form-control"></div>
+                   <div class="col-12 col-md-2"><button type="button" class="btn btn-link" id="product_image_add_more" class="form-control"><i class="fa fa-link"></i>&nbsp;Add More</button></div>
                </div>
+           </div>
 
             <div class="card-footer">
                 <button type="submit" name="add_retailer_product" value="add_retailer_product" class="btn btn-primary btn-sm">
@@ -264,25 +267,34 @@ $(document).ready(function(){
     var images_select_box = $("#images_select_box").html();
     $("#product_size_add_more").click(function(){
 // alert(product_size_add_more_count);
-        var product_size_add_more = "<div class='row form-group' id = '"+product_size_add_more_count+"'><div class='col col-md-3'></div><div class='col-12 col-md-2'><input type='text' name='product_size[]' placeholder='ex. 12' class='form-control'></div><div class='col-12 col-md-5'><select name='product_size_type[]'  class='form-control' required id='images_select_box'>"+images_select_box+"</select></div><div class='col-12 col-md-2'><button type='button' class='btn btn-link' id='"+product_size_add_more_count+"' onclick='assads("+product_size_add_more_count+")'><i class='fa fa-link'></i>&nbsp;Remove</button></div></div>";
+     var image_id = "sz"+product_size_add_more_count;
+        var product_size_add_more = "<div class='row form-group' id = '"+image_id+"'><div class='col col-md-3'></div><div class='col-12 col-md-2'><input type='text' name='product_size[]' placeholder='ex. 12' class='form-control'></div><div class='col-12 col-md-5'><select name='product_size_type[]'  class='form-control' required id='images_select_box'>"+images_select_box+"</select></div><div class='col-12 col-md-2'><button type='button' class='btn btn-link' id='"+image_id+"' onclick='removeDiv(this.id)'><i class='fa fa-link'></i>&nbsp;Remove</button></div></div>";
        $("#more_sizes").append(product_size_add_more);
        product_size_add_more_count = product_size_add_more_count+1;
     });
-
-    $("#Remove").on("click", function() {  
-                $("#textboxDiv").remove();  
-            }); 
-
 });
 
 </script>
 <script type="text/javascript">
-     function assads(elem) {
-        // alert(elem);
-         $("#"+elem+"").remove();
+     function removeDiv(elem) {
+         alert(elem);
+         $("#"+elem).remove();
     }
 </script>
 
+<script type="text/javascript">
+    var product_image_add_more_count = 1;
+     $("#product_image_add_more").click(function(){
+// alert(product_size_add_more_count);
+    var image_id = "img"+product_image_add_more_count;
+        var product_image_add_more = "<div class='row form-group' id = '"+image_id+"'><div class='col col-md-3'><label for='product_image' class=' form-control-label'> </label></div>"+
+                  "<div class='col-12 col-md-7'><input type='file' name='product_image[]'  class='form-control'></div>"+
+                   "<div class='col-12 col-md-2'><button type='button' class='btn btn-link'  class='form-control' id='"+image_id+"' onclick='removeDiv(this.id)'><i class='fa fa-link'></i>&nbsp;Remove</button></div></div>";
+
+       $("#image_more").append(product_image_add_more);
+       product_image_add_more_count = product_image_add_more_count+1;
+    });
+</script>
   
                    
                    
