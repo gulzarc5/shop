@@ -17,6 +17,7 @@ if(isset($_POST['Login']) && !empty($_POST['membership']) && !empty($_POST['emai
                 if (password_verify($password,$user['password'])) {
                     $_SESSION['email'] = $user['email_id'];
                     $_SESSION['user_type'] = $user['user_type_id'];
+                    $_SESSION['name'] = $user['first_name']." ".$user['middle_name']." ".$user['last_name'];
                     header("location:../retailer/deshboard.php");
                 }
                 else {

@@ -17,6 +17,7 @@ if(isset($_POST['Login']) && !empty($_POST['email']) && !empty($_POST['password'
             // print_r($user);
             $_SESSION['email'] = $user['email_id'];
             $_SESSION['user_type'] = $user['user_type_id'];
+            $_SESSION['business_code'] = $user['business_code'];
             header("location:../deshboard.php");
         }
     }

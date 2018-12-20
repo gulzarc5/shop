@@ -59,7 +59,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-laptop"></i>Products</a>
                         <ul class="sub-menu children dropdown-menu">
                             <li><i class="fa fa-puzzle-piece"></i><a href="wholeseller_registration_form.php">Product List</a></li>
-                            <li><i class="fa fa-id-badge"></i><a href="add_product_by_retailor.php">Add New Product</a></li>                       
+                            <li><i class="fa fa-id-badge"></i><a href="add_product_by_retailor_form.php">Add New Product</a></li>                       
                         </ul>
                     </li>
                     <li class="menu-item-has-children dropdown">
@@ -179,7 +179,7 @@
 
                             <!-- <a class="nav-link" href="#"><i class="fa fa-cog"></i> Settings</a> -->
 
-                            <a class="nav-link" href="serverScripts/logout.php"><i class="fa fa-power-off"></i> Logout</a>
+                            <a class="nav-link" href="../user_login_system/user_logout.php"><i class="fa fa-power-off"></i> Logout</a>
                         </div>
                     </div>
 
