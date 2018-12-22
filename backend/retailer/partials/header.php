@@ -61,7 +61,7 @@
                     <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-laptop"></i>Products</a>
                         <ul class="sub-menu children dropdown-menu">
-                            <li><i class="fa fa-puzzle-piece"></i><a href="wholeseller_registration_form.php">Product List</a></li>
+                            <li><i class="fa fa-puzzle-piece"></i><a href="retailer_product_show.php">Product List</a></li>
                             <li><i class="fa fa-id-badge"></i><a href="add_product_by_retailor_form.php">Add New Product</a></li>                       
                         </ul>
                     </li>
