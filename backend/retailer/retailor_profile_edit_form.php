@@ -53,10 +53,12 @@ $result = $connection->query($sql);
                 <strong>Personal </strong> Details
             </div>
            <div class="card-body card-block">
-               <div class="row form-group">
+               <!-- <div class="row form-group">
                    <div class="col col-md-3"><label for="first_name" class="form-control-label">First Name</label></div>
                     <div class="col-12 col-md-9">
-                        <input type="text"  name="first_name" value="<?php echo $user['first_name'] ?>" class="form-control">
+                        <input type="text"  name="first_name" value="<?php 
+                        // echo $user['first_name'] 
+                        ?>" class="form-control">
                     </div>
                </div>
                <?php
@@ -67,15 +69,19 @@ $result = $connection->query($sql);
                    <div class="col col-md-3"><label for="middle_name" class=" form-control-label">Middle Name</label></div>
                     <div class="col-12 col-md-9">
                         <input type="text"  name="middle_name" class="form-control" value="<?php
-                         if (!empty($user['middle_name'])) {
-                         echo $user['middle_name']; } ?>">
+
+                         // if (!empty($user['middle_name'])) {
+                         // echo $user['middle_name']; } 
+                         ?>">
                     </div>
                </div>
 
                <div class="row form-group">
                    <div class="col col-md-3"><label for="last_name" class=" form-control-label">Last Name </label></div>
                     <div class="col-12 col-md-9">
-                        <input type="text"  name="last_name"  class="form-control" value="<?php echo $user['last_name'] ?>" >
+                        // <input type="text"  name="last_name"  class="form-control" value="<?php 
+                        // echo $user['last_name'] 
+                        ?>" >
                     </div>
                </div>  
                <div class="row form-group">
@@ -84,21 +90,21 @@ $result = $connection->query($sql);
                         <select name="designation"  class="form-control" required>
                             <option value="" selected>Select Designation...</option>
                                 <?php
-                                    $sql ="SELECT * FROM `designation`";
-                                    if($result=$connection->query($sql)){
-                                        $count = 1;
-                                        while ($row=$result->fetch_assoc()) {
-                                            if ($user['designation_id'] == $row[designation_id]) {
-                                              print"<option value='$row[designation_id]' selected>$row[designation_name]</option>";
-                                            }else{
-                                                print"<option value='$row[designation_id]'>$row[designation_name]</option>";
-                                            }
-                                        }
-                                    }
+                                    // $sql ="SELECT * FROM `designation`";
+                                    // if($result=$connection->query($sql)){
+                                    //     $count = 1;
+                                    //     while ($row=$result->fetch_assoc()) {
+                                    //         if ($user['designation_id'] == $row[designation_id]) {
+                                    //           print"<option value='$row[designation_id]' selected>$row[designation_name]</option>";
+                                    //         }else{
+                                    //             print"<option value='$row[designation_id]'>$row[designation_name]</option>";
+                                    //         }
+                                    //     }
+                                    // }
                                 ?>                                
                         </select>
                     </div>
-                </div> 
+                </div>  -->
                 <input type="hidden" name="address_id" value="<?php echo $user['address_id']; ?>">
                 <?php
                 $address =null;
@@ -109,49 +115,49 @@ $result = $connection->query($sql);
                           }
                     }
                ?>  
-                <div class="row form-group">
+                <!-- <div class="row form-group">
                     <div class="col col-md-3"><label for="state" class=" form-control-label">State <span class="redstar"> * </span></label></div>
                     <div class="col-12 col-md-9">
                         <select name="state" id="state" class="form-control" required>
                             <option value="" selected>Select State...</option>
                                 <?php
-                                    $sql_state ="SELECT * FROM `state`";
-                                    if($result_state=$connection->query($sql_state)){
-                                        $count = 1;
-                                        while ($row_state=$result_state->fetch_assoc()) {
-                                          if ($address['state_id'] == $row_state['id']) {
-                                               print"<option value='$row_state[id]' selected>$row_state[name]</option>";
-                                          }else{
-                                            print"<option value='$row_state[id]'>$row_state[name]</option>";
-                                          }
-                                        }
-                                    }
+                                    // $sql_state ="SELECT * FROM `state`";
+                                    // if($result_state=$connection->query($sql_state)){
+                                    //     $count = 1;
+                                    //     while ($row_state=$result_state->fetch_assoc()) {
+                                    //       if ($address['state_id'] == $row_state['id']) {
+                                    //            print"<option value='$row_state[id]' selected>$row_state[name]</option>";
+                                    //       }else{
+                                    //         print"<option value='$row_state[id]'>$row_state[name]</option>";
+                                    //       }
+                                    //     }
+                                    // }
                                 ?>                                
                         </select>
                     </div>
-                </div>
+                </div> -->
 
-                  <div class="row form-group">
+              <!--     <div class="row form-group">
                     <div class="col col-md-3"><label for="city" class=" form-control-label">City <span class="redstar"> * </span></label></div>
                     <div class="col-12 col-md-9">
                         <select name="city" id="city" class="form-control" required>
                             <option value="" selected>Select City...</option>
                              <?php
-                                    $sql_city ="SELECT * FROM `city` WHERE `state_id`='$address[state_id]'";
-                                    if($result_city=$connection->query($sql_city)){
-                                        while ($row_city=$result_city->fetch_assoc()) {
-                                          if ($address['city_id'] == $row_city['city_id']) {
-                                               print"<option value='$row_city[city_id]' selected>$row_city[name]</option>";
-                                          }else{
-                                            print"<option value='$row_city[city_id]'>$row_city[name]</option>";
-                                          }
-                                        }
-                                    }
+                                    // $sql_city ="SELECT * FROM `city` WHERE `state_id`='$address[state_id]'";
+                                    // if($result_city=$connection->query($sql_city)){
+                                    //     while ($row_city=$result_city->fetch_assoc()) {
+                                    //       if ($address['city_id'] == $row_city['city_id']) {
+                                    //            print"<option value='$row_city[city_id]' selected>$row_city[name]</option>";
+                                    //       }else{
+                                    //         print"<option value='$row_city[city_id]'>$row_city[name]</option>";
+                                    //       }
+                                    //     }
+                                    // }
                                 ?>
 
                         </select>
                     </div>
-                </div>    
+                </div> -->    
 
                 <div class="row form-group">
                    <div class="col col-md-3"><label for="locality" class=" form-control-label"> Locality</label></div>
@@ -203,12 +209,14 @@ $result = $connection->query($sql);
                 <strong>Business </strong> Information
             </div>
            <div class="card-body card-block">
-                <div class="row form-group">
+                <!-- <div class="row form-group">
                    <div class="col col-md-3"><label for="organization" class=" form-control-label"> Organization Name </label></div>
                    <div class="col-12 col-md-9">
-                        <input type="text" name="organization"  class="form-control" value="<?php echo $user ['organization']?>">
+                        <input type="text" name="organization"  class="form-control" value="<?php 
+                        // echo $user ['organization']
+                        ?>">
                     </div>
-               </div>                
+               </div>  -->               
 
                <div class="row form-group">
                    <div class="col col-md-3"><label for="trade_licence_number" class=" form-control-label"> Trade Licence Number </label></div>
@@ -353,7 +361,7 @@ $result = $connection->query($sql);
     require_once('../partials/footer.php');
 ?>
  <script src="../../assets/datatable/jquery-3.3.1.js"></script>
-<script>
+<!-- <script>
     // AJAX call for autocomplete 
 $(document).ready(function(){
     $("#state").change(function(){
@@ -372,4 +380,4 @@ $(document).ready(function(){
     });
 });
 
-</script>
+</script> -->

@@ -3,18 +3,18 @@
 	include_once "..\..\admin\databaseConnection\connection.php";
 	if ($_POST['retailor_profile_update'] && !empty($_POST['retailor_profile_update'])){
 		$user_id = $_SESSION['user_id'];
-		$first_name = $connection->real_escape_string(mysql_entities_fix_string($_POST['first_name']));
-		$middle_name = $connection->real_escape_string(mysql_entities_fix_string($_POST['middle_name']));
-		$last_name = $connection->real_escape_string(mysql_entities_fix_string($_POST['last_name']));
-		$designation = $connection->real_escape_string(mysql_entities_fix_string($_POST['designation']));
-		$state = $connection->real_escape_string(mysql_entities_fix_string($_POST['state']));
-		$city = $connection->real_escape_string(mysql_entities_fix_string($_POST['city']));
+		// $first_name = $connection->real_escape_string(mysql_entities_fix_string($_POST['first_name']));
+		// $middle_name = $connection->real_escape_string(mysql_entities_fix_string($_POST['middle_name']));
+		// $last_name = $connection->real_escape_string(mysql_entities_fix_string($_POST['last_name']));
+		// $designation = $connection->real_escape_string(mysql_entities_fix_string($_POST['designation']));
+		// $state = $connection->real_escape_string(mysql_entities_fix_string($_POST['state']));
+		// $city = $connection->real_escape_string(mysql_entities_fix_string($_POST['city']));
 		$locality = $connection->real_escape_string(mysql_entities_fix_string($_POST['locality']));
 		$mobile_number = $connection->real_escape_string(mysql_entities_fix_string($_POST['mobile_number']));
 		$mobile_number_alternate = $connection->real_escape_string(mysql_entities_fix_string($_POST['mobile_number_alternate']));
 		$email = $connection->real_escape_string(mysql_entities_fix_string($_POST['email']));
 		$email_alternate = $connection->real_escape_string(mysql_entities_fix_string($_POST['email_alternate']));
-		$organization = $connection->real_escape_string(mysql_entities_fix_string($_POST['organization']));
+		// $organization = $connection->real_escape_string(mysql_entities_fix_string($_POST['organization']));
 		$trade_licence_number = $connection->real_escape_string(mysql_entities_fix_string($_POST['trade_licence_number']));
 		$licence_issuing_authority = $connection->real_escape_string(mysql_entities_fix_string($_POST['licence_issuing_authority']));
 		$pan = $connection->real_escape_string(mysql_entities_fix_string($_POST['pan']));
@@ -28,7 +28,7 @@
 		$address_id = $connection->real_escape_string(mysql_entities_fix_string($_POST['address_id']));
 
 
-		$sql_address = "UPDATE `address` SET `state_id`='$state',`city_id`='$city',`street`='$locality' WHERE `address_id`='$address_id'";
+		$sql_address = "UPDATE `address` SET `street`='$locality' WHERE `address_id`='$address_id'";
 		if ($result_address = $connection->query($sql_address)){
 			true;
 		}else{
@@ -36,7 +36,7 @@
 		}
 
 
-		$sql_retailor_update ="UPDATE `users` SET `organization`='$organization',`first_name`='$first_name',`middle_name`='$middle_name',`last_name`='$last_name',`designation_id`='$designation',`mobile_no`='$mobile_number ',`email_id`='$email',`trade_licence_number`='$trade_licence_number',`trade_licence_using_authority`='$licence_issuing_authority',`pan`='$pan',`GSTIN`='$gstin',`GSTIN_category_id`='$gstin_category',`membership_id`='$membership',`membership_number`='$membership_number',`membership_location`='$membership_location',`IEC_code`='$iec' WHERE `user_id`='$user_id'";
+		$sql_retailor_update ="UPDATE `users` SET `organization`='$organization',`mobile_no`='$mobile_number ',`email_id`='$email',`trade_licence_number`='$trade_licence_number',`trade_licence_using_authority`='$licence_issuing_authority',`pan`='$pan',`GSTIN`='$gstin',`GSTIN_category_id`='$gstin_category',`membership_id`='$membership',`membership_number`='$membership_number',`membership_location`='$membership_location',`IEC_code`='$iec' WHERE `user_id`='$user_id'";
 		if ($result_retailor_update = $connection->query($sql_retailor_update)){
 			header("location:../retailor_profile_edit_form.php?msg=2");
 		}else{
