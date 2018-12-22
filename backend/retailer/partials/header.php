@@ -71,7 +71,15 @@
                             <li><i class="fa fa-table"></i><a href="../admin/add_region_form.php">New Orders</a></li>
                             <li><i class="fa fa-table"></i><a href="../admin/add_designation_form.php">Delivered Products</a></li>
                         </ul>
-                    </li>          
+                    </li> 
+
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-laptop"></i>Settings</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li><i class="fa fa-puzzle-piece"></i><a href="retailor_profile_show.php"">My Profile</a></li>
+                            <li><i class="fa fa-id-badge"></i><a href="retailer_bank_detail_show.php">My Bank details</a></li>                       
+                        </ul>
+                    </li>         
                     
                 </ul>
             </div><!-- /.navbar-collapse -->
@@ -176,7 +184,7 @@
                         </a>
 
                         <div class="user-menu dropdown-menu">
-                            <a class="nav-link" href="#"><i class="fa fa-user"></i> My Profile</a>
+                            <a class="nav-link" href="retailor_profile_show.php"><i class="fa fa-user"></i> My Profile</a>
 
                             <a class="nav-link" href="#"><i class="fa fa-user"></i> Notifications <span class="count">13</span></a>
 

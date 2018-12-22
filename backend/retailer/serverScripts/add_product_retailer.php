@@ -76,26 +76,22 @@ session_start();
 				 	}else{
 				 		echo "<br> product_image  Not inserted";
 				 	}
+       			}else{
+       				echo "please Check Extension";
        			}
 	 		}
 
 	 		$sql_product_main_image_update = "UPDATE `products` SET `product_main_image`='$product_main_image' WHERE `product_id`='$product_id'";
-	 		if ($result=$connection->query($sql_product_main_image_update)) {
-				echo "<br> product_main_image inserted";
-			}else{
-				 echo "<br> product_main_image  Not inserted";
+	 		if (!$result=$connection->query($sql_product_main_image_update)) {
+	 			header("location:../add_product_by_retailor_form.php?msg=3");
 			}
-
-
-       }
-	 	
-	 	
-
+       }	
+       header("location:../add_product_by_retailor_form.php?msg=4");
 	}else{
-	 	echo " Not inserted";
+	 	header("location:../add_product_by_retailor_form.php?msg=2");
 	}
 }else{
-		echo "data not get";
+	header("location:../add_product_by_retailor_form.php?msg=1");
 }
 
 ?>
