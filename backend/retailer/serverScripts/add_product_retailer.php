@@ -28,7 +28,7 @@ session_start();
 		$company_product_code = null;
 		$created_by = $_SESSION['user_id'];
 
-		$sql = "INSERT INTO `products`(`product_id`, `title`, `description`, `region_id`, `category_id`, `grade_code_id`, `company_product_code`, `inhouse_code`, `product_code`, `brand_name`, `pack_description`, `weight_per_pack_type_id`, `weight_per_pack_unit`, `rate`, `rate_currency`, `min_order_type_id`, `min_order_unit`,`product_main_image`, `created_by_id`, `created_at`) VALUES (null,'$product_title','$description','$region','$category','$grade_code','$company_product_code','$in_house_code',null,'$tea_name','$pack_description','$weight_type','$weight','$rate','$rate_currency','$min_order_unit','$min_order',null,'$created_by',null)";
+		$sql = "INSERT INTO `products`(`product_id`, `title`, `description`, `region_id`,`product_type_id`, `category_id`, `grade_code_id`, `company_product_code`, `inhouse_code`, `product_code`, `brand_name`, `pack_description`, `weight_per_pack_type_id`, `weight_per_pack_unit`, `rate`, `rate_currency`, `min_order_type_id`, `min_order_unit`,`product_main_image`, `created_by_id`, `created_at`) VALUES (null,'$product_title','$description','$region','$type','$category','$grade_code','$company_product_code','$in_house_code',null,'$tea_name','$pack_description','$weight_type','$weight','$rate','$rate_currency','$min_order_unit','$min_order',null,'$created_by',null)";
 	 if ($result=$connection->query($sql)){
 	 	$product_id = $connection->insert_id;
 	 	$product_code = "ATNETIN/".$_SESSION['business_code'].$product_id;
