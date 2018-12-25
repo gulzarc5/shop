@@ -1487,6 +1487,20 @@ textarea:focus {
   background-size: cover;
 }
 
+.bg-image-11{
+  background-image: url("../img/bg/cart.jpg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.bg-image-12{
+  background-image: url("../img/bg/cart.jpg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 :focus {
     outline: -webkit-focus-ring-color auto 0px;
 }
@@ -4053,6 +4067,12 @@ h4.grand-totall-title span {
     background-color: #519f10;
     color: #fff;
 }
+
+.create{
+    color: #09a7f5;
+   /* float: right;*/
+    font-size: 15px;
+    transition: all 0.3s ease 0s;
 
 
 /*---------------------------

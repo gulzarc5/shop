@@ -3,10 +3,10 @@
         <div class="breadcrumb-area bg-image-8 ptb-150">
             <div class="container">
                 <div class="breadcrumb-content text-center">
-					<h3>LOGIN</h3>
+					<h3>PARTNER LOGIN</h3>
                     <ul>
                         <li><a href="index.html">Home</a></li>
-                        <li class="active">Login</li>
+                        <li class="active">Partner Login</li>
                     </ul>
                 </div>
             </div>
@@ -19,7 +19,7 @@
                         <div class="login-register-wrapper">
                             <div class="login-register-tab-list nav">
                                 <a class="active" data-toggle="tab" href="#lg1">
-                                    <h4> login </h4>
+                                    <h4>Partner login </h4>
                                 </a>
                             </div>
                             <?php
@@ -54,7 +54,8 @@
                                                         <a href="#">Forgot Password?</a>
                                                     </div>
                                                     <button type="submit" name="Login" value="Login"><span>Login</span></button>
-                                                </div>
+                                                     <a href="partner_registration.php" class="create"><b>Create an Account</b></a>
+                                                 </div>
                                             </form>
                                         </div>
                                     </div>

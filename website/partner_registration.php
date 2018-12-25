@@ -6,10 +6,10 @@ include_once "../backend/admin/databaseConnection/connection.php";
         <div class="breadcrumb-area bg-image-8 ptb-150">
             <div class="container">
                 <div class="breadcrumb-content text-center">
-					<h3>LOGIN</h3>
+					<h3>PARTNER REGISTRATION</h3>
                     <ul>
                         <li><a href="index.html">Home</a></li>
-                        <li class="active">Login</li>
+                        <li class="active">Partner Registration</li>
                     </ul>
                 </div>
             </div>
@@ -18,11 +18,11 @@ include_once "../backend/admin/databaseConnection/connection.php";
         <div class="login-register-area ptb-100">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-7 col-md-12 ml-auto mr-auto">
+                    <div class="col-lg-10 col-md-12 ml-auto mr-auto">
                         <div class="login-register-wrapper">
                             <div class="login-register-tab-list nav">
                                 <a class="active" data-toggle="tab" href="#lg1">
-                                    <h4> login </h4>
+                                    <h4> Partner Registration </h4>
                                 </a>
                             </div>
                             <?php
@@ -296,15 +296,20 @@ include_once "../backend/admin/databaseConnection/connection.php";
                 <button type="submit" name="add_retailor" value="add_retailor" class="btn btn-primary btn-sm">
                     <i class="fa fa-dot-circle-o"></i> Submit
                 </button>
+
+                 <button class="btn btn-primary btn-sm">
+                   <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                   <a href="login.php">Back
+                </button>
                <!--  <button type="reset" class="btn btn-danger btn-sm">
                     <i class="fa fa-ban"></i> Reset
                 </button> -->
             </div>
         </div>
         </form>
-                                        </div>
-                                    </div>
-                                </div>
+      </div>
+    </div>
+  </div>
                                
                             </div>
                         </div>
