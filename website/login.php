@@ -31,6 +31,9 @@
                                     } 
                                     if ($val == 2) {
                                         print "<div class='alert alert-danger' role='alert'>Password Not Matched</div>";
+                                    }    
+                                    if ($val == 3) {
+                                        print "<div class='alert alert-success' role='alert'>Registered Successfully</div>";
                                     }                       
                                 }
                               ?>    
@@ -54,7 +57,7 @@
                                                         <a href="#">Forgot Password?</a>
                                                     </div>
                                                     <button type="submit" name="Login" value="Login"><span>Login</span></button>
-                                                     <a href="partner_registration.php" class="create"><b>Create an Account</b></a>
+                                                     <a href="partner_registration_form.php" class="create"><b>Create an Account</b></a>
                                                  </div>
                                             </form>
                                         </div>

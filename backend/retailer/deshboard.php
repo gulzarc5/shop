@@ -124,7 +124,7 @@ include_once "..\admin\databaseConnection\connection.php";
                     </thead>
                     <tbody>              
                         <?php
-                            $sql ="SELECT * FROM `products` WHERE `created_by_id` = '$_SESSION[user_id]'";
+                            $sql ="SELECT * FROM `products` WHERE `created_by_id` = '$_SESSION[user_id]' ORDER BY `product_id` DESC limit 10";
                             if($result=$connection->query($sql)){
                                 $count = 1;
                                  while ($row=$result->fetch_assoc()){
