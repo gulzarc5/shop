@@ -93,6 +93,7 @@ if ($result_user = $connection->query($sql_user)) {
                                                 <div class="account-info-wrapper">
                                                     <h4>Change Password</h4>
                                                     <h5>Your Password</h5>
+                                                     <div id="pass_info"></div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-lg-12 col-md-12">
@@ -252,9 +253,9 @@ if ($result_user = $connection->query($sql_user)) {
                     success: function(data){
                         console.log(data);
                         if (data == 1) {
-                            $("#pinfo").html("<p class='alert alert-success'>You Personal Info Updated Successfully</p>");
+                            $("#pass_info").html("<p class='alert alert-success'>You Personal Info Updated Successfully</p>");
                         }else{
-                             $("#pinfo").html("<p class='alert alert-danger'>Something Went Wrong Please try again</p>");
+                             $("#pass_info").html("<p class='alert alert-danger'>Something Went Wrong Please try again</p>");
                         }
                         
                     },
