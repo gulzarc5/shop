@@ -46,7 +46,7 @@
                             <ul class="list-unstyled">
                                 <?php
                                 if (isset($_SESSION['email']) && isset( $_SESSION['user_id']) && isset( $_SESSION['user_type']) &&  $_SESSION['user_type'] == 4) {
-                                   print '<li><a href="user_login_system/user_logout.php"><i class="fa fa-user-plus top-icon"></i>Logout</a></li>';
+                                   print '<li><a href="user_login_system/user_logout.php"><i class="fa fa-power-off top-icon"></i>Logout</a></li>';
                                 }else{
                                     print '<li><a href="register.php"><i class="fa fa-user-plus top-icon"></i> Sing up</a></li>
                                 <li><a href="simple_user_login.php"><i class="fa fa-lock top-icon"></i>Login</a></li>

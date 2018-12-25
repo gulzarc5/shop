@@ -30,6 +30,7 @@ if ($result_user = $connection->query($sql_user)) {
                                     <div class="panel-heading">
                                         <h5 class="panel-title"><span>1</span> <a data-toggle="collapse" data-parent="#faq" href="#my-account-1">Edit your account information </a></h5>
                                     </div>
+                                    <input type="hidden" id="user_id" value="<?php echo $user_info['user_id'];?>">
                                     <div id="my-account-1" class="panel-collapse collapse show">
                                         <div class="panel-body">
                                             <div class="billing-information-wrapper">
@@ -54,7 +55,7 @@ if ($result_user = $connection->query($sql_user)) {
                                                     <div class="col-lg-12 col-md-12">
                                                         <div class="billing-info">
                                                             <label>Email Address</label>
-                                                            <input type="email" value="<?php echo $user_info['email_id'] ; ?>" id="email">
+                                                            <input type="email" value="<?php echo $user_info['email_id'] ;?>" id="email" disabled>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-6 col-md-6">
@@ -75,7 +76,7 @@ if ($result_user = $connection->query($sql_user)) {
                                                         <a href="#"><i class="ion-arrow-up-c"></i> back</a>
                                                     </div>
                                                     <div class="billing-btn">
-                                                        <button type="submit" onclick="personalInfo()">Save</button>
+                                                        <button type="submit" id="personal_info_save">Save</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -97,20 +98,21 @@ if ($result_user = $connection->query($sql_user)) {
                                                     <div class="col-lg-12 col-md-12">
                                                         <div class="billing-info">
                                                             <label>Current Password</label>
-                                                            <input type="current_password">
+                                                            <input type="current_password" id="current_password">
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-12 col-md-12">
                                                         <div class="billing-info">
                                                             <label>Password</label>
-                                                            <input type="password">
+                                                            <input type="password" id="password">
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-12 col-md-12">
                                                         <div class="billing-info">
                                                             <label>Password Confirm</label>
-                                                            <input type="password">
+                                                            <input type="password" id="cnf_password">
                                                         </div>
+                                                        <div id="err_msg_show"></div>
                                                     </div>
                                                 </div>
                                                 <div class="billing-back-btn">
@@ -118,7 +120,7 @@ if ($result_user = $connection->query($sql_user)) {
                                                         <a href="#"><i class="ion-arrow-up-c"></i> back</a>
                                                     </div>
                                                     <div class="billing-btn">
-                                                        <button type="submit">Continue</button>
+                                                        <button type="submit" id="change_password_save">Save</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -184,24 +186,82 @@ if ($result_user = $connection->query($sql_user)) {
    }
 }
 ?>
-?>
+
 <?php include "include/footer.php" ?>
 
+<!-- Script for save personal info -->
 <script type="text/javascript">
-    personalInfo(){
-        
-        $.ajax({
-        type: "POST",
-        url: "ajaxphp/personal_info.php",
-        data:{
-             fname : $("#first_name").val(),
-             lname : $("#last_name").val(),
-             email : $("#email").val(),
-             mobile : $("#mobile_no").val(),
-        },
-        success: function(data){
-            $("#pinfo").html("<p>You Personal Info Updated Successfully</p>");
-        }
+    $(document).ready(function(){
+        $("#personal_info_save").click(function(){
+             $.ajax({
+            type: "POST",
+            url: "ajax/personal_info.php",
+            data:{
+                u_id : $("#user_id").val(),
+                fname : $("#first_name").val(),
+                lname : $("#last_name").val(),
+                email : $("#email").val(),
+                mobile : $("#mobile_no").val(),
+            },
+            success: function(data){
+                console.log(data);
+                $("#pinfo").html("<p class='alert alert-success'>You Personal Info Updated Successfully</p>");
+            },
+            });
+        })
+    })      
+
+</script>
+
+<!-- script for change password -->
+
+<script type="text/javascript">
+     $(document).ready(function(){
+        $("#change_password_save").click(function(){
+           var u_id = $("#user_id").val();
+           var current_password = $("#current_password").val();
+           var password = $("#password").val();
+           var cnf_password = $("#cnf_password").val();
+           if (u_id == null || u_id == '') {
+                 $("#pinfo").html("<p class='alert alert-danger'>Please reload page and fill the form properly </p>");
+           }else if(current_password == null || current_password == ''){
+                alert(current_password);
+                $( "#current_password" ).focus();
+                $("#pinfo").html("<p class='alert alert-danger'>Please reload page and fill the form properly </p>");
+           }else if(password==null || password == ''){
+                $( "#password" ).focus();
+                $("#pinfo").html("<p class='alert alert-danger'>Please reload page and fill the form properly </p>");
+           }else if(cnf_password==null || cnf_password==''){
+                 $( "#cnf_password" ).focus();
+                $("#pinfo").html("<p class='alert alert-danger'>Please reload page and fill the form properly </p>");
+           }
+          else{
+                if (cnf_password != password) {
+                $("#cnf_password").val('');
+                $("#err_msg_show").html("<p class='alert alert-danger' role='alert'>OOPS! Confirm Password Not Mached</p>");
+                }else{
+                    $.ajax({
+                    type: "POST",
+                    url: "ajax/change_password.php",
+                    data:{
+                        u_id : u_id,
+                        current_password : current_password,
+                        password : password,
+                        cnf_password : cnf_password,
+                    },
+                    success: function(data){
+                        console.log(data);
+                        if (data == 1) {
+                            $("#pinfo").html("<p class='alert alert-success'>You Personal Info Updated Successfully</p>");
+                        }else{
+                             $("#pinfo").html("<p class='alert alert-danger'>Something Went Wrong Please try again</p>");
+                        }
+                        
+                    },
+                    });
+                }
+           }
+           
         });
-    }
+    })
 </script>
