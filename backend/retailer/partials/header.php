@@ -190,7 +190,7 @@
 
                             <!-- <a class="nav-link" href="#"><i class="fa fa-cog"></i> Settings</a> -->
 
-                            <a class="nav-link" href="../user_login_system/user_logout.php"><i class="fa fa-power-off"></i> Logout</a>
+                            <a class="nav-link" href="../../website/user_login_system/user_logout.php"><i class="fa fa-power-off"></i> Logout</a>
                         </div>
                     </div>
 
