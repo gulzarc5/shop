@@ -15,50 +15,50 @@ include_once "../backend/admin/databaseConnection/connection.php";
             </div>
         </div>
 		<!-- Breadcrumb Area End -->
-        <div class="login-register-area ptb-100">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-10 col-md-12 ml-auto mr-auto">
-                        <div class="login-register-wrapper">
-                            <div class="login-register-tab-list nav">
-                                <a class="active" data-toggle="tab" href="#lg1">
-                                    <h4> Partner Registration </h4>
-                                </a>
-                            </div>
-                            <?php
-                                if(!empty($_GET['msg'])){
-                                    $val = $_GET['msg'];
-                                    // echo $val;
-                                    if ($val == 1) {
-                                        print "<div class='alert alert-danger' role='alert'>Username or Password worng</div>";
-                                    } 
-                                    if ($val == 2) {
-                                        print "<div class='alert alert-danger' role='alert'>Password Not Matched</div>";
-                                    }                       
-                                }
-                              ?>    
-                            <div class="tab-content">
-                                <div id="lg1" class="tab-pane active">
-                                    <div class="login-form-container">
-                                        <div class="login-register-form">
-                                           <form action="serverScripts/retailor_registration.php" method="post" class="form-horizontal">
-        <div class="card">
+<div class="login-register-area ptb-100">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-10 col-md-12 ml-auto mr-auto">
+        <div class="login-register-wrapper">
+          <div class="login-register-tab-list nav">
+            <a class="active" data-toggle="tab" href="#lg1">
+              <h4> Partner Registration </h4>
+            </a>
+          </div>
+          <!-- PRINTING ERROR MESAGE -->
           <?php
-                if(!empty($_GET['msg'])){
-                    $val = $_GET['msg'];
-                        // echo $val;
-                    if ($val == 1) {
-                        print "<div class='alert alert-success' role='alert'>City Added Successfully</div>";
-                    }
-                    if ($val == 2) {
-                        print "<div class='alert alert-danger' role='alert'>Something Went Wrong Please Try Again</div>";
-                    }
-                    if ($val == 3) {
-                        print "<div class='alert alert-info' role='alert'>Please Fill the Form Properly</div>";
-                    }                       
-                }
-            ?>   
-          <div class="card">
+            if(!empty($_GET['msg'])){
+              $val = $_GET['msg'];
+              if ($val == 1) {
+                print "<div class='alert alert-danger' role='alert'>Username or Password worng</div>";
+              } 
+              if ($val == 2) {
+                print "<div class='alert alert-danger' role='alert'>Password Not Matched</div>";
+              }                       
+            }
+          ?>    
+          <div class="tab-content">
+            <div id="lg1" class="tab-pane active">
+              <div class="login-form-container">
+                <div class="login-register-form">
+                  <form action="serverScripts/retailor_registration.php" method="post" class="form-horizontal">
+                    <div class="card">
+                      <?php
+                        if(!empty($_GET['msg'])){
+                            $val = $_GET['msg'];
+                                // echo $val;
+                            if ($val == 1) {
+                                print "<div class='alert alert-success' role='alert'>City Added Successfully</div>";
+                            }
+                            if ($val == 2) {
+                                print "<div class='alert alert-danger' role='alert'>Something Went Wrong Please Try Again</div>";
+                            }
+                            if ($val == 3) {
+                                print "<div class='alert alert-info' role='alert'>Please Fill the Form Properly</div>";
+                            }                       
+                        }
+                      ?>   
+                      <div class="card">
             <div class="card-header">
                 <strong>Personal </strong> Details
             </div>
@@ -319,3 +319,24 @@ include_once "../backend/admin/databaseConnection/connection.php";
         </div>
         <!-- Footer style Start -->
 <?php include "include/footer.php" ?>
+<!-- <script src="../../assets/datatable/jquery-3.3.1.js"></script> -->
+<script>
+    // AJAX call for autocomplete 
+$(document).ready(function(){
+    $("#state").change(function(){
+        // alert($(this).val());
+        $.ajax({
+        type: "POST",
+        url: "ajax/city_fetch.php",
+        data:'state='+$(this).val(),
+        success: function(data){
+            // console.log(data);
+            // $("#suggesstion-box").show();
+            $("#city").html(data);
+            // $("#trnto").css("background","#FFF");
+        }
+        });
+    });
+});
+
+</script>
