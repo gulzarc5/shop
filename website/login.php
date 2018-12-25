@@ -1,6 +1,6 @@
 <?php include "include/header.php"; ?>
         <!-- Breadcrumb Area Start -->
-        <div class="breadcrumb-area bg-image-8 ptb-150">
+        <div class="breadcrumb-area bg-image-12 ptb-150">
             <div class="container">
                 <div class="breadcrumb-content text-center">
 					<h3>PARTNER LOGIN</h3>
