@@ -38,7 +38,7 @@
                                 <div id="lg1" class="tab-pane active">
                                     <div class="login-form-container">
                                         <div class="login-register-form">
-                                            <form action="user_login_system/user_login_check.php" method="post">
+                                            <form action="user_login_system/retailer_login_check.php" method="post">
                                                 <select class="form-control" name="membership" required>
                                                     <option value="">Please Select User Type</option>
                                                     <option value="3">Retailer</option>

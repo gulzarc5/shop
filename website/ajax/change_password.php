@@ -5,29 +5,29 @@ if (!empty($_POST['u_id']) && !empty($_POST['current_password']) && !empty($_POS
 	$u_id = $connection->real_escape_string(mysql_entities_fix_string($_POST['u_id']));
 	$current_password = $connection->real_escape_string(mysql_entities_fix_string($_POST['current_password']));
 	$cnf_password = $connection->real_escape_string(mysql_entities_fix_string($_POST['cnf_password']));
-	$password = password_hash($current_password, PASSWORD_BCRYPT);
+	$password = password_hash($cnf_password, PASSWORD_BCRYPT);
 	$sql_user ="SELECT * FROM `users` WHERE `user_id` = '$u_id'";
 	if ($result_user=$connection->query($sql_user)){
 		if($result_user->num_rows == 0){
 			echo "2";
 		}else{
 			$user=$result_user->fetch_assoc();
-            if (password_verify($password,$user['password'])){
-            	$sql = "UPDATE `users` SET `first_name`='$_POST[fname]',`last_name`='$_POST[lname]',`mobile_no`='$_POST[mobile]' WHERE `user_id` = '$_POST[u_id]'";
+            if (password_verify($current_password,$user['password'])){
+            	$sql = "UPDATE `users` SET `password`='$password' WHERE `user_id` = '$_POST[u_id]'";
 				if ($result = $connection->query($sql)) {
 					echo "1";
 				}else{
 					echo "2";
 				}
             }else{
-            	echo "2";
+            	echo "3";
             }
 		}
 	}else{
-		echo "2";
+		echo "4";
 	}
 }else{
-	echo "2";
+	echo "5";
 }
 
 
