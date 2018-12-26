@@ -1,9 +1,9 @@
-<?php include "serverScripts/session_check.php" ?>
-
-
+<?php
+    include "wseller_session_check.php";
+?>
 <!doctype html>
-<html class="no-js" lang="en">
 
+<html class="no-js" lang="en">
 
 <head>
     <meta charset="utf-8">
@@ -44,8 +44,8 @@
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-menu" aria-controls="main-menu" aria-expanded="false" aria-label="Toggle navigation">
                     <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand" href="./deshboard.php"><img src="../partials/logo/logo.png" alt="Logo"></a>
-                <a class="navbar-brand hidden" href="./deshboard.php"><img src="../partials/logo/logo.png" alt="Logo"></a>
+                <a class="navbar-brand" href="./"><img src="../../images/logo.png" alt="Logo"></a>
+                <a class="navbar-brand hidden" href="./"><img src="../../images/logo2.png" alt="Logo"></a>
             </div>
 
             <div id="main-menu" class="main-menu collapse navbar-collapse">
@@ -53,37 +53,30 @@
                     <li class="active">
                         <a href="deshboard.php"> <i class="menu-icon fa fa-dashboard"></i>Dashboard </a>
                     </li>
+                  <!--   <h3 class="menu-title">UI elements</h3> /.menu-title -->
                     <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-laptop"></i>New Registration</a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-laptop"></i>Products</a>
                         <ul class="sub-menu children dropdown-menu">
-                            <li><i class="fa fa-puzzle-piece"></i><a href="wholeseller_registration_form.php">Whole Seller</a></li>
-                            <li><i class="fa fa-id-badge"></i><a href="../admin/retailor_registration_form.php">Retailer</a></li>                       
+                            <li><i class="fa fa-puzzle-piece"></i><a href="retailer_product_show.php">Product List</a></li>
+                            <li><i class="fa fa-id-badge"></i><a href="add_product_by_retailor_form.php">Add New Product</a></li>                       
                         </ul>
                     </li>
                     <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>Configurations</a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>Orders</a>
                         <ul class="sub-menu children dropdown-menu">
-                            <li><i class="fa fa-table"></i><a href="../admin/add_region_form.php">Add Region</a></li>
-                            <li><i class="fa fa-table"></i><a href="../admin/add_designation_form.php">Add Designation</a></li>
-                            <li><i class="fa fa-table"></i><a href="../admin/add_category_form.php">Add Category</a></li>
-                            <li><i class="fa fa-table"></i><a href="../admin/add_state_form.php">Add State</a></li>
-                            <li><i class="fa fa-table"></i><a href="../admin/add_city_form.php">Add City</a></li>
+                            <li><i class="fa fa-table"></i><a href="../admin/add_region_form.php">New Orders</a></li>
+                            <li><i class="fa fa-table"></i><a href="../admin/add_designation_form.php">Delivered Products</a></li>
                         </ul>
-                    </li>
+                    </li> 
+
                     <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-th"></i>Products</a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-laptop"></i>Settings</a>
                         <ul class="sub-menu children dropdown-menu">
-                            <li><i class="menu-icon fa fa-th"></i><a href="../admin/add_product_form.php">Add New Product</a></li>
-                            <li><i class="menu-icon fa fa-th"></i><a href="forms-advanced.html">List of Products</a></li>
+                            <li><i class="fa fa-puzzle-piece"></i><a href="wseller_profile_show.php"">My Profile</a></li>
+                            <li><i class="fa fa-id-badge"></i><a href="wseller_bank_detail_show.php">My Bank details</a></li>                       
                         </ul>
-                    </li>
-                    <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-th"></i>Orders</a>
-                        <ul class="sub-menu children dropdown-menu">
-                            <li><i class="menu-icon fa fa-th"></i><a href="../admin/add_product_form.php">Order List</a></li>
-                            <li><i class="menu-icon fa fa-th"></i><a href="forms-advanced.html">Canceled Orders</a></li>
-                        </ul>
-                    </li>
+                    </li>         
+                    
                 </ul>
             </div><!-- /.navbar-collapse -->
         </nav>
@@ -139,18 +132,40 @@
                     <div class="user-area dropdown float-right">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <img class="user-avatar rounded-circle" src="../../images/admin.png" alt="User Avatar1">
+                            <!-- <i class="fa fa-circle"></i> -->
                         </a>
 
                         <div class="user-menu dropdown-menu">
-                            <a class="nav-link" href="#"><i class="fa fa-user"></i> My Profile</a>
+                            <a class="nav-link" href="retailor_profile_show.php"><i class="fa fa-user"></i> My Profile</a>
 
                             <a class="nav-link" href="#"><i class="fa fa-user"></i> Notifications <span class="count">13</span></a>
 
-                            <a class="nav-link" href="#"><i class="fa fa-cog"></i> Settings</a>
+                            <!-- <a class="nav-link" href="#"><i class="fa fa-cog"></i> Settings</a> -->
 
-                            <a class="nav-link" href="serverScripts/logout.php"><i class="fa fa-power-off"></i> Logout</a>
+                            <a class="nav-link" href="../../website/user_login_system/user_logout.php"><i class="fa fa-power-off"></i> Logout</a>
                         </div>
                     </div>
+
+                    <div class="language-select dropdown" id="language-select">
+                        <a class="dropdown-toggle" href="#" data-toggle="dropdown"  id="language" aria-haspopup="true" aria-expanded="true">
+                            <i class="flag-icon flag-icon-us"></i>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="language">
+                            <div class="dropdown-item">
+                                <span class="flag-icon flag-icon-fr"></span>
+                            </div>
+                            <div class="dropdown-item">
+                                <i class="flag-icon flag-icon-es"></i>
+                            </div>
+                            <div class="dropdown-item">
+                                <i class="flag-icon flag-icon-us"></i>
+                            </div>
+                            <div class="dropdown-item">
+                                <i class="flag-icon flag-icon-it"></i>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
