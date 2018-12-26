@@ -21,6 +21,23 @@ if(isset($_POST['Simple_user_login']) && !empty($_POST['email']) && !empty($_POS
                 $_SESSION['user_id'] = $user['user_id'];
                 $_SESSION['user_type'] = $user['user_type_id'];
                 $_SESSION['name'] = $user['first_name']." ".$user['middle_name']." ".$user['last_name'];
+
+                if (!empty($_SESSION['cart'])) {
+                    foreach($_SESSION['cart'] as $product_id=>$quantity){
+                        $sql_cart_check = "SELECT * FROM `shopping_cart` WHERE `product_id` = '$product_id'";
+                        $product_count = 0 ;
+                        if ($res_cart_check = $connection->query($sql_cart_check)) {
+                            $product_count= $res_cart_check->num_rows;
+                        }
+
+                        if ($product_count < 1){
+                            $sql_cart_insert = "INSERT INTO `shopping_cart`(`cart_id`, `user_id`, `product_id`, `quantity`) VALUES (null,'$_SESSION[user_id]','$product_id','$quantity')";
+                            if ($res_cart_insert = $connection->query($sql_cart_insert)) {
+                            } 
+                        }                       
+                    }
+                    unset($_SESSION['cart']);
+                }
                 // header("location:../../backend/retailer/deshboard.php");
                 header("location:../my-account.php");
             }

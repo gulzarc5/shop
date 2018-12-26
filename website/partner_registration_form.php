@@ -26,38 +26,27 @@ include_once "../backend/admin/databaseConnection/connection.php";
             </a>
           </div>
           <!-- PRINTING ERROR MESAGE -->
+          <!-- <div class="card"> -->
           <?php
             if(!empty($_GET['msg'])){
-              $val = $_GET['msg'];
-              if ($val == 1) {
-                print "<div class='alert alert-danger' role='alert'>Username or Password worng</div>";
-              } 
-              if ($val == 2) {
-                print "<div class='alert alert-danger' role='alert'>Password Not Matched</div>";
-              }                       
-            }
-          ?>    
+                $val = $_GET['msg'];
+                // echo $val;
+                if ($val == 1) {
+                  print "<div class='alert alert-success' role='alert'>Congradulations.. Registration Successfull &emsp;<a href='login.php' class='btn btn-success'>Click Here To Login</a></div>";
+                }
+                if ($val == 2) {
+                  print "<div class='alert alert-danger' role='alert'>Something Went Wrong Please Try Again</div>";
+                }
+                if ($val == 3) {
+                  print "<div class='alert alert-info' role='alert'>Email Id Exists Please Try Another Email</div>";
+                }                       
+              }
+            ?>  
           <div class="tab-content">
             <div id="lg1" class="tab-pane active">
               <div class="login-form-container">
                 <div class="login-register-form">
-                  <form action="partner_registration/partner_registration.php" method="post" class="form-horizontal">
-                    <!-- <div class="card"> -->
-                      <?php
-                        if(!empty($_GET['msg'])){
-                            $val = $_GET['msg'];
-                                // echo $val;
-                            if ($val == 1) {
-                                print "<div class='alert alert-success' role='alert'>City Added Successfully</div>";
-                            }
-                            if ($val == 2) {
-                                print "<div class='alert alert-danger' role='alert'>Something Went Wrong Please Try Again</div>";
-                            }
-                            if ($val == 3) {
-                                print "<div class='alert alert-info' role='alert'>Please Fill the Form Properly</div>";
-                            }                       
-                        }
-                      ?>  
+                  <form action="partner_registration/partner_registration.php" method="post" class="form-horizontal">  
                         <div class="card">
                           <div class="card-header">
                               <strong>Registration </strong> Type
@@ -176,13 +165,13 @@ include_once "../backend/admin/databaseConnection/connection.php";
                             </div>
 
                             <div class="row form-group">
-                              <div class="col col-md-3"><label for="password" class=" form-control-label"> Password </label></div>
-                              <div class="col-12 col-md-9"><input type="text" name="password" placeholder="Enter Password .." class="form-control"></div>
+                              <div class="col col-md-3"><label for="password" class=" form-control-label"> Password <span class="redstar"> * </span></label></div>
+                              <div class="col-12 col-md-9"><input type="password" name="password" placeholder="Enter Password .." class="form-control" required> </div>
                             </div>
 
                             <div class="row form-group">
-                              <div class="col col-md-3"><label for="confirm_password" class=" form-control-label"> Confirm Password</label></div>
-                              <div class="col-12 col-md-9"><input type="text" name="confirm_password" placeholder="Enter Confirm Password .." class="form-control"></div>
+                              <div class="col col-md-3"><label for="confirm_password" class=" form-control-label"> Confirm Password <span class="redstar"> * </span></label></div>
+                              <div class="col-12 col-md-9"><input type="password" name="confirm_password" placeholder="Enter Confirm Password .." class="form-control" required></div>
                             </div>
 
                             <div class="row form-group">
@@ -225,7 +214,7 @@ include_once "../backend/admin/databaseConnection/connection.php";
                           <div class="row form-group">
                             <div class="col col-md-3"><label for="gstin_category" class=" form-control-label">GSTIN Category</label></div>
                             <div class="col-12 col-md-9">
-                              <select name="gstin_category" id="gstin_category" class="form-control" required>
+                              <select name="gstin_category" id="gstin_category" class="form-control">
                                 <option value="" selected>Select GSTIN Category...</option>
                                   <?php
                                     $sql ="SELECT * FROM `gstin_category`";
