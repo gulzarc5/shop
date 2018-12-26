@@ -1,5 +1,6 @@
 <?php 
-    include 'include/header.php'
+    include 'include/header.php';
+    include_once "../backend/admin/databaseConnection/connection.php";  
 ?>
 
 
@@ -195,7 +196,60 @@
                 <div class="tab-content jump">
                     <div class="tab-pane active">
                         <div class="featured-product-active owl-carousel product-nav">
-                            <div class="product-wrapper-single">
+                        	<?php
+                        		$sql_products = "SELECT * FROM `products` ORDER BY `product_id` DESC limit 8";
+                        		if ($res_products = $connection->query($sql_products) ) {
+                        			$count = 1;
+
+                        			while($products = $res_products->fetch_assoc()){
+                        				if (fmod($count,2) != 0 ) {
+                        					print "<div class='product-wrapper-single'>";
+
+                        				}
+                        		print '<div class="product-wrapper mb-30">
+									<div class="product-img">
+										<a href="product-details.php">
+											<img alt="" src="../backend/uploads/product_image/'.$products['product_main_image'].'" height="270">
+										</a>
+										<div class="product-action">
+											<a class="action-wishlist" href="#" title="Wishlist">
+												<i class="ion-android-favorite-outline"></i>
+											</a>
+											<a class="action-cart" href="#" title="Add To Cart">
+												<i class="ion-ios-shuffle-strong"></i>
+											</a>
+											<a class="action-compare" href="#" data-target="#exampleModal" data-toggle="modal" title="Quick View">
+												<i class="ion-ios-search-strong"></i>
+											</a>
+										</div>
+									</div>
+									<div class="product-content text-left">
+										<div class="product-hover-style">
+											<div class="product-title">
+												<h4>
+													<a href="product-details.php">'.$products['title'].'</a>
+												</h4>
+											</div>
+											<div class="cart-hover">
+												<h4><a href="backend/cart/add_to_cart.php?product_id='.$products['product_id'].'& quantity=1">+ Add to cart</a></h4>
+											</div>
+										</div>
+										<div class="product-price-wrapper">
+											<span><i class="fa fa-rupee"></i> '.$products['rate'].'.00 </span>
+											<span class="product-price-old"></span>
+										</div>
+									</div>
+								</div>
+								';
+                        				if (fmod($count,2) == 0 ) {
+                        					print "</div>";
+                        				}
+                        				$count++;
+                        			}
+
+                        		}
+                        	?>
+                           <!--  <div class="product-wrapper-single">
 								<div class="product-wrapper mb-30">
 									<div class="product-img">
 										<a href="product-details.php">
@@ -266,8 +320,8 @@
 										</div>
 									</div>
 								</div>
-                            </div>
-                            <div class="product-wrapper-single">
+                            </div> -->
+                           <!--  <div class="product-wrapper-single">
 								<div class="product-wrapper mb-30">
 									<div class="product-img">
 										<a href="product-details.php">
@@ -337,8 +391,8 @@
 										</div>
 									</div>
 								</div>
-                            </div>
-                            <div class="product-wrapper-single">
+                            </div> -->
+                           <!--  <div class="product-wrapper-single">
 								<div class="product-wrapper mb-30">
 									<div class="product-img">
 										<a href="product-details.php">
@@ -408,8 +462,8 @@
 										</div>
 									</div>
 								</div>
-                            </div>
-                            <div class="product-wrapper-single">
+                            </div> -->
+                          <!--   <div class="product-wrapper-single">
 								<div class="product-wrapper mb-30">
 									<div class="product-img">
 										<a href="product-details.php">
@@ -479,8 +533,8 @@
 										</div>
 									</div>
 								</div>
-                            </div>
-                            <div class="product-wrapper-single">
+                            </div> -->
+                          <!--   <div class="product-wrapper-single">
 								<div class="product-wrapper mb-30">
 									<div class="product-img">
 										<a href="product-details.php">
@@ -551,7 +605,7 @@
 										</div>
 									</div>
 								</div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>

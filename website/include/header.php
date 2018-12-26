@@ -1,4 +1,7 @@
-<?php session_start(); ?>
+<?php 
+session_start(); 
+include_once "../backend/admin/databaseConnection/connection.php";
+?>
 <!doctype html>
 <html class="no-js" lang="zxx">
     
@@ -201,38 +204,69 @@
                                         </div>
                                     </a>
                                     <div class="shopping-cart-content" >
-                                        <ul>
-                                            <li class="single-shopping-cart" style="border-bottom: 1px solid #ebebeb;">
-                                                <div class="shopping-cart-img">
-                                                    <a href="#"><img alt="" src="assets/img/cart/cart-1.jpg"></a>
-                                                </div>
-                                                <div class="shopping-cart-title">
-                                                    <h4><a href="#">Phantom Remote </a></h4>
-                                                    <h6>Qty: 02</h6>
-                                                    <span>$260.00</span>
-                                                </div>
-                                                <div class="shopping-cart-delete">
-                                                    <a href="#"><i class="ion ion-close"></i></a>
-                                                </div>
-                                            </li>
-                                            <li class="single-shopping-cart" style="border-bottom: 1px solid #ebebeb;">
-                                                <div class="shopping-cart-img">
-                                                    <a href="#"><img alt="" src="assets/img/cart/cart-2.jpg"></a>
-                                                </div>
-                                                <div class="shopping-cart-title">
-                                                    <h4><a href="#">Phantom Remote</a></h4>
-                                                    <h6>Qty: 02</h6>
-                                                    <span>$260.00</span>
-                                                </div>
-                                                <div class="shopping-cart-delete">
-                                                    <a href="#"><i class="ion ion-close"></i></a>
-                                                </div>
-                                            </li>
-                                        </ul>
+                                        <?php
+                                        $sub_total_cart = 0;
+                                            if (!empty($_SESSION['cart'])) {
+                                                foreach($_SESSION['cart'] as $product_id=>$quantity){
+                                                    $sql_product = "SELECT * FROM `products` WHERE `product_id`='$product_id'";
+                                                    if ($product_res = $connection->query( $sql_product)) {
+                                                        $product = $product_res->fetch_assoc();
+                                                    print '<ul>
+                                                        <li class="single-shopping-cart" style="border-bottom: 1px solid #ebebeb;">
+                                                            <div class="shopping-cart-img">
+                                                                <a href="#"><img alt="" src="../backend/uploads/product_image/'.$product['product_main_image'].'" height="50"></a>
+                                                            </div>
+                                                            <div class="shopping-cart-title">
+                                                                <h4><a href="#">'.$product['title'].' </a></h4>
+                                                                <h6>'.$quantity.'</h6>
+                                                                <span><i class="fa fa-rupee"></i>'.$product['rate'].'</span>
+                                                            </div>
+                                                            <div class="shopping-cart-delete">
+                                                                <a href="backend/cart/remove_from_cart.php?pid='.$product_id.'&qtty=1&page=index"><i class="ion ion-close"></i></a>
+                                                            </div>
+                                                        </li>
+                                                    </ul>';
+                                                    $sub_total_cart = $sub_total_cart +$product['rate'];
+                                                    }
+                                                }
+                                            }elseif (!empty($_SESSION['user_id'])){
+                                                $sql_cart_view = "SELECT * FROM `shopping_cart` WHERE `user_id`='$_SESSION[user_id]'";
+                                                if ($cart_res = $connection->query($sql_cart_view)) {
+                                                    while($cart = $cart_res->fetch_assoc()){
+
+                                                    $sql_product_cart = "SELECT * FROM `products` WHERE `product_id`='$cart[product_id]'";
+                                                    if ($res_product = $connection->query($sql_product_cart)) {
+                                                        $product_cart = $res_product->fetch_assoc();
+                                                        print '<ul>
+                                                        <li class="single-shopping-cart" style="border-bottom: 1px solid #ebebeb;">
+                                                            <div class="shopping-cart-img">
+                                                                <a href="#"><img alt="" src="../backend/uploads/product_image/'.$product_cart['product_main_image'].'" height="50"></a>
+                                                            </div>
+                                                            <div class="shopping-cart-title">
+                                                                <h4><a href="#">'.$product_cart['title'].' </a></h4>
+                                                                <h6>'.$cart['quantity'].'</h6>
+                                                                <span><i class="fa fa-rupee"></i>'.$product_cart['rate'].'</span>
+                                                            </div>
+                                                            <div class="shopping-cart-delete">
+                                                                <a href="backend/cart/remove_from_cart.php?pid='.$cart['product_id'].'&qtty=1&page=index"><i class="ion ion-close"></i></a>
+                                                            </div>
+                                                        </li>
+                                                    </ul>';
+                                                    $sub_total_cart = $sub_total_cart +$product_cart['rate'];
+                                                    }
+
+                                                }
+                                            }
+                                        }
+
+                                        ?>
+                                        
                                         <div class="shopping-cart-total">
-                                            <h4>Shipping : <span>$20.00</span></h4>
-                                            <h4>Total : <span class="shop-total">$260.00</span></h4>
+                                            <h4>Shipping : <span><i class="fa fa-rupee"></i>20.00</span></h4>
+                                            <h4>Total : <span class="shop-total"><i class="fa fa-rupee"></i><?php echo $sub_total_cart; ?></span></h4>
                                         </div>
+
+
                                         <div class="shopping-cart-btn">
                                             <a href="cart-page.php">view cart</a>
                                             <a href="checkout.php">checkout</a>
