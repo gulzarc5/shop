@@ -31,6 +31,19 @@
         <script src="assets/js/vendor/modernizr-2.8.3.min.js"></script>
 
 
+
+  
+    
+    
+   
+   
+  
+
+    <!-- Custom Style -->
+   <!--  <link rel="stylesheet" type="text/css" href="assets/css1/style.min.css"> -->
+   
+
+
 </head>
     <body>
         <!-- header start -->

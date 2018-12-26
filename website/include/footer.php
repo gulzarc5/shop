@@ -188,13 +188,18 @@
         <script src="assets/js/isotope.pkgd.min.js"></script>
         <script src="assets/js/ajax-mail.js"></script>
         <script src="assets/js/owl.carousel.min.js"></script>
-        
         <script src="assets/js/plugins.js"></script>
         <script src="assets/js/main.js"></script>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBmGmeot5jcjdaJTvfCmQPfzeoG_pABeWo"></script>
 
 
         
+   
+    <script type="text/javascript" src="assets/js1/sticky.js"></script>
+    <script type="text/javascript" src="assets/js1/easing.min.js"></script>
+    <script type="text/javascript" src="assets/js1/magnific-popup.min.js"></script>
+    <script type="text/javascript" src="assets/js1/wow-1.3.0.min.js"></script>
+    <script type="text/javascript" src="assets/js1/active.js"></script>
 
         
 

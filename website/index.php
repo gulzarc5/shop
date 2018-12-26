@@ -14,186 +14,143 @@
         </div>
 		<!-- Slider End -->
 
-		<!-- Product Area Start -->
-        <div class="product-area bg-image-1 pt-100 pb-95">
-            <div class="container">
-                <div class="featured-product-active hot-flower owl-carousel product-nav">
-                    <div class="product-wrapper">
-                        <div class="product-img">
-                            <a href="product-details.php">
-                                <img alt="" src="assets/img/product/product-1.jpg">
-                            </a>
-                            <span>-20%</span>
-                            <div class="product-action">
-                                <a class="action-wishlist" href="#" title="Wishlist">
-                                    <i class="ion-android-favorite-outline"></i>
-                                </a>
-                                <a class="action-cart" href="#" title="Add To Cart">
-                                    <i class="ion-ios-shuffle-strong"></i>
-                                </a>
-                                <a class="action-compare" href="#" data-target="#exampleModal" data-toggle="modal" title="Quick View">
-                                    <i class="ion-ios-search-strong"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="product-content text-left">
-							<div class="product-hover-style">
-								<div class="product-title">
-									<h4>
-										<a href="product-details.php">Nature Close Tea</a>
-									</h4>
-								</div>
-								<div class="cart-hover">
-									<h4><a href="product-details.php">+ Add to cart</a></h4>
-								</div>
-							</div>
-                            <div class="product-price-wrapper">
-                                <span>$100.00 -</span>
-                                <span class="product-price-old">$120.00 </span>
-                            </div>
-                        </div>
+        <section class="section-padding" id="featurs">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <!-- Start Section Header Here -->
+                    <div  style="float: right" >
+                        <h2 class="section-title" style="margin-top: 50px;">Our Collections</h2>
+                        
                     </div>
-                    <div class="product-wrapper">
-                        <div class="product-img">
-                            <a href="product-details.php">
-                                <img alt="" src="assets/img/product/product-2.jpg">
-                            </a>
-                            <div class="product-action">
-                                <a class="action-wishlist" href="#" title="Wishlist">
-                                    <i class="ion-android-favorite-outline"></i>
-                                </a>
-                                <a class="action-cart" href="#" title="Add To Cart">
-                                    <i class="ion-ios-shuffle-strong"></i>
-                                </a>
-                                <a class="action-compare" href="#" data-target="#exampleModal" data-toggle="modal" title="Quick View">
-                                    <i class="ion-ios-search-strong"></i>
-                                </a>
+                    <!-- Ends Section Header Here -->
+                </div>
+            </div>
+            <div class="row" style="margin-top: 30px;">
+                <div class="col-md-12">
+                    <!-- Portfolio Navigation Start Here -->
+                    <ul class="featurs-navigation">
+                        <li class="active" data-filter="*">All</li>
+                        <li class="" data-filter=".assamtea">Assam Teas</li>
+                        <li class="" data-filter=".darjeelingtea">Darjeeling Teas</li>
+                        <li class="" data-filter=".barrakvalleytea">Barrak Valley Teas</li>
+                    </ul>
+                    <!-- Portfolio Navigation Ends Here -->
+
+                    <!-- Portfolio List Start Here -->
+                    <div class="row portfolio-list">
+                        <!-- Start Single Featurs Box Here -->
+                        <div class="col-md-3 col-sm-6 col-xs-12 assamtea ">
+                            <div class="shop-cart-box">
+                                <div class="cart-price">
+                                    <img src="assets/img/featurs/a2.jpg" alt="featurs product">
+                                  
+                                </div>
+                                
                             </div>
                         </div>
-                        <div class="product-content text-left">
-							<div class="product-hover-style">
-								<div class="product-title">
-									<h4>
-										<a href="product-details.php">Pink wave Cup</a>
-									</h4>
-								</div>
-								<div class="cart-hover">
-									<h4><a href="product-details.php">+ Add to cart</a></h4>
-								</div>
-							</div>
-                            <div class="product-price-wrapper">
-                                <span>$100.00 -</span>
-                                <span class="product-price-old">$120.00 </span>
+                        <!-- Start Single Featurs Box Here -->
+
+                        <!-- Start Single Featurs Box Here -->
+                        <div class="col-md-3 col-sm-6 col-xs-12 assamtea">
+                            <div class="shop-cart-box">
+                                <div class="cart-price">
+                                    <img src="assets/img/featurs/a1.jpg" alt="featurs product">
+                                </div>
                             </div>
                         </div>
+                        <!-- Start Single Featurs Box Here -->
+
+                        <!-- Start Single Featurs Box Here -->
+                        <div class="col-md-3 col-sm-6 col-xs-12 assamtea">
+                            <div class="shop-cart-box">
+                                <div class="cart-price">
+                                    <img src="assets/img/featurs/a3.jpg" alt="featurs product">
+                                    </div>
+                                </div>
+                        </div>
+                       
+                        <div class="col-md-3 col-sm-6 col-xs-12 assamtea">
+                            <div class="shop-cart-box">
+                                <div class="cart-price">
+                                    <img src="assets/img/featurs/a4.jpg" alt="featurs product">
+                                </div>
+                            </div>
+                        </div>
+
+                         <div class="col-md-3 col-sm-6 col-xs-12 darjeelingtea">
+                            <div class="shop-cart-box">
+                                <div class="cart-price">
+                                    <img src="assets/img/featurs/d1.jpg" alt="featurs product">
+                                </div>
+                            </div>
+                        </div>
+
+                         <div class="col-md-3 col-sm-6 col-xs-12 darjeelingtea">
+                            <div class="shop-cart-box">
+                                <div class="cart-price">
+                                    <img src="assets/img/featurs/d2.jpg" alt="featurs product">
+                                </div>
+                            </div>
+                        </div>
+
+                         <div class="col-md-3 col-sm-6 col-xs-12 darjeelingtea">
+                            <div class="shop-cart-box">
+                                <div class="cart-price">
+                                    <img src="assets/img/featurs/d3.jpg" alt="featurs product">
+                                </div>
+                            </div>
+                        </div>
+
+                         <div class="col-md-3 col-sm-6 col-xs-12 darjeelingtea">
+                            <div class="shop-cart-box">
+                                <div class="cart-price">
+                                    <img src="assets/img/featurs/d4.jpg" alt="featurs product">
+                                </div>
+                            </div>
+                        </div>
+
+                         <div class="col-md-3 col-sm-6 col-xs-12 barrakvalleytea">
+                            <div class="shop-cart-box">
+                                <div class="cart-price">
+                                    <img src="assets/img/featurs/b1.jpg" alt="featurs product">
+                                </div>
+                            </div>
+                        </div>
+
+                         <div class="col-md-3 col-sm-6 col-xs-12 barrakvalleytea">
+                            <div class="shop-cart-box">
+                                <div class="cart-price">
+                                    <img src="assets/img/featurs/b2.jpg" alt="featurs product">
+                                </div>
+                            </div>
+                        </div>
+
+                         <div class="col-md-3 col-sm-6 col-xs-12 barrakvalleytea">
+                            <div class="shop-cart-box">
+                                <div class="cart-price">
+                                    <img src="assets/img/featurs/b3.jpg" alt="featurs product">
+                                </div>
+                            </div>
+                        </div>
+
+                         <div class="col-md-3 col-sm-6 col-xs-12 barrakvalleytea">
+                            <div class="shop-cart-box">
+                                <div class="cart-price">
+                                    <img src="assets/img/featurs/b4.jpg" alt="featurs product">
+                                </div>
+                            </div>
+                        </div>
+
+                        
                     </div>
-                    <div class="product-wrapper">
-                        <div class="product-img">
-                            <a href="product-details.php">
-                                <img alt="" src="assets/img/product/product-3.jpg">
-                            </a>
-                            <span>-50%</span>
-                            <div class="product-action">
-                                <a class="action-wishlist" href="#" title="Wishlist">
-                                    <i class="ion-android-favorite-outline"></i>
-                                </a>
-                                <a class="action-cart" href="#" title="Add To Cart">
-                                    <i class="ion-ios-shuffle-strong"></i>
-                                </a>
-                                <a class="action-compare" href="#" data-target="#exampleModal" data-toggle="modal" title="Quick View">
-                                    <i class="ion-ios-search-strong"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="product-content text-left">
-							<div class="product-hover-style">
-								<div class="product-title">
-									<h4>
-										<a href="product-details.php">Tea and Chai</a>
-									</h4>
-								</div>
-								<div class="cart-hover">
-									<h4><a href="product-details.php">+ Add to cart</a></h4>
-								</div>
-							</div>
-                            <div class="product-price-wrapper">
-                                <span>$100.00 -</span>
-                                <span class="product-price-old">$120.00 </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product-wrapper">
-                        <div class="product-img">
-                            <a href="product-details.php">
-                                <img alt="" src="assets/img/product/product-4.jpg">
-                            </a>
-                            <div class="product-action">
-                                <a class="action-wishlist" href="#" title="Wishlist">
-                                    <i class="ion-android-favorite-outline"></i>
-                                </a>
-                                <a class="action-cart" href="#" title="Add To Cart">
-                                    <i class="ion-ios-shuffle-strong"></i>
-                                </a>
-                                <a class="action-compare" href="#" data-target="#exampleModal" data-toggle="modal" title="Quick View">
-                                    <i class="ion-ios-search-strong"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="product-content text-left">
-							<div class="product-hover-style">
-								<div class="product-title">
-									<h4>
-										<a href="product-details.php">Pearly Everlasting</a>
-									</h4>
-								</div>
-								<div class="cart-hover">
-									<h4><a href="product-details.php">+ Add to cart</a></h4>
-								</div>
-							</div>
-                            <div class="product-price-wrapper">
-                                <span>$100.00 -</span>
-                                <span class="product-price-old">$120.00 </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product-wrapper">
-                        <div class="product-img">
-                            <a href="product-details.php">
-                                <img alt="" src="assets/img/product/product-5.jpg">
-                            </a>
-                            <span>-30%</span>
-                            <div class="product-action">
-                                <a class="action-wishlist" href="#" title="Wishlist">
-                                    <i class="ion-android-favorite-outline"></i>
-                                </a>
-                                <a class="action-cart" href="#" title="Add To Cart">
-                                    <i class="ion-ios-shuffle-strong"></i>
-                                </a>
-                                <a class="action-compare" href="#" data-target="#exampleModal" data-toggle="modal" title="Quick View">
-                                    <i class="ion-ios-search-strong"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="product-content text-left">
-							<div class="product-hover-style">
-								<div class="product-title">
-									<h4>
-										<a href="product-details.php">Que herbal Tea</a>
-									</h4>
-								</div>
-								<div class="cart-hover">
-									<h4><a href="product-details.php">+ Add to cart</a></h4>
-								</div>
-							</div>
-                            <div class="product-price-wrapper">
-                                <span>$100.00 -</span>
-                                <span class="product-price-old">$120.00 </span>
-                            </div>
-                        </div>
-                    </div>
+                    <!-- Portfolio List Ends Here -->
                 </div>
             </div>
         </div>
+    </section>
+
+	
       
 		<!-- Banner Start -->
         <div class="banner-area pt-100 pb-70" style="background-image:url(assets/img/slider/s2.png);">
