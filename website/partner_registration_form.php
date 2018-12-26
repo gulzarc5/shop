@@ -165,10 +165,10 @@ include_once "../backend/admin/databaseConnection/connection.php";
                               <div class="col-12 col-md-9"><input type="text" name="mobile_number" placeholder="Enter Mobile Number.." class="form-control" required></div>
                             </div>
 
-               <div class="row form-group">
-                    <div class="col col-md-3"><label for="mobile_number_alternate" class=" form-control-label"> Mobile No.(Alternate )</label></div>
-                   <div class="col-12 col-md-9"><input type="text" name="mobile_number_alternate" placeholder="Enter Email.." class="form-control"></div>
-               </div>
+                           <div class="row form-group">
+                                <div class="col col-md-3"><label for="mobile_number_alternate" class=" form-control-label"> Mobile No.(Alternate )</label></div>
+                               <div class="col-12 col-md-9"><input type="text" name="mobile_number_alternate" placeholder="Enter Alternate Mobile Number.." class="form-control"></div>
+                           </div>
 
                             <div class="row form-group">
                                <div class="col col-md-3"><label for="email" class=" form-control-label"> Email <span class="redstar"> * </span></label></div>
