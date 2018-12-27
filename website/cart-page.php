@@ -18,7 +18,7 @@
                 <h3 class="page-title">Your cart items</h3>
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-12">
-                        <form action="#">
+<!--                         <form action="#"> -->
                             <div class="table-content table-responsive">
                                 <table>
                                     <thead>
@@ -34,13 +34,16 @@
                                     <tbody>
                                         <?php
                                             $sub_total_cart = 0;
+                                            $total_cart_session = 0;
                                             if (!empty($_SESSION['cart'])) {
+                                                $count = 501;
                                                 foreach($_SESSION['cart'] as $product_id=>$quantity){
                                                     $sql_product = "SELECT * FROM `products` WHERE `product_id`='$product_id'";
                                                     if ($product_res = $connection->query( $sql_product)) {
                                                         $product = $product_res->fetch_assoc();
-                                                        $sub_total_cart = $sub_total_cart +($product['rate'] * $quantity);
-                                                    print '<form><tr>
+                                                        $total_cart_session = $total_cart_session +($product['rate'] * $quantity);
+                                                        $sub_total_cart_session = $product['rate'] * $quantity;
+                                                    print '<form action="backend/cart/update_shopping_cart.php" method="post" id="'.$count.'"><tr>
                                             <td class="product-thumbnail">
                                                 <a href="#"><img alt="" src="../backend/uploads/product_image/'.$product['product_main_image'].'" height="50"></a>
                                             </td>
@@ -48,32 +51,35 @@
                                             <td class="product-price-cart"><span class="amount"><i class="fa fa-rupee"></i>'.$product['rate'].'.00</span></td>
                                             <td class="product-quantity">
                                                 <div class="pro-dec-cart">
-                                            <input type="hidden" name="product_id" value="">
-                                            <input type="hidden" name="product_id" value="">
+                                            <input type="hidden" name="product_id" value="'.$product_id.'">
                                         
-                                                    <input class="cart-plus-minus-box" type="text" value="'.$quantity.'" name="qtybutton">
+                                                    <input class="cart-plus-minus-box" type="text" value="'.$quantity.'" name="quantity">
                                                 </div>
                                             </td>
-                                            <td class="product-subtotal"><i class="fa fa-rupee"></i>'.$sub_total_cart.'</td>
+                                            <td class="product-subtotal"><i class="fa fa-rupee"></i>'.$sub_total_cart_session.'</td>
                                             <td class="product-remove">
-                                            <a href=""><i class="fa fa-check-circle-o" aria-hidden="true"></i></a>
-                                                <a href="backend/cart/update_shopping_cart.php?pid='.$product_id.'&qtty='.$quantity.'"><i class="fa fa-times"></i></a>
+                                            <a href="javascript:get('.$count.')"><i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                                            </a>
+                                            <a href="backend/cart/remove_from_cart.php?pid='.$product_id.'&qtty='.$quantity.'&page=cart"><i class="fa fa-times"></i></a>
                                            </td>
                                         </tr>
                                         </form>
                                         ';
                                                     }
+                                                    $count++;
                                                 }
-                                        }else{
+                                        }elseif(!empty($_SESSION['user_id'])){
                                              $sql_cart_view = "SELECT * FROM `shopping_cart` WHERE `user_id`='$_SESSION[user_id]'";
                                                 if ($cart_res = $connection->query($sql_cart_view)) {
+                                                    $count = 101;
                                                     while($cart = $cart_res->fetch_assoc()){
 
                                                     $sql_product_cart = "SELECT * FROM `products` WHERE `product_id`='$cart[product_id]'";
                                                     if ($res_product = $connection->query($sql_product_cart)) {
                                                         $product_cart = $res_product->fetch_assoc();
-                                                        $sub_total_cart = $sub_total_cart +($product_cart['rate'] * $cart['quantity']);
-                                                    print '<form><tr>
+                                                        $total_cart = $total_cart +($product_cart['rate'] * $cart['quantity']);
+                                                        $sub_total_cart = $product_cart['rate'] * $cart['quantity'];
+                                                    print '<form action="backend/cart/update_shopping_cart.php" method="post" id="'.$count.'"><tr>
                                             <td class="product-thumbnail">
                                                 <a href="#"><img alt="" src="../backend/uploads/product_image/'.$product_cart['product_main_image'].'" height="50"></a>
                                             </td>
@@ -81,22 +87,25 @@
                                             <td class="product-price-cart"><span class="amount"><i class="fa fa-rupee"></i>'.$product_cart['rate'].'.00</span></td>
                                             <td class="product-quantity">
                                                 <div class="pro-dec-cart">
-                                            <input type="hidden" name="product_id" value="">
-                                            <input type="hidden" name="product_id" value="">
-                                        
-                                                    <input class="cart-plus-minus-box" type="text" value="'.$cart['quantity'].'" name="qtybutton">
+                                            <input type="hidden" name="product_id" value="'.$cart['product_id'].'">                                 
+                                            <input class="cart-plus-minus-box" type="text" value="'.$cart['quantity'].'" name="quantity">
                                                 </div>
                                             </td>
                                             <td class="product-subtotal"><i class="fa fa-rupee"></i>'.$sub_total_cart.'</td>
                                             <td class="product-remove">
-                                            <a href=""><i class="fa fa-check-circle-o" aria-hidden="true"></i></a>
-                                                <a href="backend/cart/update_shopping_cart.php?pid='.$cart['product_id'].'&qtty='.$cart['quantity'].'"><i class="fa fa-times"></i></a>
+
+                                            <a href="javascript:get('.$count.')"><i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                                            </a>
+
+                                            <a href="backend/cart/remove_from_cart.php?pid='.$cart['product_id'].'&qtty='.$cart['quantity'].'&page=cart"><i class="fa fa-times"></i>
+                                            </a>
+
                                            </td>
                                         </tr>
                                         </form>
                                         '; 
                                                     }
-
+                                                    $count++;
                                                 }
                                             }
                                         }
@@ -119,7 +128,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </form>
+                        <!-- </form> -->
                         <div class="row">
                             <div class="col-lg-4 col-md-6">
                                <!--  <div class="cart-tax">
@@ -183,23 +192,41 @@
                                     <div class="title-wrap">
                                         <h4 class="cart-bottom-title section-bg-gary-cart">Cart Total</h4>
                                     </div>
-                                    <h5>Total Price <span><i class="fa fa-rupee"></i> <?php echo $sub_total_cart; ?>.00</span></h5>
-                                    <div class="total-shipping">
+                                    <h5>Total Price <span><i class="fa fa-rupee"></i> <?php 
+                                    if (!empty($_SESSION['user_id'])) {
+                                        echo $total_cart."2"; 
+                                    }elseif (!empty($_SESSION['cart'])) {
+                                       echo $total_cart_session; 
+                                    }
+                                    
+                                    ?>.00</span></h5>
+                                  <!--   <div class="total-shipping">
                                         <h5>Total shipping</h5>
                                         <ul>
                                             <li><input type="checkbox"> Standard <span>$20.00</span></li>
                                             <li><input type="checkbox"> Express <span>$30.00</span></li>
                                         </ul>
-                                    </div>
+                                    </div> -->
                                     <h5>Added GST 5% <span>
                                         <i class="fa fa-rupee"></i> 
                                         <?php
-                                        $gst = ($sub_total_cart/100)*5;
-                                         echo $gst; 
+                                        if (!empty($_SESSION['user_id'])) {
+                                             $gst = ($total_cart/100)*5;
+                                            echo $gst;  
+                                        }elseif (!empty($_SESSION['cart'])) {
+                                            $gst = ($total_cart_session/100)*5;
+                                           echo $gst; 
+                                        }
+                                       
                                         ?>.00</span></h5>
                                     <h4 class="grand-totall-title">Grand Total  <span><?php
-                                        $grandtotal =$sub_total_cart+$gst;
-                                         echo $grandtotal; 
+                                        if (!empty($_SESSION['user_id'])) {
+                                            $grandtotal =$total_cart+$gst;
+                                            echo $grandtotal;  
+                                        }elseif (!empty($_SESSION['cart'])) {
+                                           $grandtotal =$total_cart_session+$gst;
+                                            echo $grandtotal; 
+                                        } 
                                         ?>.00</span></h4>
                                     <a href="#">Proceed to Checkout</a>
                                 </div>
@@ -211,3 +238,10 @@
         </div>
         <!-- Footer style Start -->
 <?php include "include/footer.php" ?>
+
+<script type="text/javascript">
+    function get(name){
+        $("#"+name).submit();
+        alert(name);
+    }
+</script>

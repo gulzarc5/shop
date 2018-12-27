@@ -6,6 +6,8 @@ if (!empty($_SESSION['cart'])) {
 	unset($_SESSION['cart'][$pid]);
 	if ($_GET['page'] == 'index') {
 		header("location:../../index.php");
+	}elseif ($_GET['page'] == 'cart') {
+		header("location:../../cart-page.php");
 	}
 	
 }else{
@@ -13,10 +15,14 @@ if (!empty($_SESSION['cart'])) {
 	if ($res = $connection->query($sql)) {
 		if ($_GET['page'] == 'index') {
 			header("location:../../index.php");
+		}elseif ($_GET['page'] == 'cart') {
+		header("location:../../cart-page.php");
 		}
 	}else{
 		if ($_GET['page'] == 'index') {
 			header("location:../../index.php");
+		}elseif ($_GET['page'] == 'cart') {
+		header("location:../../cart-page.php");
 		}
 	}
 }

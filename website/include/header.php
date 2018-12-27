@@ -1,6 +1,31 @@
 <?php 
 session_start(); 
 include_once "../backend/admin/databaseConnection/connection.php";
+
+
+function categoriesView($connection){
+    $sql = "SELECT * FROM `category` WHERE `status`='1'";
+    if ($res = $connection->query($sql)) {
+       while ($cat = $res->fetch_assoc()) {
+          print '<li><a href="shop.php?id='.$cat['category_id'].'">'.$cat['name'].'</a></li>';
+       }
+    }else{
+        return false;
+    }
+}
+
+function regionsView($connection){
+    $sql = "SELECT * FROM `region` WHERE `status`='1'";
+    if ($res = $connection->query($sql)) {
+       while ($reg = $res->fetch_assoc()) {
+          print '<li><a href="shop.php?id='.$reg['region_id'].'">'.$reg['name'].'</a></li>';
+       }
+    }else{
+        return false;
+    }
+}
+
+// function 
 ?>
 <!doctype html>
 <html class="no-js" lang="zxx">
@@ -102,23 +127,29 @@ include_once "../backend/admin/databaseConnection/connection.php";
                                                 <ul class="mega-menu">
                                                     <li>
                                                         <ul>
-                                                            <li class="mega-menu-title">Tea Type</li>
-                                                            <li><a href="shop.php">Black Tea</a></li>
+                                                            <li class="mega-menu-title">CATEGORIES</li>
+                                                            <?php 
+                                                            categoriesView($connection)
+                                                            ?>
+                                                            <!-- <li><a href="shop.php">Black Tea</a></li>
                                                             <li><a href="shop.php">Green Tea</a></li>
                                                             <li><a href="shop.php">White Tea</a></li>
                                                             <li><a href="shop.php">Masala Chai</a></li>
-                                                            <li><a href="shop.php">Blends</a></li>
+                                                            <li><a href="shop.php">Blends</a></li> -->
                                                         </ul>
                                                     </li>
                                                     <li>
                                                         <ul>
                                                             <li class="mega-menu-title">Regions</li>
-                                                            <li><a href="shop.php">Darjeeling Tea</a></li>
+                                                            <?php
+                                                            regionsView($connection)
+                                                            ?>
+                                                            <!-- <li><a href="shop.php">Darjeeling Tea</a></li>
                                                             <li><a href="shop.php">Assam Teas</a></li>
-                                                            <li><a href="shop.php">South Indian</a></li>
+                                                            <li><a href="shop.php">South Indian</a></li> -->
                                                         </ul>
                                                     </li>
-                                                    <li>
+                                                    <!-- <li>
                                                         <ul>
                                                             <li class="mega-menu-title">Categories</li>
                                                             <li><a href="shop.php">Caladium</a></li>
@@ -128,7 +159,7 @@ include_once "../backend/admin/databaseConnection/connection.php";
                                                             <li><a href="shop.php">Celosia</a></li>
                                                             <li><a href="shop.php">Chives</a></li>
                                                         </ul>
-                                                    </li>
+                                                    </li> -->
                                                     <div class="mega-menu-image">
                                                         <a href="#">
                                                             <img title="Darjeeling  Risheehat China Black Tea " alt="Darjeeling  Risheehat China Black Tea " src="https://www.jayshreetea.com/media/catalog/product/cache/1/image/170x120/9df78eab33525d08d6e5fb8d27136e95/d/j/dj03718-1.jpg">
@@ -143,23 +174,29 @@ include_once "../backend/admin/databaseConnection/connection.php";
                                                 <ul class="mega-menu">
                                                     <li>
                                                         <ul>
-                                                            <li class="mega-menu-title">Tea Type</li>
-                                                            <li><a href="shop.php">Black Tea</a></li>
+                                                            <li class="mega-menu-title">CATEGORIES</li>
+                                                            <?php 
+                                                                categoriesView($connection)
+                                                            ?>
+                                                            <!-- <li><a href="shop.php">Black Tea</a></li>
                                                             <li><a href="shop.php">Green Tea</a></li>
                                                             <li><a href="shop.php">White Tea</a></li>
                                                             <li><a href="shop.php">Masala Chai</a></li>
-                                                            <li><a href="shop.php">Blends</a></li>
+                                                            <li><a href="shop.php">Blends</a></li> -->
                                                         </ul>
                                                     </li>
                                                     <li>
                                                         <ul>
                                                             <li class="mega-menu-title">Regions</li>
-                                                            <li><a href="shop.php">Darjeeling Tea</a></li>
+                                                            <?php
+                                                            regionsView($connection)
+                                                            ?>
+                                                            <!-- <li><a href="shop.php">Darjeeling Tea</a></li>
                                                             <li><a href="shop.php">Assam Teas</a></li>
-                                                            <li><a href="shop.php">South Indian</a></li>
+                                                            <li><a href="shop.php">South Indian</a></li> -->
                                                         </ul>
                                                     </li>
-                                                    <li>
+                                                <!--     <li>
                                                         <ul>
                                                             <li class="mega-menu-title">Categories</li>
                                                             <li><a href="shop.php">Caladium</a></li>
@@ -169,7 +206,7 @@ include_once "../backend/admin/databaseConnection/connection.php";
                                                             <li><a href="shop.php">Celosia</a></li>
                                                             <li><a href="shop.php">Chives</a></li>
                                                         </ul>
-                                                    </li>
+                                                    </li> -->
                                                     <div class="mega-menu-image">
                                                         <a href="#">
                                                             <img title="Darjeeling  Risheehat China Black Tea " alt="Darjeeling  Risheehat China Black Tea " src="https://www.jayshreetea.com/media/catalog/product/cache/1/image/170x120/9df78eab33525d08d6e5fb8d27136e95/d/j/dj03718-1.jpg">

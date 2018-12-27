@@ -1,5 +1,7 @@
 <?php
     include "include/header.php";
+
+
     ?>
         <!-- Breadcrumb Area Start -->
         <div class="breadcrumb-area bg-image-3 ptb-150">
@@ -713,7 +715,11 @@
                                 <h4 class="shop-sidebar-title">Shop By Categories</h4>
                                 <div class="shop-catigory">
                                     <ul id="faq">
-                                        <li> <a data-toggle="collapse" data-parent="#faq" href="#shop-catigory-1">Morning Tea <i class="ion-ios-arrow-down"></i></a>
+                                        <?php
+                                        categoriesView($connection)
+
+                                        ?>
+                                       <!--  <li> <a data-toggle="collapse" data-parent="#faq" href="#shop-catigory-1">Morning Tea <i class="ion-ios-arrow-down"></i></a>
                                             <ul id="shop-catigory-1" class="panel-collapse collapse show">
                                                 <li><a href="#">Green</a></li>
                                                 <li><a href="#">Herbal</a></li>
@@ -739,10 +745,10 @@
                                                 <li><a href="#">Pu'erh Tea </a></li>
                                                 <li><a href="#">Dark Tea</a></li>
                                             </ul>
-                                        </li>
-                                        <li> <a href="#">Herbal Tea</a> </li>
+                                        </li> -->
+                                        <!-- <li> <a href="#">Herbal Tea</a> </li>
                                         <li> <a href="#">Rooibos Tea</a></li>
-                                        <li> <a href="#">Organic Tea</a></li>
+                                        <li> <a href="#">Organic Tea</a></li> -->
                                     </ul>
                                 </div>
                             </div>
@@ -760,17 +766,17 @@
                                 </div>
                             </div>
                             <div class="shop-widget mt-40 shop-sidebar-border pt-35">
-                                <h4 class="shop-sidebar-title">By Brand</h4>
+                                <h4 class="shop-sidebar-title">By Type</h4>
                                 <div class="sidebar-list-style mt-20">
                                     <ul>
-                                        <li><input type="checkbox"><a href="#">Green </a>
+                                       <!--  <li><input type="checkbox"><a href="#">Green </a>
                                         <li><input type="checkbox"><a href="#">Herbal </a></li>
                                         <li><input type="checkbox"><a href="#">Loose </a></li>
                                         <li><input type="checkbox"><a href="#">Mate </a></li>
                                         <li><input type="checkbox"><a href="#">Organic </a></li>
                                         <li><input type="checkbox"><a href="#">White  </a></li>
                                         <li><input type="checkbox"><a href="#">Yellow Tea </a></li>
-                                        <li><input type="checkbox"><a href="#">Puer Tea </a></li>
+                                        <li><input type="checkbox"><a href="#">Puer Tea </a></li> -->
                                     </ul>
                                 </div>
                             </div>
