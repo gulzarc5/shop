@@ -1,6 +1,62 @@
 <?php 
 session_start(); 
 include_once "../backend/admin/databaseConnection/connection.php";
+
+
+function categoriesView($connection){
+    $sql = "SELECT * FROM `category` WHERE `status`='1'";
+    if ($res = $connection->query($sql)) {
+       while ($cat = $res->fetch_assoc()) {
+          print '<li><a href="shop.php?id='.$cat['category_id'].'&prod_avail=1">'.$cat['name'].'</a></li>';
+       }
+    }else{
+        return false;
+    }
+}
+
+function categoriesView1($connection){
+    $sql = "SELECT * FROM `category` WHERE `status`='1'";
+    if ($res = $connection->query($sql)) {
+       while ($cat = $res->fetch_assoc()) {
+          print '<li><a href="shop.php?id='.$cat['category_id'].'&prod_avail=2">'.$cat['name'].'</a></li>';
+       }
+    }else{
+        return false;
+    }
+}
+
+function regionsView($connection){
+    $sql = "SELECT * FROM `region` WHERE `status`='1'";
+    if ($res = $connection->query($sql)) {
+       while ($reg = $res->fetch_assoc()) {
+          print '<li><a href="shop.php?id='.$reg['region_id'].'&prod_avail=1">'.$reg['name'].'</a></li>';
+       }
+    }else{
+        return false;
+    }
+}
+
+function regionsView2($connection){
+    $sql = "SELECT * FROM `region` WHERE `status`='1'";
+    if ($res = $connection->query($sql)) {
+       while ($reg = $res->fetch_assoc()) {
+          print '<li><a href="shop.php?id='.$reg['region_id'].'&prod_avail=2">'.$reg['name'].'</a></li>';
+       }
+    }else{
+        return false;
+    }
+}
+
+function typesView($connection){
+    $sql = "SELECT * FROM `type` WHERE `status`='1'";
+    if ($res = $connection->query($sql)) {
+       while ($type = $res->fetch_assoc()) {
+          print '<li><input type="checkbox" value="'.$type['type_id'].'" id="'.$type['type_id'].'">'.$type['name'].'</li>';
+       }
+    }else{
+        return false;
+    }
+}
 ?>
 <!doctype html>
 <html class="no-js" lang="zxx">
@@ -32,21 +88,6 @@ include_once "../backend/admin/databaseConnection/connection.php";
         <link rel="stylesheet" href="assets/css/style1.css">
         <link rel="stylesheet" href="assets/css/responsive.css">
         <script src="assets/js/vendor/modernizr-2.8.3.min.js"></script>
-
-
-
-  
-    
-    
-   
-   
-  
-
-    <!-- Custom Style -->
-   <!--  <link rel="stylesheet" type="text/css" href="assets/css1/style.min.css"> -->
-   
-
-
 </head>
     <body>
         <!-- header start -->
@@ -102,23 +143,29 @@ include_once "../backend/admin/databaseConnection/connection.php";
                                                 <ul class="mega-menu">
                                                     <li>
                                                         <ul>
-                                                            <li class="mega-menu-title">Tea Type</li>
-                                                            <li><a href="shop.php">Black Tea</a></li>
+                                                            <li class="mega-menu-title">CATEGORIES</li>
+                                                            <?php 
+                                                            categoriesView($connection)
+                                                            ?>
+                                                            <!-- <li><a href="shop.php">Black Tea</a></li>
                                                             <li><a href="shop.php">Green Tea</a></li>
                                                             <li><a href="shop.php">White Tea</a></li>
                                                             <li><a href="shop.php">Masala Chai</a></li>
-                                                            <li><a href="shop.php">Blends</a></li>
+                                                            <li><a href="shop.php">Blends</a></li> -->
                                                         </ul>
                                                     </li>
                                                     <li>
                                                         <ul>
                                                             <li class="mega-menu-title">Regions</li>
-                                                            <li><a href="shop.php">Darjeeling Tea</a></li>
+                                                            <?php
+                                                            regionsView($connection)
+                                                            ?>
+                                                            <!-- <li><a href="shop.php">Darjeeling Tea</a></li>
                                                             <li><a href="shop.php">Assam Teas</a></li>
-                                                            <li><a href="shop.php">South Indian</a></li>
+                                                            <li><a href="shop.php">South Indian</a></li> -->
                                                         </ul>
                                                     </li>
-                                                    <li>
+                                                    <!-- <li>
                                                         <ul>
                                                             <li class="mega-menu-title">Categories</li>
                                                             <li><a href="shop.php">Caladium</a></li>
@@ -128,7 +175,7 @@ include_once "../backend/admin/databaseConnection/connection.php";
                                                             <li><a href="shop.php">Celosia</a></li>
                                                             <li><a href="shop.php">Chives</a></li>
                                                         </ul>
-                                                    </li>
+                                                    </li> -->
                                                     <div class="mega-menu-image">
                                                         <a href="#">
                                                             <img title="Darjeeling  Risheehat China Black Tea " alt="Darjeeling  Risheehat China Black Tea " src="https://www.jayshreetea.com/media/catalog/product/cache/1/image/170x120/9df78eab33525d08d6e5fb8d27136e95/d/j/dj03718-1.jpg">
@@ -143,23 +190,29 @@ include_once "../backend/admin/databaseConnection/connection.php";
                                                 <ul class="mega-menu">
                                                     <li>
                                                         <ul>
-                                                            <li class="mega-menu-title">Tea Type</li>
-                                                            <li><a href="shop.php">Black Tea</a></li>
+                                                            <li class="mega-menu-title">CATEGORIES</li>
+                                                            <?php 
+                                                                categoriesView($connection)
+                                                            ?>
+                                                            <!-- <li><a href="shop.php">Black Tea</a></li>
                                                             <li><a href="shop.php">Green Tea</a></li>
                                                             <li><a href="shop.php">White Tea</a></li>
                                                             <li><a href="shop.php">Masala Chai</a></li>
-                                                            <li><a href="shop.php">Blends</a></li>
+                                                            <li><a href="shop.php">Blends</a></li> -->
                                                         </ul>
                                                     </li>
                                                     <li>
                                                         <ul>
                                                             <li class="mega-menu-title">Regions</li>
-                                                            <li><a href="shop.php">Darjeeling Tea</a></li>
+                                                            <?php
+                                                            regionsView($connection)
+                                                            ?>
+                                                            <!-- <li><a href="shop.php">Darjeeling Tea</a></li>
                                                             <li><a href="shop.php">Assam Teas</a></li>
-                                                            <li><a href="shop.php">South Indian</a></li>
+                                                            <li><a href="shop.php">South Indian</a></li> -->
                                                         </ul>
                                                     </li>
-                                                    <li>
+                                                <!--     <li>
                                                         <ul>
                                                             <li class="mega-menu-title">Categories</li>
                                                             <li><a href="shop.php">Caladium</a></li>
@@ -169,7 +222,7 @@ include_once "../backend/admin/databaseConnection/connection.php";
                                                             <li><a href="shop.php">Celosia</a></li>
                                                             <li><a href="shop.php">Chives</a></li>
                                                         </ul>
-                                                    </li>
+                                                    </li> -->
                                                     <div class="mega-menu-image">
                                                         <a href="#">
                                                             <img title="Darjeeling  Risheehat China Black Tea " alt="Darjeeling  Risheehat China Black Tea " src="https://www.jayshreetea.com/media/catalog/product/cache/1/image/170x120/9df78eab33525d08d6e5fb8d27136e95/d/j/dj03718-1.jpg">
@@ -207,7 +260,7 @@ include_once "../backend/admin/databaseConnection/connection.php";
                                         <?php
                                         $sub_total_cart = 0;
                                             if (!empty($_SESSION['cart'])) {
-                                                foreach($_SESSION['cart'] as $product_id=>$quantity){
+                                                foreach($_SESSION['cart'] as $product_id=>$value){
                                                     $sql_product = "SELECT * FROM `products` WHERE `product_id`='$product_id'";
                                                     if ($product_res = $connection->query( $sql_product)) {
                                                         $product = $product_res->fetch_assoc();
@@ -218,7 +271,7 @@ include_once "../backend/admin/databaseConnection/connection.php";
                                                             </div>
                                                             <div class="shopping-cart-title">
                                                                 <h4><a href="#">'.$product['title'].' </a></h4>
-                                                                <h6>'.$quantity.'</h6>
+                                                                <h6>'.$value['quantity'].'</h6>
                                                                 <span><i class="fa fa-rupee"></i>'.$product['rate'].'</span>
                                                             </div>
                                                             <div class="shopping-cart-delete">
@@ -229,6 +282,7 @@ include_once "../backend/admin/databaseConnection/connection.php";
                                                     $sub_total_cart = $sub_total_cart +$product['rate'];
                                                     }
                                                 }
+                                                
                                             }elseif (!empty($_SESSION['user_id'])){
                                                 $sql_cart_view = "SELECT * FROM `shopping_cart` WHERE `user_id`='$_SESSION[user_id]'";
                                                 if ($cart_res = $connection->query($sql_cart_view)) {
