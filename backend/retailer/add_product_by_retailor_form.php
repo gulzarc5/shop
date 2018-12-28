@@ -147,8 +147,8 @@ require_once('partials/header.php');
                 <div id="more_sizes">
                 <div class="row form-group">
                    <div class="col col-md-3"><label for="product_size" class=" form-control-label"> Available Sizes </label></div>
-                   <div class="col-12 col-md-2"><input type="text" name="product_size[]" placeholder="ex. 12" class="form-control" required></div>
-                   <div class="col-12 col-md-5" >
+                   <div class="col-12 col-md-3"><input type="text" name="product_size[]" placeholder="Enter Size" class="form-control" required></div>
+                   <div class="col-12 col-md-4" >
 
                      <select name="product_size_type[]"  class="form-control" required id="images_select_box" required>
                             <option value="" selected>Select Type...</option>
@@ -161,69 +161,73 @@ require_once('partials/header.php');
                                     }
                                 ?>                                
                         </select>
-
                    </div>
+                     <div class="col-12 col-md-2"><input type="text" name="min_order[]" placeholder="Min Order" class="form-control" required></div>
+                   <!-- Next Line of available size -->
+                   <br><br>
+                   <div class="col col-md-3"></div>
+                   <div class="col-12 col-md-3"><input type="text" name="product_price[]" placeholder="Enter Price" class="form-control" required></div>
+                   <div class="col-12 col-md-4">
+                        <select name="rate_currency[]"  class="form-control" required id="images_select_box">
+                        <option value="" selected>Select Currency...</option>
+                        <option value="1">INR</option>
+                        <option value="2">USD</option>                                 
+                    </select>
+                   </div>
+                  
                    <div class="col-12 col-md-2"><button type="button" class="btn btn-link" id="product_size_add_more" class="form-control"><i class="fa fa-link"></i>&nbsp;Add More</button></div>
                </div>
                </div>
 
 
               
-                <div class="row form-group">
+               <!--  <div class="row form-group">
                    <div class="col col-md-3"><label for="weight" class=" form-control-label"> Weight Per Pack </label></div>
                    <div class="col-12 col-md-3"><input type="text" name="weight" placeholder="ex. 12" class="form-control" required></div>
                    <div class="col-12 col-md-6" >
 
                      <select name="weight_type"  class="form-control" required id="images_select_box">
-                            <option value="" selected>Select Type...</option>
+                            <option value="" selected>Select Type...</option> -->
                                 <?php
-                                    $grade_code_sql ="SELECT * FROM `weight_type`";
-                                    if($grade_code_result=$connection->query($grade_code_sql)){
-                                        while ($grade_code_row=$grade_code_result->fetch_assoc()) {
-                                            print"<option value='$grade_code_row[weight_type_id]'>$grade_code_row[name] </option>";
-                                        }
-                                    }
+                                    // $grade_code_sql ="SELECT * FROM `weight_type`";
+                                    // if($grade_code_result=$connection->query($grade_code_sql)){
+                                    //     while ($grade_code_row=$grade_code_result->fetch_assoc()) {
+                                    //         print"<option value='$grade_code_row[weight_type_id]'>$grade_code_row[name] </option>";
+                                    //     }
+                                    // }
                                 ?>                                
-                        </select>
+                      <!--   </select>
 
                    </div>
-               </div>
+               </div> -->
 
-                <div class="row form-group">
+              <!--   <div class="row form-group">
                    <div class="col col-md-3"><label for="rate" class=" form-control-label"> Rate / Unit </label></div>
                    <div class="col-12 col-md-3"><input type="text" name="rate" placeholder="ex. 12" class="form-control" required></div>
-                   <div class="col-12 col-md-6" >
+                   <div class="col-12 col-md-6" ></div>
+               </div> -->
 
-                     <select name="rate_currency"  class="form-control" required id="images_select_box">
-                            <option value="" selected>Select Currency...</option>
-                            <option value="1">INR</option>
-                            <option value="2">USD</option>                                 
-                        </select>
-
-                   </div>
-               </div>
-
-               <div class="row form-group">
+              <!--  <div class="row form-group">
                    <div class="col col-md-3"><label for="min_order" class=" form-control-label"> Minimum Order </label></div>
                    <div class="col-12 col-md-3"><input type="text" name="min_order" placeholder="ex. 12" class="form-control" required></div>
                    <div class="col-12 col-md-6" >
 
                      <select name="min_order_unit"  class="form-control" required id="images_select_box">
-                            <option value="" selected>Select Unit...</option>
+                            <option value="" selected>Select Unit...</option> -->
                                 <?php
-                                    $grade_code_sql ="SELECT * FROM `weight_type`";
-                                    if($grade_code_result=$connection->query($grade_code_sql)){
-                                        while ($grade_code_row=$grade_code_result->fetch_assoc()) {
-                                            print"<option value='$grade_code_row[weight_type_id]'>$grade_code_row[name] </option>";
-                                        }
-                                    }
+                                    // $grade_code_sql ="SELECT * FROM `weight_type`";
+                                    // if($grade_code_result=$connection->query($grade_code_sql)){
+                                    //     while ($grade_code_row=$grade_code_result->fetch_assoc()) {
+                                    //         print"<option value='$grade_code_row[weight_type_id]'>$grade_code_row[name] </option>";
+                                    //     }
+                                    // }
                                 ?>                                
-                        </select>
+                    <!--     </select>
 
                    </div>
-               </div>
+               </div> -->
 
-               <div id="image_more">
+            <div id="image_more">
                 <div class="row form-group">
                    <div class="col col-md-3"><label for="product_image" class=" form-control-label"> Upload Image</label></div>
                    <div class="col-12 col-md-7" id ="product_image" onclick="getImageBoxId(this.id)"><input type="file" name="product_image[]" placeholder="Enter Product Title..." class="form-control" id = 'inputproduct_image' onChange="validate(this.value)"></div>
@@ -271,7 +275,7 @@ $(document).ready(function(){
     $("#product_size_add_more").click(function(){
 // alert(product_size_add_more_count);
      var product_size_id = "sz"+product_size_add_more_count;
-        var product_size_add_more = "<div class='row form-group' id = '"+product_size_id+"'><div class='col col-md-3'></div><div class='col-12 col-md-2'><input type='text' name='product_size[]' placeholder='ex. 12' class='form-control'></div><div class='col-12 col-md-5'><select name='product_size_type[]'  class='form-control' required id='images_select_box'>"+images_select_box+"</select></div><div class='col-12 col-md-2'><button type='button' class='btn btn-link' id='"+product_size_id+"' onclick='removeDiv(this.id)'><i class='fa fa-link'></i>&nbsp;Remove</button></div></div>";
+        var product_size_add_more = "<div class='row form-group' id = '"+product_size_id+"'><div class='col col-md-3'></div><div class='col-12 col-md-3'><input type='text' name='product_size[]' placeholder='Enter Size' class='form-control'></div><div class='col-12 col-md-4'><select name='product_size_type[]'  class='form-control' required id='images_select_box'>"+images_select_box+"</select></div><div class='col-12 col-md-2'><input type='text' name='min_order[]'' placeholder='Min Order' class='form-control' required></div><br><br><div class='col col-md-3'></div><div class='col-12 col-md-3'><input type='text' name='product_price[]' placeholder='Enter Price' class='form-control' required></div><div class='col-12 col-md-4'><select name='rate_currency[]'  class='form-control' required id='images_select_box'><option value='' selected>Select Currency...</option><option value='1'>INR</option><option value='2'>USD</option></select></div><div class='col-12 col-md-2'><button type='button' class='btn btn-link' id='"+product_size_id+"' onclick='removeDiv(this.id)'><i class='fa fa-link'></i>&nbsp;Remove</button></div></div>";
        $("#more_sizes").append(product_size_add_more);
        product_size_add_more_count = product_size_add_more_count+1;
     });

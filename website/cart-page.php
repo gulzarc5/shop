@@ -25,7 +25,8 @@
                                         <tr>
                                             <th>Image</th>
                                             <th>Product Name</th>
-                                            <th>Until Price</th>
+                                            <th>Product Size</th>
+                                            <th>Unit Price</th>
                                             <th>Qty</th>
                                             <th>Subtotal</th>
                                             <th>Delete</th>
@@ -37,30 +38,37 @@
                                             $total_cart_session = 0;
                                             if (!empty($_SESSION['cart'])) {
                                                 $count = 501;
-                                                foreach($_SESSION['cart'] as $product_id=>$quantity){
+                                                foreach($_SESSION['cart'] as $product_id=>$value){
                                                     $sql_product = "SELECT * FROM `products` WHERE `product_id`='$product_id'";
                                                     if ($product_res = $connection->query( $sql_product)) {
                                                         $product = $product_res->fetch_assoc();
-                                                        $total_cart_session = $total_cart_session +($product['rate'] * $quantity);
-                                                        $sub_total_cart_session = $product['rate'] * $quantity;
+                                                        
                                                     print '<form action="backend/cart/update_shopping_cart.php" method="post" id="'.$count.'"><tr>
                                             <td class="product-thumbnail">
                                                 <a href="#"><img alt="" src="../backend/uploads/product_image/'.$product['product_main_image'].'" height="50"></a>
-                                            </td>
-                                            <td class="product-name"><a href="#" style="color:black;">'.$product['title'].'</a></td>
-                                            <td class="product-price-cart"><span class="amount"><i class="fa fa-rupee"></i>'.$product['rate'].'.00</span></td>
-                                            <td class="product-quantity">
+                                            </td><td class="product-name"><a href="#" style="color:black;">'.$product['title'].'</a></td>';
+                                            $sql_product_size="SELECT * FROM `product_sizes` WHERE `product_size_id`='$value[size_id]'";
+                                            if ($res_product_size = $connection->query($sql_product_size)) {
+                                                $product_size = $res_product_size->fetch_assoc();
+                                                // print_r($)
+
+                                                print '<td class="product-size"><a href="#" style="color:black;">'.$product_size['size'].'</a></td>
+                                            <td class="product-price-cart"><span class="amount"><i class="fa fa-rupee"></i>'.$product_size['rate'].'.00</span></td>';
+                                                $total_cart_session = $total_cart_session +($product_size['rate'] * $value['quantity']);
+                                                        $sub_total_cart_session = $product_size['rate'] * $value['quantity'];
+                                            }
+                                            print ' <td class="product-quantity">
                                                 <div class="pro-dec-cart">
                                             <input type="hidden" name="product_id" value="'.$product_id.'">
                                         
-                                                    <input class="cart-plus-minus-box" type="text" value="'.$quantity.'" name="quantity">
+                                                    <input class="cart-plus-minus-box" type="text" value="'.$value['quantity'].'" name="quantity">
                                                 </div>
                                             </td>
                                             <td class="product-subtotal"><i class="fa fa-rupee"></i>'.$sub_total_cart_session.'</td>
                                             <td class="product-remove">
                                             <a href="javascript:get('.$count.')"><i class="fa fa-check-circle-o" aria-hidden="true"></i>
                                             </a>
-                                            <a href="backend/cart/remove_from_cart.php?pid='.$product_id.'&qtty='.$quantity.'&page=cart"><i class="fa fa-times"></i></a>
+                                            <a href="backend/cart/remove_from_cart.php?pid='.$product_id.'&qtty='.$value['quantity'].'&page=cart"><i class="fa fa-times"></i></a>
                                            </td>
                                         </tr>
                                         </form>
@@ -72,20 +80,29 @@
                                              $sql_cart_view = "SELECT * FROM `shopping_cart` WHERE `user_id`='$_SESSION[user_id]'";
                                                 if ($cart_res = $connection->query($sql_cart_view)) {
                                                     $count = 101;
+                                                    $total_cart = 0;
                                                     while($cart = $cart_res->fetch_assoc()){
 
                                                     $sql_product_cart = "SELECT * FROM `products` WHERE `product_id`='$cart[product_id]'";
                                                     if ($res_product = $connection->query($sql_product_cart)) {
                                                         $product_cart = $res_product->fetch_assoc();
-                                                        $total_cart = $total_cart +($product_cart['rate'] * $cart['quantity']);
-                                                        $sub_total_cart = $product_cart['rate'] * $cart['quantity'];
+                                                        
                                                     print '<form action="backend/cart/update_shopping_cart.php" method="post" id="'.$count.'"><tr>
                                             <td class="product-thumbnail">
                                                 <a href="#"><img alt="" src="../backend/uploads/product_image/'.$product_cart['product_main_image'].'" height="50"></a>
                                             </td>
-                                            <td class="product-name"><a href="#" style="color:black;">'.$product_cart['title'].'</a></td>
-                                            <td class="product-price-cart"><span class="amount"><i class="fa fa-rupee"></i>'.$product_cart['rate'].'.00</span></td>
-                                            <td class="product-quantity">
+                                            <td class="product-name"><a href="#" style="color:black;">'.$product_cart['title'].'</a></td>';
+                                             $sql_product_size="SELECT * FROM `product_sizes` WHERE `product_size_id`='$cart[product_size_id]'";
+                                            if ($res_product_size = $connection->query($sql_product_size)) {
+                                                $product_size = $res_product_size->fetch_assoc();
+                                               print '<td class="product-size"><a href="#" style="color:black;">'.$product_size['size'].'</a></td>
+                                            <td class="product-price-cart"><span class="amount"><i class="fa fa-rupee"></i>'.$product_size['rate'].'.00</span></td>';
+
+                                                $total_cart = $total_cart +($product_size['rate'] * $cart['quantity']);
+                                                $sub_total_cart = $product_size['rate'] * $cart['quantity'];
+                                            }
+
+                                           print '<td class="product-quantity">
                                                 <div class="pro-dec-cart">
                                             <input type="hidden" name="product_id" value="'.$cart['product_id'].'">                                 
                                             <input class="cart-plus-minus-box" type="text" value="'.$cart['quantity'].'" name="quantity">
@@ -194,12 +211,12 @@
                                     </div>
                                     <h5>Total Price <span><i class="fa fa-rupee"></i> <?php 
                                     if (!empty($_SESSION['user_id'])) {
-                                        echo $total_cart."2"; 
+                                        echo $total_cart; 
                                     }elseif (!empty($_SESSION['cart'])) {
                                        echo $total_cart_session; 
                                     }
                                     
-                                    ?>.00</span></h5>
+                                    ?></span></h5>
                                   <!--   <div class="total-shipping">
                                         <h5>Total shipping</h5>
                                         <ul>

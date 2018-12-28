@@ -200,7 +200,9 @@
                         		$sql_products = "SELECT * FROM `products` ORDER BY `product_id` DESC limit 8";
                         		if ($res_products = $connection->query($sql_products) ) {
                         			$count = 1;
-
+                                    $html=null;
+                                    $product_thumb_count = 1000;
+                                    $product_thumb_count1 = 1000;
                         			while($products = $res_products->fetch_assoc()){
                         				if (fmod($count,2) != 0 ) {
                         					print "<div class='product-wrapper-single'>";
@@ -218,7 +220,7 @@
 											<a class="action-cart" href="#" title="Add To Cart">
 												<i class="ion-ios-shuffle-strong"></i>
 											</a>
-											<a class="action-compare" href="#" data-target="#exampleModal" data-toggle="modal" title="Quick View">
+											<a class="action-compare" href="#" data-target="#exampleModal'.$count.'" data-toggle="modal" title="Quick View" id="'.$products['product_id'].'">
 												<i class="ion-ios-search-strong"></i>
 											</a>
 										</div>
@@ -229,9 +231,17 @@
 												<h4>
 													<a href="product-details.php">'.$products['title'].'</a>
 												</h4>
-											</div>
-											<div class="cart-hover">
-												<h4><a href="backend/cart/add_to_cart.php?product_id='.$products['product_id'].'& quantity=1">+ Add to cart</a></h4>
+											</div>';
+                                        $sql_product_size_id ="SELECT * FROM `product_sizes` WHERE `product_id`='$products[product_id]' AND `rate`='$products[rate]'";
+                                        $product_size_id = null ;
+                                        $min_order_quantity_log = 1;
+                                        if ($res_product_size_id = $connection->query($sql_product_size_id)) {
+                                            $product_sizes = $res_product_size_id->fetch_assoc();
+                                            $product_size_id = $product_sizes['product_size_id'];
+                                             $min_order_quantity_log = $product_sizes['min_order'];
+                                        }
+										print'<div class="cart-hover">
+												<h4><a href="backend/cart/add_to_cart.php?product_id='.$products['product_id'].'&quantity='.$min_order_quantity_log.'&product_size='.$product_size_id.'">+ Add to cart</a></h4>
 											</div>
 										</div>
 										<div class="product-price-wrapper">
@@ -241,371 +251,101 @@
 									</div>
 								</div>
 								';
+                        
+                                $html = $html.'<div class="modal fade exampleModal" id="exampleModal'.$count.'" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-5 col-sm-5 col-xs-12">
+                                <div class="tab-content">
+                                    <div id="pro-'.$count.'" class="tab-pane fade show active">
+                                        <img src="../backend/uploads/product_image/'.$products['product_main_image'].'" alt="">
+                                    </div>';
+                                $sql_product_image = "SELECT * FROM `product_image` WHERE `product_id`='$products[product_id]'";
+                                if ($res_product_image = $connection->query($sql_product_image)) {
+                                    while ($product_images = $res_product_image->fetch_assoc()) {
+                                       $html = $html.'<div id="pro-'.$product_thumb_count.'" class="tab-pane fade">
+                                        <img src="../backend/uploads/product_image/'.$product_images['image_name'].'" alt="">
+                                    </div>';
+                                    $product_thumb_count++;
+                                    }
+                                }
+                                
+                                $html = $html.'</div>
+                                <div class="product-thumbnail">
+                                    <div class="thumb-menu owl-carousel nav nav-style" role="tablist">
+                                    <a class="active" data-toggle="tab" href="#pro-'.$count.'"><img src="../backend/uploads/product_image/'.$products['product_main_image'].'" alt=""></a>';
+                                    $sql_product_image_thumb = "SELECT * FROM `product_image` WHERE `product_id`='$products[product_id]'";
+                                    if ($res_product_image_thumb = $connection->query($sql_product_image_thumb)) {
+                                        while ($product_images_thumb = $res_product_image_thumb->fetch_assoc()) {
+                                           $html = $html.'<a class="active" data-toggle="tab" href="#pro-'.$product_thumb_count1.'"><img src="../backend/uploads/product_image/'.$product_images_thumb['image_name'].'" alt=""></a>';
+                                        $product_thumb_count1++;
+                                        }
+                                    }
+                                $html = $html.'</div>
+                                </div>
+                            </div>
+                            <div class="col-md-7 col-sm-7 col-xs-12">
+                                <div class="modal-pro-content">
+                                    <h3>'.$products['title'].'</h3>
+                                    <div class="product-price-wrapper" id="model_id-'.$count.'">
+                                        <span><i class="fa fa-rupee"></i> '.$products['rate'].'.00</span>
+                                    </div>
+                                    <p>'.$products['description'].'</p>    
+                                    <form action="backend/cart/add_to_cart.php" method="GET">
+                                    <div class="quick-view-select">
+                                        <div class="select-option-part">
+                                            <label>Size*</label>
+                                            <select id="select_size-'.$count.'" name="product_size" class="select" onchange="getValueSelect(this.id)" required>';
+                                            $sql_product_size ="SELECT product_sizes.product_size_id as size_id, product_sizes.rate as rate,product_sizes.min_order as min_order, product_sizes.size as size, `weight_type`.name as weight FROM `product_sizes` inner join weight_type WHERE product_sizes.weight_type_id=weight_type.weight_type_id AND `product_id`='$products[product_id]'";
+                                            $min_order_quantity=0;
+                                            if ($res_product_size = $connection->query($sql_product_size)) {
+                                                while($products_size = $res_product_size->fetch_assoc()){
+                                                    if ($products['rate'] == $products_size['rate']) {
+                                                         $html = $html.'<option value="'.$products_size['size_id'].'" selected>'.$products_size['size'].'-'.$products_size['weight'].'</option>' ;
+                                                         $min_order_quantity = $products_size['min_order'];
+                                                    }else{
+                                                         $html = $html.'<option value="'.$products_size['size_id'].'">'.$products_size['size'].'-'.$products_size['weight'].'</option>' ;
+                                                    }
+                                                 
+                                                }
+                                            }
+                                         $html = $html.'
+                                            </select>
+                                            <span id ="min_order_qtty-'.$count.'"> Min Order Quantity -  '.$min_order_quantity.'</span>
+                                        </div>
+                                    </div>
+                                    <div class="product-quantity">
+                                        <div class="cart-plus-minus" id ="min-order_value-'.$count.'">
+                                            <input class="cart-plus-minus-box" type="text" name="quantity" value="'.$min_order_quantity.'">
+                                        </div>
+                                        <input type="hidden" name="product_id" value="'.$products['product_id'].'">
+                                        <input type="hidden" name="page" value="1">
+                                        <button type="submit">Add to cart</button>
+                                    </div>
+                                    </form>
+                                    <span><i class="fa fa-check"></i> In stock</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><br>';
                         				if (fmod($count,2) == 0 ) {
                         					print "</div>";
-                        				}
-                        				$count++;
+                        				}                      				
+                                 
+                                    $count++;
+
                         			}
 
                         		}
                         	?>
-                           <!--  <div class="product-wrapper-single">
-								<div class="product-wrapper mb-30">
-									<div class="product-img">
-										<a href="product-details.php">
-											<img alt="" src="assets/img/product/product-1.jpg">
-										</a>
-										<span>-30%</span>
-										<div class="product-action">
-											<a class="action-wishlist" href="#" title="Wishlist">
-												<i class="ion-android-favorite-outline"></i>
-											</a>
-											<a class="action-cart" href="#" title="Add To Cart">
-												<i class="ion-ios-shuffle-strong"></i>
-											</a>
-											<a class="action-compare" href="#" data-target="#exampleModal" data-toggle="modal" title="Quick View">
-												<i class="ion-ios-search-strong"></i>
-											</a>
-										</div>
-									</div>
-									<div class="product-content text-left">
-										<div class="product-hover-style">
-											<div class="product-title">
-												<h4>
-													<a href="product-details.php">BeBe Bloom tea</a>
-												</h4>
-											</div>
-											<div class="cart-hover">
-												<h4><a href="product-details.php">+ Add to cart</a></h4>
-											</div>
-										</div>
-										<div class="product-price-wrapper">
-											<span>$100.00 -</span>
-											<span class="product-price-old">$120.00 </span>
-										</div>
-									</div>
-								</div>
-								<div class="product-wrapper mb-30">
-									<div class="product-img">
-										<a href="product-details.php">
-											<img alt="" src="assets/img/product/product-2.jpg">
-										</a>
-										<span>-50%</span>
-										<div class="product-action">
-											<a class="action-wishlist" href="#" title="Wishlist">
-												<i class="ion-android-favorite-outline"></i>
-											</a>
-											<a class="action-cart" href="#" title="Add To Cart">
-												<i class="ion-ios-shuffle-strong"></i>
-											</a>
-											<a class="action-compare" href="#" data-target="#exampleModal" data-toggle="modal" title="Quick View">
-												<i class="ion-ios-search-strong"></i>
-											</a>
-										</div>
-									</div>
-									<div class="product-content text-left">
-										<div class="product-hover-style">
-											<div class="product-title">
-												<h4>
-													<a href="product-details.php">Every spice Tea</a>
-												</h4>
-											</div>
-											<div class="cart-hover">
-												<h4><a href="product-details.php">+ Add to cart</a></h4>
-											</div>
-										</div>
-										<div class="product-price-wrapper">
-											<span>$100.00 -</span>
-											<span class="product-price-old">$120.00 </span>
-										</div>
-									</div>
-								</div>
-                            </div> -->
-                           <!--  <div class="product-wrapper-single">
-								<div class="product-wrapper mb-30">
-									<div class="product-img">
-										<a href="product-details.php">
-											<img alt="" src="assets/img/product/product-3.jpg">
-										</a>
-										<span>-60%</span>
-										<div class="product-action">
-											<a class="action-wishlist" href="#" title="Wishlist">
-												<i class="ion-android-favorite-outline"></i>
-											</a>
-											<a class="action-cart" href="#" title="Add To Cart">
-												<i class="ion-ios-shuffle-strong"></i>
-											</a>
-											<a class="action-compare" href="#" data-target="#exampleModal" data-toggle="modal" title="Quick View">
-												<i class="ion-ios-search-strong"></i>
-											</a>
-										</div>
-									</div>
-									<div class="product-content text-left">
-										<div class="product-hover-style">
-											<div class="product-title">
-												<h4>
-													<a href="product-details.php">Que herbal Tea</a>
-												</h4>
-											</div>
-											<div class="cart-hover">
-												<h4><a href="product-details.php">+ Add to cart</a></h4>
-											</div>
-										</div>
-										<div class="product-price-wrapper">
-											<span>$100.00 -</span>
-											<span class="product-price-old">$120.00 </span>
-										</div>
-									</div>
-								</div>
-								<div class="product-wrapper mb-30">
-									<div class="product-img">
-										<a href="product-details.php">
-											<img alt="" src="assets/img/product/product-4.jpg">
-										</a>
-										<div class="product-action">
-											<a class="action-wishlist" href="#" title="Wishlist">
-												<i class="ion-android-favorite-outline"></i>
-											</a>
-											<a class="action-cart" href="#" title="Add To Cart">
-												<i class="ion-ios-shuffle-strong"></i>
-											</a>
-											<a class="action-compare" href="#" data-target="#exampleModal" data-toggle="modal" title="Quick View">
-												<i class="ion-ios-search-strong"></i>
-											</a>
-										</div>
-									</div>
-									<div class="product-content text-left">
-										<div class="product-hover-style">
-											<div class="product-title">
-												<h4>
-													<a href="product-details.php">Tea and Chai</a>
-												</h4>
-											</div>
-											<div class="cart-hover">
-												<h4><a href="product-details.php">+ Add to cart</a></h4>
-											</div>
-										</div>
-										<div class="product-price-wrapper">
-											<span>$100.00 -</span>
-											<span class="product-price-old">$120.00 </span>
-										</div>
-									</div>
-								</div>
-                            </div> -->
-                           <!--  <div class="product-wrapper-single">
-								<div class="product-wrapper mb-30">
-									<div class="product-img">
-										<a href="product-details.php">
-											<img alt="" src="assets/img/product/product-5.jpg">
-										</a>
-										<div class="product-action">
-											<a class="action-wishlist" href="#" title="Wishlist">
-												<i class="ion-android-favorite-outline"></i>
-											</a>
-											<a class="action-cart" href="#" title="Add To Cart">
-												<i class="ion-ios-shuffle-strong"></i>
-											</a>
-											<a class="action-compare" href="#" data-target="#exampleModal" data-toggle="modal" title="Quick View">
-												<i class="ion-ios-search-strong"></i>
-											</a>
-										</div>
-									</div>
-									<div class="product-content text-left">
-										<div class="product-hover-style">
-											<div class="product-title">
-												<h4>
-													<a href="product-details.php">Society Ice Tea</a>
-												</h4>
-											</div>
-											<div class="cart-hover">
-												<h4><a href="product-details.php">+ Add to cart</a></h4>
-											</div>
-										</div>
-										<div class="product-price-wrapper">
-											<span>$100.00 -</span>
-											<span class="product-price-old">$120.00 </span>
-										</div>
-									</div>
-								</div>
-								<div class="product-wrapper mb-30">
-									<div class="product-img">
-										<a href="product-details.php">
-											<img alt="" src="assets/img/product/product-6.jpg">
-										</a>
-										<span>-40%</span>
-										<div class="product-action">
-											<a class="action-wishlist" href="#" title="Wishlist">
-												<i class="ion-android-favorite-outline"></i>
-											</a>
-											<a class="action-cart" href="#" title="Add To Cart">
-												<i class="ion-ios-shuffle-strong"></i>
-											</a>
-											<a class="action-compare" href="#" data-target="#exampleModal" data-toggle="modal" title="Quick View">
-												<i class="ion-ios-search-strong"></i>
-											</a>
-										</div>
-									</div>
-									<div class="product-content text-left">
-										<div class="product-hover-style">
-											<div class="product-title">
-												<h4>
-													<a href="product-details.php">Green Tea Tulsi</a>
-												</h4>
-											</div>
-											<div class="cart-hover">
-												<h4><a href="product-details.php">+ Add to cart</a></h4>
-											</div>
-										</div>
-										<div class="product-price-wrapper">
-											<span>$100.00 -</span>
-											<span class="product-price-old">$120.00 </span>
-										</div>
-									</div>
-								</div>
-                            </div> -->
-                          <!--   <div class="product-wrapper-single">
-								<div class="product-wrapper mb-30">
-									<div class="product-img">
-										<a href="product-details.php">
-											<img alt="" src="assets/img/product/product-7.jpg">
-										</a>
-										<span>-60%</span>
-										<div class="product-action">
-											<a class="action-wishlist" href="#" title="Wishlist">
-												<i class="ion-android-favorite-outline"></i>
-											</a>
-											<a class="action-cart" href="#" title="Add To Cart">
-												<i class="ion-ios-shuffle-strong"></i>
-											</a>
-											<a class="action-compare" href="#" data-target="#exampleModal" data-toggle="modal" title="Quick View">
-												<i class="ion-ios-search-strong"></i>
-											</a>
-										</div>
-									</div>
-									<div class="product-content text-left">
-										<div class="product-hover-style">
-											<div class="product-title">
-												<h4>
-													<a href="product-details.php">Best Friends Tea</a>
-												</h4>
-											</div>
-											<div class="cart-hover">
-												<h4><a href="product-details.php">+ Add to cart</a></h4>
-											</div>
-										</div>
-										<div class="product-price-wrapper">
-											<span>$100.00 -</span>
-											<span class="product-price-old">$120.00 </span>
-										</div>
-									</div>
-								</div>
-								<div class="product-wrapper mb-30">
-									<div class="product-img">
-										<a href="product-details.php">
-											<img alt="" src="assets/img/product/product-8.jpg">
-										</a>
-										<div class="product-action">
-											<a class="action-wishlist" href="#" title="Wishlist">
-												<i class="ion-android-favorite-outline"></i>
-											</a>
-											<a class="action-cart" href="#" title="Add To Cart">
-												<i class="ion-ios-shuffle-strong"></i>
-											</a>
-											<a class="action-compare" href="#" data-target="#exampleModal" data-toggle="modal" title="Quick View">
-												<i class="ion-ios-search-strong"></i>
-											</a>
-										</div>
-									</div>
-									<div class="product-content text-left">
-										<div class="product-hover-style">
-											<div class="product-title">
-												<h4>
-													<a href="product-details.php">Instant Tea Premix</a>
-												</h4>
-											</div>
-											<div class="cart-hover">
-												<h4><a href="product-details.php">+ Add to cart</a></h4>
-											</div>
-										</div>
-										<div class="product-price-wrapper">
-											<span>$100.00 -</span>
-											<span class="product-price-old">$120.00 </span>
-										</div>
-									</div>
-								</div>
-                            </div> -->
-                          <!--   <div class="product-wrapper-single">
-								<div class="product-wrapper mb-30">
-									<div class="product-img">
-										<a href="product-details.php">
-											<img alt="" src="assets/img/product/product-4.jpg">
-										</a>
-										<span>-30%</span>
-										<div class="product-action">
-											<a class="action-wishlist" href="#" title="Wishlist">
-												<i class="ion-android-favorite-outline"></i>
-											</a>
-											<a class="action-cart" href="#" title="Add To Cart">
-												<i class="ion-ios-shuffle-strong"></i>
-											</a>
-											<a class="action-compare" href="#" data-target="#exampleModal" data-toggle="modal" title="Quick View">
-												<i class="ion-ios-search-strong"></i>
-											</a>
-										</div>
-									</div>
-									<div class="product-content text-left">
-										<div class="product-hover-style">
-											<div class="product-title">
-												<h4>
-													<a href="product-details.php">Black Ossum Tea</a>
-												</h4>
-											</div>
-											<div class="cart-hover">
-												<h4><a href="product-details.php">+ Add to cart</a></h4>
-											</div>
-										</div>
-										<div class="product-price-wrapper">
-											<span>$100.00 -</span>
-											<span class="product-price-old">$120.00 </span>
-										</div>
-									</div>
-								</div>
-								<div class="product-wrapper mb-30">
-									<div class="product-img">
-										<a href="product-details.php">
-											<img alt="" src="assets/img/product/product-3.jpg">
-										</a>
-										<span>-70%</span>
-										<div class="product-action">
-											<a class="action-wishlist" href="#" title="Wishlist">
-												<i class="ion-android-favorite-outline"></i>
-											</a>
-											<a class="action-cart" href="#" title="Add To Cart">
-												<i class="ion-ios-shuffle-strong"></i>
-											</a>
-											<a class="action-compare" href="#" data-target="#exampleModal" data-toggle="modal" title="Quick View">
-												<i class="ion-ios-search-strong"></i>
-											</a>
-										</div>
-									</div>
-									<div class="product-content text-left">
-										<div class="product-hover-style">
-											<div class="product-title">
-												<h4>
-													<a href="product-details.php">Le Bongai Tea</a>
-												</h4>
-											</div>
-											<div class="cart-hover">
-												<h4><a href="product-details.php">+ Add to cart</a></h4>
-											</div>
-										</div>
-										<div class="product-price-wrapper">
-											<span>$100.00 -</span>
-											<span class="product-price-old">$120.00 </span>
-										</div>
-									</div>
-								</div>
-                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -615,3 +355,29 @@
 <?php
     include "include/footer.php";
 ?>
+<script type="text/javascript">
+    function getValueSelect(id){
+        var added_id = id.split('-');
+        var product_size_id = $("#"+id).val();
+        // alert(product_size_id);
+       
+
+        $.ajax({
+        type: "POST",
+        url: "ajax/product_size_fetch.php",
+        data:{product_size_id : product_size_id},
+        success: function(data){
+            var pro_size = JSON.parse(data);
+            console.log(pro_size.product_id);
+            var html_min_order = '<input class="cart-plus-minus-box" type="text" name="quantity" value="'+pro_size.min_order+'">';
+            var min_order_qtty = 'Min Order Quantity -  '+pro_size.min_order;
+            var html = "<span><i class='fa fa-rupee'></i> "+pro_size.rate+" </span>";
+            // $("#suggesstion-box").show();
+            $("#min-order_value-"+added_id[1]).html(html_min_order);
+            $("#min_order_qtty-"+added_id[1]).html(min_order_qtty);
+            $("#model_id-"+added_id[1]).html(html);
+            // $("#trnto").css("background","#FFF");
+        }
+        });
+    }
+</script>

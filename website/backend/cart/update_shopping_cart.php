@@ -13,7 +13,7 @@ if (!empty($_SESSION['user_id']) && !empty($_POST['product_id']) && !empty($_POS
 }elseif (!empty($_SESSION['cart']) && !empty($_POST['product_id']) && !empty($_POST['quantity'])){
 	$pid = $_POST['product_id'];
 	$qtty = $_POST['quantity'];
-	$_SESSION['cart'][$pid]=$qtty;
+	$_SESSION['cart'][$pid]['quantity']=$qtty;
 	header("location:../../cart-page.php");
 }
 else{
