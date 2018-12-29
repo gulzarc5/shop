@@ -4,6 +4,7 @@
     function productsView($connection,$cat_id,$product_avail){
         $html = null;
         $sql_product = "SELECT * FROM `products` WHERE `product_avail`='$product_avail' AND `category_id`='$cat_id'";
+
         $count = 1;
         $html=null;
         $product_thumb_count = 1000;
@@ -217,8 +218,8 @@
                                 <div class="row">
                                     <?php
                                     $html = null;
-                                    if ($_GET['id'] && $_GET['prod_avail']) {
-                                        $cat_id = $_GET['id'];
+                                    if ($_GET['cat_id'] && $_GET['prod_avail']) {
+                                        $cat_id = $_GET['cat_id'];
                                         $product_avail = $_GET['prod_avail'];
                                         $html = productsView($connection,$cat_id,$product_avail);
                                     }
