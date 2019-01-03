@@ -1,10 +1,270 @@
 <?php
     include "include/header.php";
+    $_SESSION['price'] = 1;
+if ($_GET['cat_id'] && $_GET['prod_avail']) {
+    $cat_id = $_GET['cat_id'];
+    $product_avail = $_GET['prod_avail'];
+    if (!empty($_SESSION['category_id'])) {
+    unset($_SESSION['category_id']);
+    }
+    if (!empty($_SESSION['product_avail'])) {
+        unset($_SESSION['product_avail']);
+    }
+    $_SESSION['category_id'] = $cat_id;
+    $_SESSION['product_avail'] = $product_avail;
+    if (!empty($_GET['product_type']) && $_GET['check'] == 1) {
+        $typ = $_GET['product_type'];
+        $_SESSION['type'][$typ]=$typ;
+    }
+    if (!empty($_GET['product_type']) && $_GET['check'] == 2) {
+        $typ = $_GET['product_type'];
+        unset($_SESSION['type'][$typ]);
+    }
+    if (!empty($_GET['price'])) {
+         $_SESSION['price']=$_GET['price'];
+    }
+    print '<input type="hidden" id="cat_main" name="cat_id" value="'.$_SESSION['category_id'].'">
+<input type="hidden" id="product_avail" name="product_avail" value="'.$_SESSION['product_avail'].'">';
 
-    function productsView($connection,$cat_id,$product_avail){
+}   
+?>
+
+        <!-- Breadcrumb Area Start -->
+        <div class="breadcrumb-area bg-image-3 ptb-150">
+            <div class="container">
+                <div class="breadcrumb-content text-center">
+                    <h3>SHOP PAGE</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li class="active">SHOP PAGE</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Breadcrumb Area End -->
+        <!-- Shop Page Area Start -->
+        <div class="shop-page-area ptb-100">
+            <div class="container">
+                <div class="row flex-row-reverse">
+                    <div class="col-lg-9">
+                        <div class="shop-topbar-wrapper">
+                            <div class="shop-topbar-left">
+                                <ul class="view-mode">
+                                    <li class="active"><a href="#product-grid" data-view="product-grid"><i class="fa fa-th"></i></a></li>
+                                    <li><a href="#product-list" data-view="product-list"><i class="fa fa-list-ul"></i></a></li>
+                                </ul>
+                                <p>Showing 1 - 20 of 30 results  
+                                </p>
+                            </div>
+                            <div class="product-sorting-wrapper">
+                                <div class="product-shorting shorting-style">
+                                    <label>View:</label>
+                                    <select>
+                                        <option value=""> 20</option>
+                                        <option value=""> 23</option>
+                                        <option value=""> 30</option>
+                                    </select>
+                                </div>
+                                <div class="product-show shorting-style">
+                                    <label>Sort by:</label>
+                                    <select name="sort" id="sort_product">
+                                        <option value="1" selected>Price Low - High</option>
+                                        <?php
+                                        if (!empty($_SESSION['price']) && $_SESSION['price'] ==2) {
+                                            print '<option value="2" selected>Price High - Low</option>';
+                                        }else{
+                                            print '<option value="2">Price High - Low</option>'; 
+                                        }
+                                         if (!empty($_SESSION['price']) && $_SESSION['price'] == 3) {
+                                            print '<option value="3" selected>Name</option>';
+                                        }else{
+                                            print '<option value="3">Name</option>' ;
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                        <?php
+                        if (!empty($_SESSION['category_id'])) {
+                            // echo   $_SESSION['category_id'];
+                            $sql_cat_name_show = "SELECT * FROM `category` WHERE `category_id`='$_SESSION[category_id]' AND `status`='1'";
+                            if ($res_cat_name_show = $connection->query($sql_cat_name_show)) {
+                                $cat_name_show = $res_cat_name_show->fetch_assoc();
+                                print '<div class="sufee-alert alert with-close alert-success alert-dismissible fade show col-lg-3">
+                                '.$cat_name_show['name'].'
+                                </div>';
+                                    }
+                                     
+                                    }
+                                    if (!empty($_SESSION['type'])) {
+                                        foreach ($_SESSION['type'] as $key => $value) {
+                                            $sql_type_name = "SELECT * FROM `type` WHERE `type_id`='$key'";
+                                            if ($res_type_name = $connection->query($sql_type_name)) {
+                                                $type_name = $res_type_name->fetch_assoc();
+                                                print '<div class="sufee-alert alert with-close alert-success alert-dismissible fade show col-lg-3">
+                                '.$type_name['name'].'
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="closeFilterCheckBox('.$key.')">
+                                <span aria-hidden="true">×</span>
+                                </button>
+                            </div>';
+                                            }
+                                        }
+                                    }
+                                    ?>
+                        </div>
+                        <div class="grid-list-product-wrapper">
+                            <div class="product-grid product-view pb-20">
+                                <div class="row" id="main_area">
+                                    <?php
+                                    $html = null;
+                                    if ($_GET['cat_id'] && $_GET['prod_avail']) {
+                                        $cat_id = $_GET['cat_id'];
+                                        $product_avail = $_GET['prod_avail'];
+                                        $_SESSION['category_id'] = $cat_id;
+                                        $_SESSION['product_avail'] = $product_avail;
+                                        $html = productsView($connection,$session);
+                                    }
+                                    ?>
+                                </div>
+                            </div>
+                            <div class="pagination-total-pages">
+                                <div class="pagination-style">
+                                    <ul>
+                                        <li><a class="prev-next prev" href="#"><i class="ion-ios-arrow-left"></i> Prev </a></li>
+                                        <li><a class="active" href="#">1</a></li>
+                                        <li><a href="#">2</a></li>
+                                        <li><a href="#">3</a></li>
+                                        <li><a href="#">...</a></li>
+                                        <li><a href="#">10</a></li>
+                                        <li><a class="prev-next next" href="#">Next<i class="ion-ios-arrow-right"></i> </a></li>
+                                    </ul>
+                                </div>
+                                <div class="total-pages">
+                                    <p>Showing 1 - 20 of 30 results  </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="shop-sidebar-wrapper gray-bg-7 shop-sidebar-mrg">
+                            <div class="shop-widget">
+                                <h4 class="shop-sidebar-title">Shop By Categories</h4>
+                                <div class="shop-catigory">
+                                    <ul id="faq">
+                                        <?php
+                                            categoriesView($connection)
+                                        ?>
+                                       
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="shop-price-filter mt-40 shop-sidebar-border pt-35">
+                                <h4 class="shop-sidebar-title">Price Filter</h4>
+                                <div class="price_filter mt-25">
+                                    <span>Range:  $100.00 - 1.300.00 </span>
+                                    <div id="slider-range"></div>
+                                    <div class="price_slider_amount">
+                                        <div class="label-input">
+                                            <input type="text" id="amount" name="price"  placeholder="Add Your Price" />
+                                        </div>
+                                        <button type="button">Filter</button> 
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="shop-widget mt-40 shop-sidebar-border pt-35">
+                                <h4 class="shop-sidebar-title">By Type</h4>
+                                <div class="sidebar-list-style mt-20">
+                                    <ul>
+                                        <?php
+                                        typesView($connection);
+                                        ?>
+                                    
+                                    </ul>
+                                </div>
+                            </div>
+                           
+                            <div class="shop-widget mt-40 shop-sidebar-border pt-35">
+                                <h4 class="shop-sidebar-title">Popular Tags</h4>
+                                <div class="shop-tags mt-25">
+                                    <ul>
+                                        <li><a href="#">Green</a></li>
+                                        <li><a href="#">Oolong</a></li>
+                                        <li><a href="#">Black</a></li>
+                                        <li><a href="#">Pu'erh</a></li>
+                                        <li><a href="#">Dark </a></li>
+                                        <li><a href="#">Special</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Shop Page Area End -->
+ <?php include "include/footer.php"; ?>
+<script type="text/javascript">
+    function getValueSelect(id){
+        var added_id = id.split('-');
+        var product_size_id = $("#"+id).val();
+        // alert(product_size_id);
+       
+
+        $.ajax({
+        type: "POST",
+        url: "ajax/product_size_fetch.php",
+        data:{product_size_id : product_size_id},
+        success: function(data){
+            var pro_size = JSON.parse(data);
+            console.log(pro_size.product_id);
+            var html_min_order = '<input class="cart-plus-minus-box" type="text" name="quantity" value="'+pro_size.min_order+'">';
+            var min_order_qtty = 'Min Order Quantity -  '+pro_size.min_order;
+            var html = "<span><i class='fa fa-rupee'></i> "+pro_size.rate+" </span>";
+            // $("#suggesstion-box").show();
+            $("#min-order_value-"+added_id[1]).html(html_min_order);
+            $("#min_order_qtty-"+added_id[1]).html(min_order_qtty);
+            $("#model_id-"+added_id[1]).html(html);
+            // $("#trnto").css("background","#FFF");
+        }
+        });
+    }
+</script>
+
+<?php
+ function productsView($connection,$session){
         $html = null;
-        $sql_product = "SELECT * FROM `products` WHERE `product_avail`='$product_avail' AND `category_id`='$cat_id'";
-
+        $cat_id = $_SESSION['category_id'];
+        $pack_type = $_SESSION['product_avail'];
+        $sql_product = "SELECT * FROM `products` WHERE `product_avail`='$pack_type' AND `category_id`='$cat_id'";
+        if (!empty( $_SESSION['type'])) {
+            $flagType = false ;
+             $sql_product = $sql_product." AND (";
+            foreach ($_SESSION['type'] as  $key => $value) {
+                if ($flagType == false) {
+                     $sql_product = $sql_product."`product_type_id` ='$key' ";
+                     $flagType = true;
+                }else{
+                    $sql_product = $sql_product." OR `product_type_id` ='$key' ";
+                }
+               
+            }
+            $sql_product = $sql_product." ) ";
+        }
+        if (!empty($_SESSION['price'])) {
+            if ($_SESSION['price'] == 1) {
+               $sql_product = $sql_product."ORDER BY `rate` asc";
+            }
+            elseif ($_SESSION['price'] == 2) {
+                $sql_product = $sql_product."ORDER BY `rate` desc";
+            }
+            elseif ($_SESSION['price'] == 2) {
+                $sql_product = $sql_product."ORDER BY `title` desc";
+            }             
+        }else{
+            $sql_product = $sql_product."ORDER BY `rate` asc";
+        }
         $count = 1;
         $html=null;
         $product_thumb_count = 1000;
@@ -166,225 +426,54 @@
         }
         return $html;
     }
-
     ?>
-        <!-- Breadcrumb Area Start -->
-        <div class="breadcrumb-area bg-image-3 ptb-150">
-            <div class="container">
-                <div class="breadcrumb-content text-center">
-                    <h3>SHOP PAGE</h3>
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li class="active">SHOP PAGE</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <!-- Breadcrumb Area End -->
-        <!-- Shop Page Area Start -->
-        <div class="shop-page-area ptb-100">
-            <div class="container">
-                <div class="row flex-row-reverse">
-                    <div class="col-lg-9">
-                        <div class="shop-topbar-wrapper">
-                            <div class="shop-topbar-left">
-                                <ul class="view-mode">
-                                    <li class="active"><a href="#product-grid" data-view="product-grid"><i class="fa fa-th"></i></a></li>
-                                    <li><a href="#product-list" data-view="product-list"><i class="fa fa-list-ul"></i></a></li>
-                                </ul>
-                                <p>Showing 1 - 20 of 30 results  </p>
-                            </div>
-                            <div class="product-sorting-wrapper">
-                                <div class="product-shorting shorting-style">
-                                    <label>View:</label>
-                                    <select>
-                                        <option value=""> 20</option>
-                                        <option value=""> 23</option>
-                                        <option value=""> 30</option>
-                                    </select>
-                                </div>
-                                <div class="product-show shorting-style">
-                                    <label>Sort by:</label>
-                                    <select>
-                                        <option value="">Default</option>
-                                        <option value=""> Name</option>
-                                        <option value=""> price</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="grid-list-product-wrapper">
-                            <div class="product-grid product-view pb-20">
-                                <div class="row">
-                                    <?php
-                                    $html = null;
-                                    if ($_GET['cat_id'] && $_GET['prod_avail']) {
-                                        $cat_id = $_GET['cat_id'];
-                                        $product_avail = $_GET['prod_avail'];
-                                        $html = productsView($connection,$cat_id,$product_avail);
-                                    }
-                                    ?>
-                                </div>
-                            </div>
-                            <div class="pagination-total-pages">
-                                <div class="pagination-style">
-                                    <ul>
-                                        <li><a class="prev-next prev" href="#"><i class="ion-ios-arrow-left"></i> Prev</a></li>
-                                        <li><a class="active" href="#">1</a></li>
-                                        <li><a href="#">2</a></li>
-                                        <li><a href="#">3</a></li>
-                                        <li><a href="#">...</a></li>
-                                        <li><a href="#">10</a></li>
-                                        <li><a class="prev-next next" href="#">Next<i class="ion-ios-arrow-right"></i> </a></li>
-                                    </ul>
-                                </div>
-                                <div class="total-pages">
-                                    <p>Showing 1 - 20 of 30 results  </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="shop-sidebar-wrapper gray-bg-7 shop-sidebar-mrg">
-                            <div class="shop-widget">
-                                <h4 class="shop-sidebar-title">Shop By Categories</h4>
-                                <div class="shop-catigory">
-                                    <ul id="faq">
-                                        <?php
-                                        categoriesView($connection)
 
-                                        ?>
-                                       <!--  <li> <a data-toggle="collapse" data-parent="#faq" href="#shop-catigory-1">Morning Tea <i class="ion-ios-arrow-down"></i></a>
-                                            <ul id="shop-catigory-1" class="panel-collapse collapse show">
-                                                <li><a href="#">Green</a></li>
-                                                <li><a href="#">Herbal</a></li>
-                                                <li><a href="#">Loose </a></li>
-                                                <li><a href="#">Mate</a></li>
-                                                <li><a href="#">Organic</a></li>
-                                            </ul>
-                                        </li>
-                                        <li> <a data-toggle="collapse" data-parent="#faq" href="#shop-catigory-2">Tea Trends<i class="ion-ios-arrow-down"></i></a>
-                                            <ul id="shop-catigory-2" class="panel-collapse collapse">
-                                                <li><a href="#">Pu'Erh</a></li>
-                                                <li><a href="#">Black</a></li>
-                                                <li><a href="#">White</a></li>
-                                                <li><a href="#">Yellow Tea</a></li>
-                                                <li><a href="#">Puer Tea</a></li>
-                                            </ul>
-                                        </li>
-                                        <li> <a data-toggle="collapse" data-parent="#faq" href="#shop-catigory-3">Most Tea Map <i class="ion-ios-arrow-down"></i></a>
-                                            <ul id="shop-catigory-3" class="panel-collapse collapse">
-                                                <li><a href="#">Green Tea</a></li>
-                                                <li><a href="#">Oolong Tea</a></li>
-                                                <li><a href="#">Black Tea</a></li>
-                                                <li><a href="#">Pu'erh Tea </a></li>
-                                                <li><a href="#">Dark Tea</a></li>
-                                            </ul>
-                                        </li> -->
-                                        <!-- <li> <a href="#">Herbal Tea</a> </li>
-                                        <li> <a href="#">Rooibos Tea</a></li>
-                                        <li> <a href="#">Organic Tea</a></li> -->
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="shop-price-filter mt-40 shop-sidebar-border pt-35">
-                                <h4 class="shop-sidebar-title">Price Filter</h4>
-                                <div class="price_filter mt-25">
-                                    <span>Range:  $100.00 - 1.300.00 </span>
-                                    <div id="slider-range"></div>
-                                    <div class="price_slider_amount">
-                                        <div class="label-input">
-                                            <input type="text" id="amount" name="price"  placeholder="Add Your Price" />
-                                        </div>
-                                        <button type="button">Filter</button> 
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="shop-widget mt-40 shop-sidebar-border pt-35">
-                                <h4 class="shop-sidebar-title">By Type</h4>
-                                <div class="sidebar-list-style mt-20">
-                                    <ul>
-                                        <?php
-                                        typesView($connection);
-                                        ?>
-                                       <!--  <li><input type="checkbox"><a href="#">Green </a>
-                                        <li><input type="checkbox"><a href="#">Herbal </a></li>
-                                        <li><input type="checkbox"><a href="#">Loose </a></li>
-                                        <li><input type="checkbox"><a href="#">Mate </a></li>
-                                        <li><input type="checkbox"><a href="#">Organic </a></li>
-                                        <li><input type="checkbox"><a href="#">White  </a></li>
-                                        <li><input type="checkbox"><a href="#">Yellow Tea </a></li>
-                                        <li><input type="checkbox"><a href="#">Puer Tea </a></li> -->
-                                    </ul>
-                                </div>
-                            </div>
-                            <!-- <div class="shop-widget mt-40 shop-sidebar-border pt-35">
-                                <h4 class="shop-sidebar-title">By Color</h4>
-                                <div class="sidebar-list-style mt-20">
-                                    <ul>
-                                        <li><input type="checkbox"><a href="#">Black </a></li>
-                                        <li><input type="checkbox"><a href="#">Blue </a></li>
-                                        <li><input type="checkbox"><a href="#">Green </a></li>
-                                        <li><input type="checkbox"><a href="#">Grey </a></li>
-                                        <li><input type="checkbox"><a href="#">Red</a></li>
-                                        <li><input type="checkbox"><a href="#">White  </a></li>
-                                        <li><input type="checkbox"><a href="#">Yellow   </a></li>
-                                    </ul>
-                                </div>
-                            </div> -->
-                          <!--   <div class="shop-widget mt-40 shop-sidebar-border pt-35">
-                                <h4 class="shop-sidebar-title">Compare Products</h4>
-                                <div class="compare-product">
-                                    <p>You have no item to compare. </p>
-                                    <div class="compare-product-btn">
-                                        <span>Clear all </span>
-                                        <a href="#">Compare <i class="fa fa-check"></i></a>
-                                    </div>
-                                </div>
-                            </div> -->
-                            <div class="shop-widget mt-40 shop-sidebar-border pt-35">
-                                <h4 class="shop-sidebar-title">Popular Tags</h4>
-                                <div class="shop-tags mt-25">
-                                    <ul>
-                                        <li><a href="#">Green</a></li>
-                                        <li><a href="#">Oolong</a></li>
-                                        <li><a href="#">Black</a></li>
-                                        <li><a href="#">Pu'erh</a></li>
-                                        <li><a href="#">Dark </a></li>
-                                        <li><a href="#">Special</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Shop Page Area End -->
- <?php include "include/footer.php"; ?>
-<script type="text/javascript">
-    function getValueSelect(id){
-        var added_id = id.split('-');
-        var product_size_id = $("#"+id).val();
-        // alert(product_size_id);
-       
 
-        $.ajax({
-        type: "POST",
-        url: "ajax/product_size_fetch.php",
-        data:{product_size_id : product_size_id},
-        success: function(data){
-            var pro_size = JSON.parse(data);
-            console.log(pro_size.product_id);
-            var html_min_order = '<input class="cart-plus-minus-box" type="text" name="quantity" value="'+pro_size.min_order+'">';
-            var min_order_qtty = 'Min Order Quantity -  '+pro_size.min_order;
-            var html = "<span><i class='fa fa-rupee'></i> "+pro_size.rate+" </span>";
-            // $("#suggesstion-box").show();
-            $("#min-order_value-"+added_id[1]).html(html_min_order);
-            $("#min_order_qtty-"+added_id[1]).html(min_order_qtty);
-            $("#model_id-"+added_id[1]).html(html);
-            // $("#trnto").css("background","#FFF");
+    <script type="text/javascript">
+        function getTypeData(typeid){
+            if ($('#'+typeid).is(":checked"))
+            {
+                var cat_main_id = $("#cat_main").val();
+                var product_avail_id = $("#product_avail").val();
+                var product_type = $('#'+typeid).val();
+                // alert(cat_main_id);
+                // alert(product_avail_id);
+                // alert(product_type);
+                window.location.href = "shop.php?cat_id="+cat_main_id+"&prod_avail="+product_avail_id+"&product_type="+product_type+"&check=1";
+            }else if(!$('#'+typeid).is(":checked")){
+                var cat_main_id = $("#cat_main").val();
+                var product_avail_id = $("#product_avail").val();
+                var product_type = $('#'+typeid).val();
+                // alert(cat_main_id);
+                // alert(product_avail_id);
+                // alert(product_type);
+                window.location.href = "shop.php?cat_id="+cat_main_id+"&prod_avail="+product_avail_id+"&product_type="+product_type+"&check=2";
+            }
         }
-        });
-    }
+
+        function closeFilterCheckBox(typeid){
+            var cat_main_id = $("#cat_main").val();
+            var product_avail_id = $("#product_avail").val();
+            var product_type = $('#'+typeid).val();
+                // alert(cat_main_id);
+                // alert(product_avail_id);
+                // alert(product_type);
+            window.location.href = "shop.php?cat_id="+cat_main_id+"&prod_avail="+product_avail_id+"&product_type="+product_type+"&check=2";
+        }
+    </script>
+
+<script src="../../assets/datatable/jquery-3.3.1.js"></script>
+<script>
+    // AJAX call for autocomplete 
+$(document).ready(function(){
+    $("#sort_product").change(function(){
+        var sort_pro = $("#sort_product").val();
+       var url = window.location.href+"&price="+sort_pro; 
+       // alert(sort_pro);
+       //  alert(url);
+         window.location.href = url;
+      
+    });
+});
+
 </script>

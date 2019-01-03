@@ -1,5 +1,5 @@
 <?php 
-session_start(); 
+$session = session_start(); 
 include_once "../backend/admin/databaseConnection/connection.php";
 
 
@@ -51,7 +51,18 @@ function typesView($connection){
     $sql = "SELECT * FROM `type` WHERE `status`='1'";
     if ($res = $connection->query($sql)) {
        while ($type = $res->fetch_assoc()) {
-          print '<li><input type="checkbox" value="'.$type['type_id'].'" id="'.$type['type_id'].'">'.$type['name'].'</li>';
+        $flag = false;
+        if (!empty($_SESSION['type'])) {
+            foreach ($_SESSION['type'] as $key => $value) {
+                if ($key == $type['type_id']) {
+                     print '<li><input type="checkbox" onclick = "getTypeData('.$type['type_id'].')" value="'.$type['type_id'].'" id="'.$type['type_id'].'" checked>'.$type['name'].'</li>';     
+                     $flag = true;                       # code...
+                }
+            }
+        }
+        if (!$flag) {
+             print '<li><input type="checkbox" onclick = "getTypeData('.$type['type_id'].')" value="'.$type['type_id'].'" id="'.$type['type_id'].'">'.$type['name'].'</li>';
+        }
        }
     }else{
         return false;
