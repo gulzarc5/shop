@@ -452,7 +452,7 @@ $(document).on('click', '#final_order',function(){
         });
         pass = false;
         return;
-    }else if(shiping_billing == 1){
+    }else{
         var billing_fname = $("input[name='billing_fname']").val();
         var billing_lname = $("input[name='billing_lname']").val();
         var billing_email = $("input[name='billing_email']").val();
@@ -503,6 +503,15 @@ $(document).on('click', '#final_order',function(){
         success: function(data){
 
             console.log(data);
+            if (data == 1) {
+                if (payment_type == 1) {
+                    window.location.href = "order_success.php";
+                }else if (payment_type == 2) {
+
+                }
+            }else if(data == 2){
+
+            }
             // $("#suggesstion-box").show();
             // $("#city").html(data);
             // $("#trnto").css("background","#FFF");

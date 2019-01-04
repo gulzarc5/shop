@@ -32,17 +32,16 @@ if (!empty($_SESSION['user_id']) && $_SESSION['user_type'] ==4) {
 				$res_shipping = $connection->query($sql_shipping);
 				$shipping_info_id = $connection->insert_id;
 			}elseif ($shiping_billing == 2) {
-				$billing_fname = $connection->real_escape_string(mysql_entities_fix_string($_POST['billing_fname']));
-				$billing_lname = $connection->real_escape_string(mysql_entities_fix_string($_POST['billing_lname']));
-				$billing_email = $connection->real_escape_string(mysql_entities_fix_string($_POST['billing_email']));
-				$billing_address = $connection->real_escape_string(mysql_entities_fix_string($_POST['billing_address']));
-				$billing_state = $connection->real_escape_string(mysql_entities_fix_string($_POST['billing_state']));
-				$billing_company = $connection->real_escape_string(mysql_entities_fix_string($_POST['billing_company']));
-				$billing_city = $connection->real_escape_string(mysql_entities_fix_string($_POST['billing_city']));
-				$billing_pin = $connection->real_escape_string(mysql_entities_fix_string($_POST['billing_pin']));
-				$billing_mobile = $connection->real_escape_string(mysql_entities_fix_string($_POST['billing_mobile']));
-				$shiping_billing = $connection->real_escape_string(mysql_entities_fix_string($_POST['shiping_billing']));
-				$sql_shipping = "INSERT INTO `shipping_info`(`shipping_info_id`, `f_name`, `l_name`, `company`, `email`, `state`, `city`, `address`, `pin`, `mobile`, `date`) VALUES (null,'$billing_fname','$billing_lname','$billing_company','$billing_email','$billing_state','$billing_city','$billing_address','$billing_pin','$billing_mobile',date('now'))";
+				$shipping_fname = $connection->real_escape_string(mysql_entities_fix_string($_POST['shipping_fname']));
+				$shipping_lname = $connection->real_escape_string(mysql_entities_fix_string($_POST['shipping_lname']));
+				$shipping_email = $connection->real_escape_string(mysql_entities_fix_string($_POST['shipping_email']));
+				$shipping_address = $connection->real_escape_string(mysql_entities_fix_string($_POST['shipping_address']));
+				$shipping_state = $connection->real_escape_string(mysql_entities_fix_string($_POST['shipping_state']));
+				$shipping_company = $connection->real_escape_string(mysql_entities_fix_string($_POST['shipping_company']));
+				$shipping_city = $connection->real_escape_string(mysql_entities_fix_string($_POST['shipping_city']));
+				$shipping_pin = $connection->real_escape_string(mysql_entities_fix_string($_POST['shipping_pin']));
+				$shipping_mobile = $connection->real_escape_string(mysql_entities_fix_string($_POST['shipping_mobile']));
+				$sql_shipping = "INSERT INTO `shipping_info`(`shipping_info_id`, `f_name`, `l_name`, `company`, `email`, `state`, `city`, `address`, `pin`, `mobile`, `date`) VALUES (null,'$shipping_fname','$shipping_lname','$shipping_company','$shipping_email','$shipping_state','$shipping_city','$shipping_address','$shipping_pin','$shipping_mobile',date('now'))";
 				$res_shipping = $connection->query($sql_shipping);
 				$shipping_info_id = $connection->insert_id;
 			}
@@ -56,10 +55,9 @@ if (!empty($_SESSION['user_id']) && $_SESSION['user_type'] ==4) {
                 $_SESSION['user_type'] = '4';
                 $_SESSION['name'] = $billing_fname." ".$billing_lname;
 			}else{
-				echo 1;
+				echo 2;
 				return;
 			}
-
 			$total_oreder_value =0;
 			$total_gst = 0;
 			foreach($_SESSION['cart'] as $product_id=>$value){
@@ -77,22 +75,29 @@ if (!empty($_SESSION['user_id']) && $_SESSION['user_type'] ==4) {
 
 				foreach($_SESSION['cart'] as $product_id=>$value){
 
+					$sql_product_sizes="SELECT * FROM `product_sizes` WHERE `product_size_id`='$value[size_id]'";
+					if ($res_product_sizes = $connection->query($sql_product_sizes)) {
+	                    $product_sizes = $res_product_sizes->fetch_assoc();
+	                    
+	                }
+
 					$created_by_id_sql = "SELECT `created_by_id` FROM `products` WHERE `product_id`='$product_id'";
 					if ($res_created_by_id = $connection->query($created_by_id_sql)) {
 						$create_by_id_row = $res_created_by_id->fetch_assoc();
 						$created_by_id = $create_by_id_row['created_by_id'];
 
-						$order_details = "INSERT INTO `order_details`(`order_details_id`, `order_id`, `product_id`, `user_id`, `quantity`, `product_size_id`, `billing_info_id`, `shipping_info_id`, `order_to_id`, `date`) VALUES (null,'$order_id','$product_id','$_SESSION[user_id]','$value[quantity]','$value[size_id]','$billing_info_id','$shipping_info_id','$created_by_id',date('now'))";
+						$order_details = "INSERT INTO `order_details`(`order_details_id`, `order_id`, `product_id`, `user_id`, `quantity`, `rate`, `product_size`, `billing_info_id`, `shipping_info_id`, `order_to_id`,`status`, `date`) VALUES (null,'$order_id','$product_id','$_SESSION[user_id]','$value[quantity]','$product_sizes[rate]','$value[size_id]','$billing_info_id','$shipping_info_id','$created_by_id','1',date('now'))";
 						if ($res_order_details = $connection->query($order_details)) {
-							echo "1";
+							unset($_SESSION['cart']);
 						}
 					}
-
 					
 				}
-				
-			}
-		
+				echo "1";
+
+			}else{
+				echo 2;
+			}		
 }
 
 

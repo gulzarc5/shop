@@ -156,7 +156,7 @@ function typesView($connection){
                                                         <ul>
                                                             <li class="mega-menu-title">CATEGORIES</li>
                                                             <?php 
-                                                            categoriesView($connection)
+                                                            categoriesView1($connection)
                                                             ?>
                                                             <!-- <li><a href="shop.php">Black Tea</a></li>
                                                             <li><a href="shop.php">Green Tea</a></li>

@@ -2,6 +2,8 @@
             <div class="footer-top gray-bg-3 pb-35">
                 <div class="container">
                     <div class="row">
+
+                        <?php if (!empty($_SESSION['user_id']) && $_SESSION['user_type'] == 4) { ?>
 						<div class="col-lg-3 col-md-6 col-sm-6">
                             <div class="footer-widget mb-40">
                                 <div class="footer-title mb-25">
@@ -10,15 +12,16 @@
                                 <div class="footer-content">
                                     <ul>
                                         <li><a href="my-account.php">My Account</a></li>
-                                        <li><a href="about-us.php">Order History</a></li>
                                         <li><a href="wishlist.php">WishList</a></li>
                                         <li><a href="#">Newsletter</a></li>
-                                        <li><a href="about-us.php">Order History</a></li>
+                                        <li><a href="order_history.php">Order History</a></li>
                                         <li><a href="#">International Orders</a></li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
+
+                        <?php   } ?>
 						<div class="col-lg-3 col-md-6 col-sm-6">
                             <div class="footer-widget mb-40">
                                 <div class="footer-title mb-25">
