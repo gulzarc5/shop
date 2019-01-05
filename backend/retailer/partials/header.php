@@ -1,5 +1,11 @@
 <?php
     include "retailor_session_check.php";
+   include_once "../admin/databaseConnection/connection.php";
+    $res_order_count_view =null;
+    $sql_orders_view = "SELECT * FROM `order_details` WHERE `order_to_id` = '$_SESSION[user_id]'  AND `retailer_is_viewed` ='1'";
+    if ($res_orders_view = $connection->query($sql_orders_view)) {
+        $res_order_count_view = $res_orders_view->num_rows;
+    }
 ?>
 <!doctype html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
@@ -68,8 +74,8 @@
                     <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>Orders</a>
                         <ul class="sub-menu children dropdown-menu">
-                            <li><i class="fa fa-table"></i><a href="../admin/add_region_form.php">New Orders</a></li>
-                            <li><i class="fa fa-table"></i><a href="../admin/add_designation_form.php">Delivered Products</a></li>
+                            <li><i class="fa fa-table"></i><a href="retailer_orders.php">New Orders</a></li>
+                            <li><i class="fa fa-table"></i><a href="all_orders.php">All Orders</a></li>
                         </ul>
                     </li> 
 
@@ -110,23 +116,21 @@
 
                         <div class="dropdown for-notification">
                             <button class="btn btn-secondary dropdown-toggle" type="button" id="notification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <a href="retailer_orders.php">
                                 <i class="fa fa-bell"></i>
-                                <span class="count bg-danger">5</span>
+                                <?php
+                                    if (!empty($res_order_count_view)) {
+                                        print '<span class="count bg-danger">'.$res_order_count_view.'</span>';
+                                    }
+                                ?>
+                                </a>
                             </button>
                             <div class="dropdown-menu" aria-labelledby="notification">
-                                <p class="red">You have 3 Notification</p>
-                                <a class="dropdown-item media bg-flat-color-1" href="#">
-                                <i class="fa fa-check"></i>
-                                <p>Server #1 overloaded.</p>
-                            </a>
-                                <a class="dropdown-item media bg-flat-color-4" href="#">
+                                <a class="dropdown-item media bg-flat-color-4" href="retailer_orders.php">
                                 <i class="fa fa-info"></i>
-                                <p>Server #2 overloaded.</p>
+                                <p>Show Orders</p>
                             </a>
-                                <a class="dropdown-item media bg-flat-color-5" href="#">
-                                <i class="fa fa-warning"></i>
-                                <p>Server #3 overloaded.</p>
-                            </a>
+                                
                             </div>
                         </div>
                     </div>
@@ -142,7 +146,14 @@
                         <div class="user-menu dropdown-menu">
                             <a class="nav-link" href="retailor_profile_show.php"><i class="fa fa-user"></i> My Profile</a>
 
-                            <a class="nav-link" href="#"><i class="fa fa-user"></i> Notifications <span class="count">13</span></a>
+                            <a class="nav-link" href="retailer_orders.php"><i class="fa fa-user"></i> Notifications 
+                                <?php
+                                    if (!empty($res_order_count_view)) {
+                                        print '<span class="count">'.$res_order_count_view.'</span>';
+                                    }else{
+
+                                    }
+                                ?>
 
                             <!-- <a class="nav-link" href="#"><i class="fa fa-cog"></i> Settings</a> -->
 
@@ -150,7 +161,7 @@
                         </div>
                     </div>
 
-                    <div class="language-select dropdown" id="language-select">
+                  <!--   <div class="language-select dropdown" id="language-select">
                         <a class="dropdown-toggle" href="#" data-toggle="dropdown"  id="language" aria-haspopup="true" aria-expanded="true">
                             <i class="flag-icon flag-icon-us"></i>
                         </a>
@@ -168,7 +179,7 @@
                                 <i class="flag-icon flag-icon-it"></i>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
                 </div>
             </div>

@@ -74,7 +74,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-th"></i>Products</a>
                         <ul class="sub-menu children dropdown-menu">
                             <li><i class="menu-icon fa fa-th"></i><a href="../admin/add_product_form.php">Add New Product</a></li>
-                            <li><i class="menu-icon fa fa-th"></i><a href="forms-advanced.html">List of Products</a></li>
+                            <li><i class="menu-icon fa fa-th"></i><a href="show_products.php">List of Products</a></li>
                         </ul>
                     </li>
                     <li class="menu-item-has-children dropdown">
@@ -148,7 +148,7 @@
 
                             <a class="nav-link" href="#"><i class="fa fa-cog"></i> Settings</a>
 
-                            <a class="nav-link" href="serverScripts/logout.php"><i class="fa fa-power-off"></i> Logout</a>
+                            <a class="nav-link" href="serverScripts/index.php"><i class="fa fa-power-off"></i> Logout</a>
                         </div>
                     </div>
                 </div>

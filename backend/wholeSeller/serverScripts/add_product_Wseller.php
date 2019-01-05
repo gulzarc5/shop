@@ -18,23 +18,57 @@ session_start();
 		$product_price = $_POST['product_price']; // array of product Price
 		$price_currency = $_POST['rate_currency']; // array of product Price Currency
 		$min_order = $_POST['min_order'];
-		// $weight = $_POST['weight'];
-		// $weight_type = $_POST['weight_type'];
-		// $rate = $_POST['rate'];
-		// // $rate_currency= $_POST['rate_currency'];
-		// // $min_order = $_POST['min_order'];
-		// $min_order_unit = $_POST['min_order_unit'];
 		$product_image = $_FILES['product_image'];  //array of image
 		$in_house_code = $_POST['in_house_code'];
 
 		$company_product_code = null;
 		$created_by = $_SESSION['user_id'];
 
-		$sql = "INSERT INTO `products`(`product_id`, `title`, `product_avail`, `sale_type`, `description`, `region_id`, `product_type_id`, `category_id`, `grade_code_id`, `company_product_code`, `inhouse_code`, `product_code`, `brand_name`, `pack_description`, `weight_per_pack_type_id`, `weight_per_pack_unit`, `rate`, `rate_currency`, `min_order_type_id`, `min_order_unit`, `product_main_image`, `created_by_id`, `created_at`) VALUES (null,'$product_title','1','1','$description','$region','$type','$category','$grade_code','$company_product_code','$in_house_code',null,'$tea_name','$pack_description',null,null,null,null,null,null,null,'$created_by',null)";
+		$sql = "INSERT INTO `products`(`product_id`, `title`, `product_avail`, `sale_type`, `description`, `region_id`, `product_type_id`, `category_id`, `grade_code_id`, `company_product_code`, `inhouse_code`, `product_code`, `brand_name`, `pack_description`, `weight_per_pack_type_id`, `weight_per_pack_unit`, `rate`, `rate_currency`, `min_order_type_id`, `min_order_unit`, `product_main_image`, `created_by_id`, `created_at`) VALUES (null,'$product_title','2','2','$description','$region','$type','$category','$grade_code','$company_product_code','$in_house_code',null,'$tea_name','$pack_description',null,null,null,null,null,null,null,'$created_by',null)";
 	 if ($result=$connection->query($sql)){
 	 	$product_id = $connection->insert_id;
 	 	$product_code = "ATNETIN/".$_SESSION['business_code'].$product_id;
-	 	$sql_update = "UPDATE `products` SET `product_code`='$product_code' WHERE `product_id`='$product_id'";
+
+	 	$companys_product_code = $_SESSION['business_code'];
+
+
+	 	//Fetch Region Code
+	 		$sql_fetch_region_code = "SELECT `region_code` FROM `region` WHERE `region_id`='$region'";
+	 		if($res_fetch_region_code = $connection->query($sql_fetch_region_code)){
+	 			$fetch_region_code_row = $res_fetch_region_code->fetch_assoc();
+	 			if (!empty($fetch_region_code_row['region_code'])) {
+	 				$companys_product_code = $companys_product_code.'/'.$fetch_region_code_row['region_code']; 
+	 			}
+	 		}
+	 	//Fetch Category Code
+	 		$sql_fetch_Category_code = "SELECT `category_code` FROM `category` WHERE `category_id` = '$category'";
+	 		if($res_fetch_Category_code = $connection->query($sql_fetch_Category_code)){
+	 			$fetch_Category_code_row = $res_fetch_Category_code->fetch_assoc();
+	 			if (!empty($fetch_Category_code_row['category_code'])) {
+	 				$companys_product_code = $companys_product_code.'/'.$fetch_Category_code_row['category_code']; 
+	 			}
+	 		}
+	 	//Fetch Type Code
+	 		$sql_fetch_type_code = "SELECT `type_code` FROM `type` WHERE `type_id`='$type'";
+	 		if($res_fetch_type_code = $connection->query($sql_fetch_type_code)){
+	 			$fetch_type_code_row = $res_fetch_type_code->fetch_assoc();
+	 			if (!empty($fetch_type_code_row['type_code'])) {
+	 				$companys_product_code = $companys_product_code.'/'.$fetch_type_code_row['type_code']; 
+	 			}
+	 		}
+
+	 	//Fetch Greade Code
+	 		$sql_fetch_grade_code = "SELECT `grade_code` FROM `grade_code` WHERE `grade_code_id`='$grade_code'";
+	 		if($res_fetch_grade_code = $connection->query($sql_fetch_grade_code)){
+	 			$fetch_grade_code_row = $res_fetch_grade_code->fetch_assoc();
+	 			if (!empty($fetch_grade_code_row['grade_code'])) {
+	 				$companys_product_code = $companys_product_code.'/'.$fetch_grade_code_row['grade_code']; 
+	 			}
+	 		}
+
+	 	$companys_product_code = $companys_product_code.'/'.$product_id;
+
+	 	$sql_update = "UPDATE `products` SET `product_code`='$product_code', `company_product_code`='$companys_product_code' WHERE `product_id`='$product_id'";
 	 	if ($result=$connection->query($sql_update)){
 	 		echo "inserted";
 	 	}else{
@@ -98,15 +132,15 @@ session_start();
 
 	 		$sql_product_main_image_update = "UPDATE `products` SET `product_main_image`='$product_main_image' WHERE `product_id`='$product_id'";
 	 		if (!$result=$connection->query($sql_product_main_image_update)) {
-	 			header("location:../add_product_by_retailor_form.php?msg=3");
+	 			header("location:../add_product_by_Wseller_form.php?msg=3");
 			}
        }	
-       header("location:../add_product_by_retailor_form.php?msg=4");
+       header("location:../add_product_by_Wseller_form.php?msg=4");
 	}else{
-	 	header("location:../add_product_by_retailor_form.php?msg=2");
+	 	header("location:../add_product_by_Wseller_form.php?msg=2");
 	}
 }else{
-	header("location:../add_product_by_retailor_form.php?msg=1");
+	header("location:../add_product_by_Wseller_form.php?msg=1");
 }
 
 ?>

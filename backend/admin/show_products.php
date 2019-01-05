@@ -1,6 +1,6 @@
 <?php
-require_once('partials/header.php');
-include_once "../admin/databaseConnection/connection.php";
+require_once('../partials/header.php');
+include_once "databaseConnection/connection.php";
 ?>
 <script src="../../assets/datatable/jquery.dataTables.min.css"></script>
 <div class="breadcrumbs">
@@ -43,31 +43,44 @@ include_once "../admin/databaseConnection/connection.php";
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <strong class="card-title">Products</strong>
+                        <strong class="card-title">Region</strong>
                     </div>
                     <div class="card-body table-responsive">
                         <table id="bootstrap-data-table-export" class="table table-striped table-bordered" style=" overflow: scroll;">
                             <thead>
                                 <tr>
                                     <th>Sl</th>
-                                    <th>Product Image</th>
-                                    <th>Region</th>
+                                    <th>Product Code</th>
+                                    <th>Product Name</th>
+                                    <th>Product Brand</th>
+                                    <!-- <th>Product Type</th>
+                                    <th>Product Category</th>
+                                    <th>Grade Code</th>
+                                    <th>Region</th> -->
                                     <th>Tea Type</th>
-                                    <th>Grade</th>
-                                    <th>Description</th>
-                                    <th>Actions</th>
+                                    <th>Available Sizes / Rate / Min Order Unit</th>
+                                    <th>Added By</th>
+                                    <th>Added Date</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
                                     $count = 1;
-                                    $sql ="SELECT * FROM `products` WHERE `created_by_id` = '$_SESSION[user_id]' ORDER BY `product_id` DESC";
+                                    $sql ="SELECT * FROM `products` limit 200";
                                     if($result=$connection->query($sql)){
                                         while ($row=$result->fetch_assoc()) {
                                             print" <tr>
                                                 <td>";
                                             print   $count++;
-                                            print   "</td><td><img src='../uploads/product_image/$row[product_main_image]' width='100'></td>";
+                                            print   "</td>
+                                            </td><td>$row[product_code]</td>
+                                            <td>$row[title]</td>
+                                            <td>$row[brand_name]</td>"; 
+                                            if ($row['brand_name'] == 1) {
+                                                 print "<td>Packet</td>";
+                                             }else{
+                                                print "<td>$row[brand_name]</td>";
+                                             }
                                             $count++;
                                             print "";
                                     if (!empty($row['region_id'])) {
@@ -103,15 +116,13 @@ include_once "../admin/databaseConnection/connection.php";
                                         print "<td></td>";
                                     }
                                        
-                                        print "<td>$row[description]</td>";
+                                        print "";
                                         print "<td>
                                             <table>
                                             <tr>
-                                                <td><a href='retailor_product_edit_form.php?pd_id=$row[product_id]' class='btn btn-sm btn-info'>Edit</a></td>
-                                                <td><a href='serverScripts/retailer_product_delete.php?pd_id=$row[product_id]' class='btn btn-sm btn-danger'>Delete</a></td></tr>
-                                                <tr>
-                                                <td><a href='retailer_product_image_edit_form.php?pd_id=$row[product_id]' class='btn btn-sm btn-primary'>Edit Images</a></td>
-                                            </tr>
+                                                <td><a href='retailor_product_edit_form.php?pd_id=$row[product_id]' class='btn btn-info'>Edit</a></td>
+                                                <td><a href='serverScripts/retailer_product_delete.php?pd_id=$row[product_id]' class='btn btn-danger'>Delete</a></td>
+                                            <tr>
                                             </table>
                                         </td>";
                                         print "</tr>";

@@ -3,7 +3,7 @@
 	session_start();
 
 if (isset($_SESSION['email']) && isset( $_SESSION['user_id']) && isset( $_SESSION['user_type']) &&  $_SESSION['user_type'] == 4){
-	$sql_cart_check = "SELECT * FROM `shopping_cart` WHERE `product_id` = '$_GET[product_id]'";
+	$sql_cart_check = "SELECT * FROM `shopping_cart` WHERE `product_id` = '$_GET[product_id]' && `user_id`='$_SESSION[user_id]'";
 	$product_count = 0 ;
 	if ($res_cart_check = $connection->query($sql_cart_check)) {
 		$product_count= $res_cart_check->num_rows;

@@ -32,7 +32,22 @@ include_once "..\admin\databaseConnection\connection.php";
         <div class="card text-white bg-flat-color-1">
             <div class="card-body pb-0">
                 <h4 class="mb-0">
-                    <span class="count">10468</span>
+                    <span class="count">
+                    <?php
+                    $sql_product_count = "SELECT COUNT(*) as total FROM `products` WHERE `created_by_id`='$_SESSION[user_id]'";
+                    if ($res_product_count = $connection->query($sql_product_count)) {
+                        $product_count = $res_product_count->fetch_assoc();
+                        if ($product_count['total']>0) {
+                            print $product_count['total'];
+                        }else{
+                            print "0";
+                        }
+                    }else{
+                        print "0";
+                    }
+                    ?>
+                        
+                    </span>
                 </h4>
                 <p class="text-light">Total Products</p>                   
             </div>
@@ -42,7 +57,21 @@ include_once "..\admin\databaseConnection\connection.php";
         <div class="card text-white bg-flat-color-2">
             <div class="card-body pb-0">
                 <h4 class="mb-0">
-                    <span class="count">10468</span>
+                    <span class="count">
+                    <?php
+                    $sql_delivered_count = "SELECT COUNT(*) as total FROM  `order_details` WHERE `order_to_id`='$_SESSION[user_id]' AND `status`='3'";
+                    if ($res_delivered_count = $connection->query($sql_delivered_count)) {
+                        $delivered_count = $res_delivered_count->fetch_assoc();
+                        if ($delivered_count['total']>0) {
+                            print $delivered_count['total'];
+                        }else{
+                            print "0";
+                        }
+                    }else{
+                        print "0";
+                    }
+                    ?>
+                    </span>
                 </h4>
                 <p class="text-light">Total Delivered Products</p>
             </div>
@@ -52,9 +81,23 @@ include_once "..\admin\databaseConnection\connection.php";
         <div class="card text-white bg-flat-color-3">
             <div class="card-body pb-0">
                 <h4 class="mb-0">
-                    <span class="count">10468</span>
+                    <span class="count">
+                    <?php
+                    $sql_delivered_count = "SELECT COUNT(*) as total FROM  `order_details` WHERE `order_to_id`='$_SESSION[user_id]' AND `status`='2'";
+                    if ($res_delivered_count = $connection->query($sql_delivered_count)) {
+                        $delivered_count = $res_delivered_count->fetch_assoc();
+                        if ($delivered_count['total']>0) {
+                            print $delivered_count['total'];
+                        }else{
+                            print "0";
+                        }
+                    }else{
+                        print "0";
+                    }
+                    ?>
+                    </span>
                 </h4>
-                <p class="text-light">Total Pending Orders</p>
+                <p class="text-light">Total Dispatched Orders</p>
             </div>
         </div>
     </div>
@@ -62,9 +105,23 @@ include_once "..\admin\databaseConnection\connection.php";
         <div class="card text-white bg-flat-color-4">
             <div class="card-body pb-0">
                 <h4 class="mb-0">
-                    <span class="count">10468</span>
+                    <span class="count">
+                    <?php
+                    $sql_delivered_count = "SELECT COUNT(*) as total FROM  `order_details` WHERE `order_to_id`='$_SESSION[user_id]' AND `status`='1'";
+                    if ($res_delivered_count = $connection->query($sql_delivered_count)) {
+                        $delivered_count = $res_delivered_count->fetch_assoc();
+                        if ($delivered_count['total']>0) {
+                            print $delivered_count['total'];
+                        }else{
+                            print "0";
+                        }
+                    }else{
+                        print "0";
+                    }
+                    ?>
+                    </span>
                 </h4>
-                <p class="text-light">Members online</p>
+                <p class="text-light">Total Pending Orders</p>
             </div>
         </div>
     </div>
@@ -80,25 +137,63 @@ include_once "..\admin\databaseConnection\connection.php";
                     <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">Order Id</th>
-                            <th scope="col">Product Image</th>
-                            <th scope="col">Product Name</th>
-                            <th scope="col">Quantity</th>
-                            <th scope="col">Price</th>
+                            <th>Order Id</th>
+                            <th>Product Code</th>
+                            <th>Product Name</th>
+                            <th>Product Size</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Order From User</th>
+                            <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
+                        <?php
+                                    $count = 1;
+                                    $sql_orders = "SELECT * FROM `order_details` WHERE `order_to_id` = '$_SESSION[user_id]' AND `status` != '3' ORDER BY `order_details_id` DESC limit 10";
+                                    if ($res_orders = $connection->query($sql_orders)) {
+                                        while($orders = $res_orders->fetch_assoc()){
+                                         print '<tr><td>'.$count.'<input type="hidden" value = "'.$orders['order_details_id'].'" id="order_id'.$count.'"></td>';
+                                        
+                                        print '<td>'.$orders['order_id'].'</td>';
+
+                                        $sql_product ="SELECT * FROM `products` WHERE `product_id` = '$orders[product_id]'";
+                                        if ($res_product = $connection->query($sql_product)) {
+                                            $product = $res_product->fetch_assoc();
+
+                                            print '<td>'.$product['product_code'].'</td><td>'.$product['title'].'</td>';
+                                        }
+                                        $sql_product_size = "SELECT `product_sizes`.`size` as product_size, `weight_type`.`name` as weight FROM `product_sizes` INNER JOIN `weight_type` ON `product_sizes`.`weight_type_id`=`weight_type`.`weight_type_id` WHERE `product_size_id`='$orders[product_size]'";
+                                        if ($res_product_size = $connection->query($sql_product_size)) {
+                                            $product_size = $res_product_size->fetch_assoc();
+
+                                            print '<td>'.$product_size['product_size'].' / '.$product_size['weight'].'</td>';
+                                        }
+                                        print '<td>'.$orders['quantity'].'</td>
+                                                <td>'.$orders['rate'].'</td>';
+                                      
+                                             $sql_user_name = "SELECT `first_name`,`middle_name`,`last_name` FROM `users` WHERE `user_id` = '$orders[user_id]'";
+                                             if ($res_user = $connection->query($sql_user_name)) {
+                                                 $user_row = $res_user->fetch_assoc();
+                                                 print'<td>'.$user_row['first_name'].' '.$user_row['middle_name'].' '.$user_row['last_name'].'</td>';
+                                             }
+                                             if ($orders['status'] == 1) {
+                                                 print'<td><button class="btn btn-sm btn-danger" disabled>Pending</button></td>';
+                                             }elseif($orders['status'] == 2){
+                                                 print'<td>
+                                                 <button class="btn btn-sm btn-info" disabled>Dispached</button></td>';
+                                             }else{
+                                                 print'<td><button class="btn btn-sm btn-success" disabled>Delivered</button></td>';
+                                             }
+                                        
+                                        print '</tr>';
+                                        $count++;
+                                    }
+                                    }
+                                ?>
                         </tr>
-                        </tr>
-                            <td colspan="5"></td>
-                            <td> <a href="" class="btn btn-primary btn-sm">show more<i class="fa fa-angle-double-right"></i> </a></td>
+                            <td colspan="8"></td>
+                            <td> <a href="retailer_orders.php" class="btn btn-primary btn-sm">show more<i class="fa fa-angle-double-right"></i> </a></td>
                         <tr>
                     </tbody>
                 </table>

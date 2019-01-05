@@ -24,7 +24,7 @@ session_start();
 		// $company_product_code = null;
 		// $created_by = $_SESSION['user_id'];
 
-		$sql = "UPDATE `products` SET `title`='$product_title',`description`='$description',`inhouse_code`='$in_house_code',`brand_name`='$tea_name',`pack_description`='$pack_description' WHERE `product_id` = '$product_id'";
+		$sql = "UPDATE `products` SET `title`='$product_title',`description`='$description',`inhouse_code`='$in_house_code',`brand_name`='$tea_name',`pack_description`='$pack_description' WHERE `product_id` = '$product_id' AND `created_by_id`='$_SESSION[user_id]'";
 	 if ($result=$connection->query($sql)){
 	 	$sql_delete_product_size = "DELETE FROM `product_sizes` WHERE `product_id`='$product_id'";
 	 	if ($result_delete_product_size = $connection->query($sql_delete_product_size)) {
@@ -93,12 +93,12 @@ session_start();
 	 	// 		header("location:../add_product_by_retailor_form.php?msg=3");
 			// }
    //     }	
-       header("location:../retailer_product_show.php?msg=3");
+       header("location:../wseller_product_list.php?msg=3");
 	}else{
-	 	header("location:../retailer_product_show.php?msg=2");
+	 	header("location:../wseller_product_list.php?msg=2");
 	}
 }else{
-	header("location:../retailer_product_show.php?msg=3");
+	header("location:../wseller_product_list.php?msg=3");
 }
 
 ?>

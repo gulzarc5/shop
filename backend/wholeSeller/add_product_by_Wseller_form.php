@@ -6,7 +6,7 @@ require_once('partials/header.php');
             <div class="col-sm-4">
                 <div class="page-header float-left">
                     <div class="page-title">
-                        <h1>Retailer Dashboard</h1>
+                        <h1>Whole Seller Dashboard</h1>
                     </div>
                 </div>
             </div>
@@ -46,7 +46,7 @@ require_once('partials/header.php');
                     }                        
                 }
             ?> 
-    <form action="serverScripts/add_product_retailer.php" method="post" class="form-horizontal" enctype="multipart/form-data">  
+    <form action="serverScripts/add_product_Wseller.php" method="post" class="form-horizontal" enctype="multipart/form-data">  
         <div class="card">
             <div class="card-header">
                 <strong>Product </strong> Information

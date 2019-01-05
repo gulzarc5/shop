@@ -2,64 +2,70 @@
     include "include/header.php"; 
 
 function getOrders($connection){
-    $sql = "SELECT * FROM `orders` WHERE `user_id`='$_SESSION[user_id]' ORDER BY `id` DESC limit 50";
+    $sql = "SELECT * FROM `orders` WHERE `user_id`='$_SESSION[user_id]' ORDER BY `id` DESC";
+    $html = null;
+    $count = 1;
     if ($res = $connection->query($sql)) {
         while($order = $res->fetch_assoc()){
+            print $count ;
+            $count++;
             $order_details_sql = "SELECT * FROM `order_details` WHERE `order_id`='$order[id]'";
             $total = 0;
             if ($res_order_details = $connection->query($order_details_sql)) {
 
                 $order_details_row = $res_order_details->num_rows + 3;
-                print '<tr>
+                $html =  $html.'<tr>
                             <th scope="row" rowspan="'.$order_details_row.'">'.$order['id'].'</th>';
                 while ($order_details = $res_order_details->fetch_assoc()) {
 
                     $sql_product = "SELECT * FROM `products` WHERE `product_id`='$order_details[product_id]'";
-                    $res = $connection->query($sql_product);
-                    $product = $res->fetch_assoc();
-                   print '<td>'.$product['title'].'</td>
+                    $res_product = $connection->query($sql_product);
+                    $product = $res_product->fetch_assoc();
+                   $html =  $html.'<td>'.$product['title'].'</td>
                             <td>'.$product['brand_name'].'</td>
                             <td>'.$product['product_code'].'</td>
                             <td>'.$product['inhouse_code'].'</td>';
                     $sql_product_size = "SELECT `product_sizes`.`size` as product_size, `weight_type`.`name` as weight FROM `product_sizes` INNER JOIN `weight_type` ON `product_sizes`.`weight_type_id`=`weight_type`.`weight_type_id` WHERE `product_size_id`='$order_details[product_size]'";
                     $res_product_size = $connection->query($sql_product_size);
                     $product_size_name = $res_product_size->fetch_assoc();
-                    print '<td>'.$product_size_name['product_size'].' / '.$product_size_name['weight'].'</td>
+                    $html =  $html.'<td>'.$product_size_name['product_size'].' / '.$product_size_name['weight'].'</td>
                             <td>'.$order_details['rate'].'</td>
                             <td>'.$order_details['quantity'].'</td>';
                             $Subtotal = $order_details['rate'] * $order_details['quantity'];
-                    print '<td>'.$Subtotal.'</td>';
+                   $html =  $html.'<td>'.$Subtotal.'</td>';
                     if ($order_details['status'] == 1) {
-                       print '<td class="btn btn-sm btn-danger">Pending</td>';
+                      $html =  $html. '<td class="btn btn-sm btn-danger">Pending</td>';
                     }elseif ($order_details['status'] == 2) {
-                        print '<td><p class="alert alert-info">Dispatched<p></td>';
+                        $html =  $html. '<td><p class="alert alert-info">Dispatched<p></td>';
                     }else{
-                        print '<td><p class="alert alert-success">Delivered<p></td>';
+                        $html =  $html. '<td><p class="alert alert-success">Delivered<p></td>';
                     }
-                   print'</tr>';
+                   $html =  $html.'</tr>';
                     $total = $total+$Subtotal;
                 }
+                 $gst = ($total*5)/100;
+                $grand_total = $gst + $total;
+               $html =  $html. '<tr>
+                <td colspan="7"></td>
+                <td>Total</td>
+                <td>'.$total.'.00</td>
+                </tr
+                <tr>
+                <td colspan="7"></td>
+                <td>GST @ 5%</td>
+                <td>'.$gst.'.00</td>
+                </tr
+                <tr>
+                <td colspan="7"></td>
+                <td>Grand Total</td>
+                <td>'.$grand_total.'.00</td>
+                </tr>';
             }
-            $gst = ($total*5)/100;
-            $grand_total = $gst + $total;
-            print '<tr>
-            <td colspan="6"></td>
-            <td>Total</td>
-            <td>'.$total.'.00</td>
-            </tr
-            <tr>
-            <td colspan="6"></td>
-            <td>GST @ 5%</td>
-            <td>'.$gst.'.00</td>
-            </tr
-            <tr>
-            <td colspan="6"></td>
-            <td>Grand Total</td>
-            <td>'.$grand_total.'.00</td>
-            </tr';
+           
         }
 
     }
+    return $html;
 }
 ?>
 		<!-- Breadcrumb Area Start -->
@@ -97,7 +103,11 @@ function getOrders($connection){
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php getOrders($connection) ?>
+                                <?php
+                                if (isset($_SESSION['user_id'])) {
+                                     echo getOrders($connection); 
+                                 } 
+                                 ?>
                             </tbody>
                         </table>                              
                                    

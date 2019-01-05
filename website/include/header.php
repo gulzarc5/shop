@@ -18,7 +18,7 @@ function categoriesView1($connection){
     $sql = "SELECT * FROM `category` WHERE `status`='1'";
     if ($res = $connection->query($sql)) {
        while ($cat = $res->fetch_assoc()) {
-          print '<li><a href="shop.php?id='.$cat['category_id'].'&prod_avail=2">'.$cat['name'].'</a></li>';
+          print '<li><a href="shop.php?cat_id='.$cat['category_id'].'&prod_avail=2">'.$cat['name'].'</a></li>';
        }
     }else{
         return false;

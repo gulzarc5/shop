@@ -55,7 +55,7 @@ require_once('partials/header.php');
             <?php
                 if (isset($_GET['pd_id']) && !empty($_GET['pd_id'])) {
                     $product_id_update = $_GET['pd_id'];
-                    $sql_product = "SELECT * FROM `products` WHERE `product_id`='$_GET[pd_id]'";
+                    $sql_product = "SELECT * FROM `products` WHERE `product_id`='$_GET[pd_id]' AND `created_by_id`='$_SESSION[user_id]'";
                     if ($result_product = $connection->query($sql_product)) {
                         if ($product = $result_product->fetch_assoc()) {
                             

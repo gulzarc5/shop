@@ -179,7 +179,7 @@ var shipping_html = '<div class="row">'+
                     var shipping_city = $("input[name='shipping_city']").val();
                     var shipping_pin = $("input[name='shipping_pin']").val();
                     var shipping_mobile = $("input[name='shipping_mobile']").val();
-                    alert(shipping_fname);
+                    // alert(shipping_fname);
                     if (!shipping_fname) {
                         $("input[name='shipping_fname']").focus();
                         $("input[name='shipping_fname']").css({
