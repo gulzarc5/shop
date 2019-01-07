@@ -154,7 +154,7 @@ if ($_GET['cat_id'] && $_GET['prod_avail']) {
                                 <div class="shop-catigory">
                                     <ul id="faq">
                                         <?php
-                                            categoriesView($connection)
+                                            sidebarCategoriesView($connection)
                                         ?>
                                        
                                     </ul>
