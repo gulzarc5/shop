@@ -1,5 +1,16 @@
 <?php include "include/header.php"; 
 
+    $database_cart_count = 0;
+    if (!empty($_SESSION['user_id'])) {
+       $sql_cart_count = "SELECT * FROM `shopping_cart` WHERE `user_id`='$_SESSION[user_id]'";
+        if ($cart_res_database = $connection->query($sql_cart_count)){
+            $database_cart_count = $cart_res_database->num_rows;
+        }
+    }
+    if (!empty($_SESSION['cart']) || $database_cart_count > 0){
+         
+
+
  function shippingAddress($connection,$session){
     $sql_fetch_address = "SELECT * FROM `shipping_info` WHERE `user_id`='$_SESSION[user_id]' ORDER BY `shipping_info_id` DESC";
     if ($res_shipping_address = $connection->query($sql_fetch_address)) {
@@ -67,7 +78,7 @@
 <!-- ///////////////////If user not registered then This Checkout Form Will Open //////////// -->
                             <div id="faq" class="panel-group">
 
-                                <?php if (empty($_SESSION['user_id']) && $_SESSION['user_type'] != 4) { ?>
+                                <?php if (empty($_SESSION['user_id'])) { ?>
 
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
@@ -1032,4 +1043,8 @@
 
 <?php
     }
+
+        }else{
+            echo "<script>window.location.href ='cart-page.php';</script>";
+        }
 ?>

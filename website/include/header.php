@@ -14,6 +14,21 @@ function categoriesView($connection){
     }
 }
 
+function sidebarCategoriesView($connection){
+    $sql = "SELECT * FROM `category` WHERE `status`='1'";
+    if ($res = $connection->query($sql)) {
+       while ($cat = $res->fetch_assoc()) {
+        if (!empty($_GET['prod_avail'])) {
+            print '<li><a href="shop.php?cat_id='.$cat['category_id'].'&prod_avail='.$_GET['prod_avail'].'">'.$cat['name'].'</a></li>';
+        }else{
+          print '<li><a href="shop.php?cat_id='.$cat['category_id'].'&prod_avail=1">'.$cat['name'].'</a></li>';
+        }
+       }
+    }else{
+        return false;
+    }
+}
+
 function categoriesView1($connection){
     $sql = "SELECT * FROM `category` WHERE `status`='1'";
     if ($res = $connection->query($sql)) {
@@ -261,15 +276,29 @@ function typesView($connection){
 										</ul>
 									</div>
 								</div>
+
                                 <div class="header-cart">
                                     <a href="#">
                                         <div class="cart-icon">
                                             <i class="ti-shopping-cart"></i>
                                         </div>
                                     </a>
+                                   
                                     <div class="shopping-cart-content" >
-                                        <?php
+                                         <?php
+                                         $database_cart_count = 0;
+                                         if (!empty($_SESSION['user_id'])) {
+                                            $sql_cart_count = "SELECT * FROM `shopping_cart` WHERE `user_id`='$_SESSION[user_id]'";
+
+
+                                                if ($cart_res_database = $connection->query($sql_cart_count))
+                                             $database_cart_count = $cart_res_database->num_rows;
+                                         }
+                                    if (!empty($_SESSION['cart']) || $database_cart_count > 0){
+
+
                                         $sub_total_cart = 0;
+
                                             if (!empty($_SESSION['cart'])) {
                                                 foreach($_SESSION['cart'] as $product_id=>$value){
                                                     $sql_product = "SELECT * FROM `products` WHERE `product_id`='$product_id'";
@@ -296,7 +325,10 @@ function typesView($connection){
                                                 
                                             }elseif (!empty($_SESSION['user_id'])){
                                                 $sql_cart_view = "SELECT * FROM `shopping_cart` WHERE `user_id`='$_SESSION[user_id]'";
+
+
                                                 if ($cart_res = $connection->query($sql_cart_view)) {
+                                                    
                                                     while($cart = $cart_res->fetch_assoc()){
 
                                                     $sql_product_cart = "SELECT * FROM `products` WHERE `product_id`='$cart[product_id]'";
@@ -336,7 +368,15 @@ function typesView($connection){
                                             <a href="cart-page.php">view cart</a>
                                             <a href="checkout.php">checkout</a>
                                         </div>
+                                         <?php
+                                            }else{
+
+                                                print '<div class="shopping-cart-total" style="padding: 20px 80px 40px;">
+                                                <h4>Cart Is Empty</h4></div>';
+                                            }
+                                        ?>
                                     </div>
+
                                 </div>
                                 <div class="header-cart">
                                     <a href="#">

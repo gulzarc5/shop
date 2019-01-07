@@ -19,6 +19,15 @@
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-12">
 <!--                         <form action="#"> -->
+                        <?php
+                            $database_cart_count = 0;
+                            if (!empty($_SESSION['user_id'])) {
+                                $sql_cart_count = "SELECT * FROM `shopping_cart` WHERE `user_id`='$_SESSION[user_id]'";
+                                    if ($cart_res_database = $connection->query($sql_cart_count))
+                                        $database_cart_count = $cart_res_database->num_rows;
+                                    }
+                            if (!empty($_SESSION['cart']) || $database_cart_count > 0){
+                        ?>
                             <div class="table-content table-responsive">
                                 <table>
                                     <thead>
@@ -137,11 +146,11 @@
                                         <div class="cart-shiping-update">
                                             <a href="index.php">Continue Shopping</a>
                                         </div>
-                                        <div class="cart-clear">
+                                        <!-- <div class="cart-clear"> -->
                                             <!-- <button>Update Shopping Cart</button> -->
 
-                                            <a href="#">Clear Shopping Cart</a>
-                                        </div>
+                                            <!-- <a href="#">Clear Shopping Cart</a> -->
+                                        <!-- </div> -->
                                     </div>
                                 </div>
                             </div>
@@ -245,10 +254,16 @@
                                             echo $grandtotal; 
                                         } 
                                         ?>.00</span></h4>
-                                    <a href="#">Proceed to Checkout</a>
+                                    <a href="checkout.php">Proceed to Checkout</a>
                                 </div>
                             </div>
                         </div>
+                        <?php
+                            }else{
+                                print '<div class="table-content table-responsive" >
+                                                <center><h4>Cart Is Empty</h4></center></div>';
+                            }
+                        ?>
                     </div>
                 </div>
             </div>

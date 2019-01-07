@@ -1,5 +1,11 @@
 <?php
     include "wseller_session_check.php";
+
+    $res_order_count_view =null;
+    $sql_orders_view = "SELECT * FROM `order_details` WHERE `order_to_id` = '$_SESSION[user_id]'  AND `retailer_is_viewed` ='1'";
+    if ($res_orders_view = $connection->query($sql_orders_view)) {
+        $res_order_count_view = $res_orders_view->num_rows;
+    }
 ?>
 <!doctype html>
 
@@ -64,8 +70,8 @@
                     <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>Orders</a>
                         <ul class="sub-menu children dropdown-menu">
-                            <li><i class="fa fa-table"></i><a href="../admin/add_region_form.php">New Orders</a></li>
-                            <li><i class="fa fa-table"></i><a href="../admin/add_designation_form.php">Delivered Products</a></li>
+                            <li><i class="fa fa-table"></i><a href="wseller_new_orders.php">New Orders</a></li>
+                            <li><i class="fa fa-table"></i><a href="all_orders.php">All Orders</a></li>
                         </ul>
                     </li> 
 
